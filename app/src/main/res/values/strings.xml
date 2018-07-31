@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Manibhadra</string>
+
+    // Create Account Activity
+    <string name="hint_email">Email</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_birthday">Birthday</string>
+    <string name="create_account_button">Create account</string>
+    <string name="accept_continue">By continuing you accept our</string>
+    <string name="terms_and_condition">Terms and Conditions</string>
+
+    <string name="alert_email_null">Please enter email.</string>
+    <string name="alert_invalid_email">Please enter valid email.</string>
+    <string name="alert_name_null">Please enter name.</string>
+    <string name="alert_birthday_null">Please select birth date.</string>
+    <string name="alert_name_alphabets">Name field only accept alphabets.</string>
+
+    <string name="alert_password_sentto_email">Password has been sent to your entered email id.</string>
+
+    // Sign In Activity
+    <string name="hint_sign_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="sign_in_button">Sign in</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="create_account">Create account</string>
+
+    <string name="alert_facebook_already_login">Already registered with Facebook</string>
+    <string name="alert_gmail_already_login">Already registered with Gmail</string>
+
+    <string name="alert_password_null">Please enter password </string>
+    <string name="alert_invalid_password">Enter valid password</string>
+    <string name="login_with_facebook">Login With Facebook</string>
+
+    <string name="alert_invalid_email_password">Incorrect email or password.</string>
+
+    // Select Public Private Layout
+    <string name="select_public_private_welcome_text">Admit to receive invitations for event...</string>
+    <string name="s_public">Public</string>
+    <string name="s_private">Private</string>
+    <string name="s_both">Both</string>
+
+    <string name="or_text">OR</string>
+    <string name="continue_text">continue with</string>
+    <string name="facebook">Facebook</string>
+    <string name="google_plus">Gmail</string>
+    <string name="register_sign_in">Sign in</string>
+
+
+</resources>
