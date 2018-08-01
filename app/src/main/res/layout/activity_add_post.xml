@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.manibhadra.activity.AddPostActivity">
+    tools:context="com.manibhadra.activity.admin.AddCategoryActivity">
 
     <RelativeLayout
         android:id="@+id/main_view"
@@ -28,22 +28,78 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Add Product"
+            android:text="Add Category"
             android:fontFamily="@font/josefinsans_regular"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_XXLarge_Size" />
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="Under Development"
-        android:fontFamily="@font/josefinsans_regular"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_XXLarge_Size" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/new_camera_ico" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp">
+
+                <EditText
+                    android:id="@+id/sign_in_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/colorBlack"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="Category Name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/text_Medium_Size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_below="@+id/sign_in_email"
+                    android:background="@color/colorBlack" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/signUpBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/continue_btn_bg"
+                android:fontFamily="@font/josefinsans_regular"
+                android:text="Add"
+                android:textAllCaps="false"
+                android:textColor="@drawable/continue_btn_text_color"
+                android:textSize="@dimen/text_Large_Size" />
+
+
+        </LinearLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

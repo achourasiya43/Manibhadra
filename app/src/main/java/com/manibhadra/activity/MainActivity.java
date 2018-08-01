@@ -1,7 +1,6 @@
 package com.manibhadra.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.manibhadra.R;
+import com.manibhadra.activity.admin.AddCategoryActivity;
 import com.manibhadra.adapter.VendorProductAdapter;
 import com.manibhadra.model.ProductInfo;
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         iv_add_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddPostActivity.class));
+                startActivity(new Intent(MainActivity.this, AddCategoryActivity.class));
             }
         });
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.manibhadra.activity.MainActivity">
+    tools:context="com.manibhadra.activity.admin.ViewCategoryActivity">
 
     <RelativeLayout
         android:id="@+id/main_view"
@@ -14,28 +14,26 @@
         android:background="@drawable/header_bg">
 
         <TextView
-            android:id="@+id/profile_action_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Products"
+            android:text="Category List"
             android:fontFamily="@font/josefinsans_regular"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_XXLarge_Size" />
 
         <ImageView
-            android:id="@+id/iv_add_post"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_9sdp"
-            android:tint="@color/colorPrimaryDark"
-            android:layout_centerInParent="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ico_add"
-            android:gravity="center" />
+            android:id="@+id/back"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/back_arrow_ico"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:tint="@color/colorPrimaryDark"/>
 
     </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

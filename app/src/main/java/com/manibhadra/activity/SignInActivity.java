@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.manibhadra.R;
+import com.manibhadra.activity.admin.AdminHomeActivity;
 
 public class SignInActivity extends AppCompatActivity {
     private TextView create_signIn;
@@ -37,7 +38,7 @@ public class SignInActivity extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                startActivity(new Intent(SignInActivity.this, AdminHomeActivity.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     finishAfterTransition();
