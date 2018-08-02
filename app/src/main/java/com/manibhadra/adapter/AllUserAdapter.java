@@ -9,28 +9,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.manibhadra.R;
-import com.manibhadra.activity.admin.ProductDetailsActivity;
-import com.manibhadra.model.ProductInfo;
+import com.manibhadra.activity.admin.UserDetailsActivity;
+import com.manibhadra.model.AllUsersInfo;
 
 import java.util.ArrayList;
 
 /**
- * Created by Anil on 02-08-2018.
+ * Created by Anil on 03-08-2018.
  */
 
-public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHolder> {
     Context mContext;
-    ArrayList<ProductInfo> vendorProductList;
+    ArrayList<AllUsersInfo> arrayList;
 
-    public ProductAdapter(Context mContext, ArrayList<ProductInfo> vendorProductList) {
+    public AllUserAdapter(Context mContext, ArrayList<AllUsersInfo> arrayList) {
         this.mContext = mContext;
-        this.vendorProductList = vendorProductList;
+        this.arrayList = arrayList;
     }
 
-
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.all_users_item_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,7 +41,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
 
     @Override
     public int getItemCount() {
-        return vendorProductList.size();
+        return arrayList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -53,8 +53,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext,ProductDetailsActivity.class);
-            intent.putExtra("product_key","viewProduct");
+            Intent intent = new Intent(mContext,UserDetailsActivity.class);
             mContext.startActivity(intent);
         }
 

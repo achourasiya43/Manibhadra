@@ -1,15 +1,18 @@
 package com.manibhadra.activity.admin;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.manibhadra.R;
 
 public class AdminHomeActivity extends AppCompatActivity {
     private CardView cv_view_all_user,cv_add_category,cv_view_category;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,5 +46,24 @@ public class AdminHomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

@@ -61,10 +61,11 @@
             android:name=".activity.admin.ViewAllUserActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".activity.admin.ProductListActivity"
+        <activity
+            android:name=".activity.admin.ProductListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.admin.UserDetailsActivity"></activity>
     </application>
 
 </manifest>

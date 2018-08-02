@@ -3,6 +3,8 @@ package com.manibhadra.activity.admin;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.manibhadra.R;
 import com.manibhadra.adapter.CategoryAdapter;
@@ -16,12 +18,14 @@ public class ViewCategoryActivity extends AppCompatActivity {
     private CategoryAdapter adapter;
     private ArrayList<CategoryInfo> categorytList;
     private RecyclerView recycler_view;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_category);
 
+        back = findViewById(R.id.back);
         recycler_view = findViewById(R.id.recycler_view);
         categorytList = new ArrayList<>();
 
@@ -34,5 +38,13 @@ public class ViewCategoryActivity extends AppCompatActivity {
         }
         adapter = new CategoryAdapter(this,categorytList);
         recycler_view.setAdapter(adapter);
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

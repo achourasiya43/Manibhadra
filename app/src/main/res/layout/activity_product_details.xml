@@ -17,34 +17,311 @@
             android:id="@+id/back"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/back_arrow_ico"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:tint="@color/colorPrimaryDark"/>
+            android:src="@drawable/back_arrow_ico"
+            android:tint="@color/colorPrimaryDark" />
 
         <TextView
-            android:id="@+id/profile_action_bar"
+            android:id="@+id/action_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/josefinsans_regular"
             android:gravity="center"
             android:text="Details"
-            android:fontFamily="@font/josefinsans_regular"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_XXLarge_Size" />
 
-
     </RelativeLayout>
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="Under Development"
-        android:fontFamily="@font/josefinsans_regular"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/text_XXLarge_Size" />
+        android:layout_marginTop="?actionBarSize"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/add_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:src="@drawable/new_camera_ico" />
+
+                <EditText
+                    android:id="@+id/sign_in_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@null"
+                    android:backgroundTint="@color/colorBlack"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="Product Name"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/text_Medium_Size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/sign_in_email"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/colorBlack" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@null"
+                    android:backgroundTint="@color/colorBlack"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="Product Size (Comma Separator)"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/text_Medium_Size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/sign_in_email"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/colorBlack" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@null"
+                    android:backgroundTint="@color/colorBlack"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="Color Code (Comma Separator)"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/text_Medium_Size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/sign_in_email"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/colorBlack" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@null"
+                    android:backgroundTint="@color/colorBlack"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="Product Details"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/text_Medium_Size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/sign_in_email"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/colorBlack" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:background="@null"
+                    android:backgroundTint="@color/colorBlack"
+                    android:fontFamily="@font/nunito_light"
+                    android:hint="Others Details"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textSize="@dimen/text_Medium_Size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/sign_in_email"
+                    android:layout_marginLeft="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/colorBlack" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/details_view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_14sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:text="Product Name :"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Large_Size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_primary_left_chat_border"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:padding="@dimen/_10sdp"
+                    android:text="ARTICLES THAT CAN CHANGE YOUR LIFE"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Small_Size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:text="Product Size :"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Large_Size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_primary_left_chat_border"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:padding="@dimen/_10sdp"
+                    android:text="4 inch , 2 inch , 10 inch"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Small_Size" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:text="Color Code :"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Large_Size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_primary_left_chat_border"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Blue #2121, Black #33333"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Small_Size" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:text="Product Details :"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Large_Size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_primary_left_chat_border"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:padding="@dimen/_10sdp"
+                    android:text="There are enough articles on this site to fill two books, so it can sometimes be daunting to know where to start."
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Small_Size" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:text="Other Details :"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Large_Size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_primary_left_chat_border"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Below are what many consider to be my “greatest hits,” the articles that have been the most popular, the most shared, "
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Small_Size" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/addProductBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/continue_btn_bg"
+                android:fontFamily="@font/josefinsans_regular"
+                android:text="Add Product"
+                android:textAllCaps="false"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:textColor="@drawable/continue_btn_text_color"
+                android:textSize="@dimen/text_Large_Size" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

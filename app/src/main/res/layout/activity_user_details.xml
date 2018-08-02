@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.manibhadra.activity.admin.UserDetailsActivity">
+
+
+    <TextView
+        android:id="@+id/sign_in_email"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:backgroundTint="@color/colorBlack"
+        android:fontFamily="@font/nunito_light"
+        android:hint="User Details Under Development"
+        android:imeOptions="actionNext"
+        android:gravity="center"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="@dimen/text_XXLarge_Size" />
+
+</android.support.constraint.ConstraintLayout>

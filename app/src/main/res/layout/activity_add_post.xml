@@ -37,8 +37,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_200sdp"
         android:orientation="vertical">
 
         <ImageView
@@ -52,7 +53,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -68,7 +69,7 @@
                     android:backgroundTint="@color/colorBlack"
                     android:fontFamily="@font/nunito_light"
                     android:hint="Category Name"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/colorBlack"
                     android:textColorHint="@color/colorBlack"
