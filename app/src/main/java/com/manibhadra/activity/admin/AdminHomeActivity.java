@@ -12,7 +12,6 @@ import com.manibhadra.R;
 
 public class AdminHomeActivity extends AppCompatActivity {
     private CardView cv_view_all_user,cv_add_category,cv_view_category;
-    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,8 @@ public class AdminHomeActivity extends AppCompatActivity {
 
 
     }
+
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     public void onBackPressed() {
