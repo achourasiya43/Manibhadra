@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
  * Created by Anil on 01-08-2018.
  */
 
-class Utils {
+public class Utils {
     private static boolean connected = false;
 
 
@@ -28,7 +28,7 @@ class Utils {
 
     public static void openAlertDialog(Context context, String message) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Apoim");
+        builder.setTitle("Manibhadra");
         builder.setCancelable(false);
         builder.setMessage(message);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

@@ -6,12 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.manibhadra.R;
+import com.manibhadra.session.SessionManager;
 
 public class AdminHomeActivity extends AppCompatActivity {
     private CardView cv_view_all_user,cv_add_category,cv_view_category;
+    private Button btn_logout;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +25,9 @@ public class AdminHomeActivity extends AppCompatActivity {
         cv_view_all_user = findViewById(R.id.cv_view_all_user);
         cv_add_category = findViewById(R.id.cv_add_category);
         cv_view_category = findViewById(R.id.cv_view_category);
+        btn_logout = findViewById(R.id.btn_logout);
+
+        sessionManager = new SessionManager(this);
 
         cv_view_all_user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +53,12 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         });
 
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionManager.logout();
+            }
+        });
 
     }
 

@@ -5,36 +5,28 @@ package com.manibhadra.model;
  */
 
 public class SignInInfo {
-
+    
     public String status;
     public String message;
     public UserDetailBean userDetail;
-
+    
     public static class UserDetailBean {
-
+        
         public String userId;
         public String fullName;
-        public String birthday;
-        public String gender;
         public String email;
-        public String countryCode;
-        public String contactNo;
-        public String emailVerified;
+        public String password;
+        public String profileImage;
         public String socialId;
         public String socialType;
+        public String countryCode;
+        public String contactNumber;
+        public String userType;
+        public String deviceType;
+        public String deviceToken;
         public String authToken;
-        public String address;
-        public String latitude;
-        public String longitude;
-        public String isProfileUpdate;
-        public String mapPayment;
-        public String showTopPayment;
-        public String totalFriends;
-        public String showOnMap = "";
-        public String bankAccountStatus;
-        public String profileImage;
-        public String isNotification;
-
+        public String status;
+        public String crd;
+        public String upd;
     }
-
 }

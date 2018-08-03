@@ -35,11 +35,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_50sdp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/colorPrimaryDark"
                 android:src="@drawable/new_camera_ico" />
 
             <LinearLayout
@@ -53,6 +56,44 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:tint="@color/colorPrimaryDark"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/user_ico"/>
+
+                    <EditText
+                        android:id="@+id/sign_in_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_35sdp"
+                        android:backgroundTint="@color/colorBlack"
+                        android:fontFamily="@font/nunito_light"
+                        android:hint="@string/hint_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"
+                        android:textSize="@dimen/text_Medium_Size" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_below="@+id/sign_in_name"
+                        android:layout_marginLeft="@dimen/_35sdp"
+                        android:background="@color/colorBlack" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_10sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_20sdp"
@@ -197,5 +238,12 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:textSize="@dimen/text_Large_Size" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>
