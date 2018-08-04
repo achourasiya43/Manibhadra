@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.ProductDetailsActivity;
+import com.manibhadra.activity.admin.ProductListActivity;
+import com.manibhadra.listner.GetProductId;
 import com.manibhadra.model.ProductInfo;
 
 import java.util.ArrayList;
@@ -20,11 +22,13 @@ import java.util.ArrayList;
 
 public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     Context mContext;
-    ArrayList<ProductInfo> vendorProductList;
+    ArrayList<ProductInfo.ProductListBean> ProductList;
+    GetProductId.getId getId;
 
-    public ProductAdapter(Context mContext, ArrayList<ProductInfo> vendorProductList) {
+    public ProductAdapter(Context mContext, ArrayList<ProductInfo.ProductListBean> ProductList,GetProductId.getId getId) {
         this.mContext = mContext;
-        this.vendorProductList = vendorProductList;
+        this.ProductList = ProductList;
+        this.getId = getId;
     }
 
 
@@ -41,7 +45,7 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
 
     @Override
     public int getItemCount() {
-        return vendorProductList.size();
+        return ProductList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -53,9 +57,8 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext,ProductDetailsActivity.class);
-            intent.putExtra("product_key","viewProduct");
-            mContext.startActivity(intent);
+            getId.getProductId(ProductList.get(getAdapterPosition()).productId);
+
         }
 
     }

@@ -1,57 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.manibhadra.activity.admin.ViewCategoryActivity">
 
-    <RelativeLayout
-        android:id="@+id/main_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/header_bg">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="Product List"
+        <RelativeLayout
+            android:id="@+id/main_view"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/header_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/josefinsans_regular"
+                android:gravity="center"
+                android:text="Product List"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_XXLarge_Size" />
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:src="@drawable/back_arrow_ico"
+                android:tint="@color/colorPrimaryDark" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_add_product"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/continue_btn_bg"
             android:fontFamily="@font/josefinsans_regular"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_XXLarge_Size" />
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/back_arrow_ico"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:tint="@color/colorPrimaryDark"/>
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_add_product"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_35sdp"
-        android:background="@drawable/continue_btn_bg"
-        android:fontFamily="@font/josefinsans_regular"
-        android:text="Add product"
-        android:textAllCaps="false"
-        android:layout_gravity="right"
-        android:layout_margin="@dimen/_10sdp"
-        android:textColor="@drawable/continue_btn_text_color"
-        android:textSize="@dimen/text_Large_Size" />
+            android:text="Add product"
+            android:textAllCaps="false"
+            android:textColor="@drawable/continue_btn_text_color"
+            android:textSize="@dimen/text_Large_Size" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</LinearLayout>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

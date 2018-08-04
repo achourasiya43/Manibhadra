@@ -5,13 +5,13 @@ package com.manibhadra.model;
  */
 
 public class SignInInfo {
-    
+
     public String status;
     public String message;
     public UserDetailBean userDetail;
-    
+
     public static class UserDetailBean {
-        
+
         public String userId;
         public String fullName;
         public String email;

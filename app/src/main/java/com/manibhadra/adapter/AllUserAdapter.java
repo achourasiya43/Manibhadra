@@ -7,10 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.UserDetailsActivity;
 import com.manibhadra.model.AllUsersInfo;
+import com.manibhadra.model.SignInInfo;
 
 import java.util.ArrayList;
 
@@ -20,9 +25,9 @@ import java.util.ArrayList;
 
 public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHolder> {
     Context mContext;
-    ArrayList<AllUsersInfo> arrayList;
+    ArrayList<AllUsersInfo.UsersDataBean> arrayList;
 
-    public AllUserAdapter(Context mContext, ArrayList<AllUsersInfo> arrayList) {
+    public AllUserAdapter(Context mContext, ArrayList<AllUsersInfo.UsersDataBean> arrayList) {
         this.mContext = mContext;
         this.arrayList = arrayList;
     }
@@ -36,7 +41,9 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        if (arrayList.get(position).profileImage != null)
+            Glide.with(mContext).load(arrayList.get(position).profileImage).apply(new RequestOptions().placeholder(R.drawable.ico_user_placeholder)).into(holder.profile_image);
+        holder.tv_product_name.setText(arrayList.get(position).fullName);
     }
 
     @Override
@@ -45,15 +52,19 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView profile_image;
+        TextView tv_product_name;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            profile_image = itemView.findViewById(R.id.profile_image);
+            tv_product_name = itemView.findViewById(R.id.tv_product_name);
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext,UserDetailsActivity.class);
+            Intent intent = new Intent(mContext, UserDetailsActivity.class);
             mContext.startActivity(intent);
         }
 

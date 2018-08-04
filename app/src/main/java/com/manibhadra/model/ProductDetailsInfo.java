@@ -1,17 +1,15 @@
 package com.manibhadra.model;
 
-import java.util.List;
-
 /**
- * Created by Anil on 31-07-2018.
+ * Created by Anil on 05-08-2018.
  */
 
-public class ProductInfo {
+public class ProductDetailsInfo {
     public String status;
     public String message;
-    public List<ProductListBean> productList;
-    
-    public static class ProductListBean {
+    public ProductDetailBean productDetail;
+
+    public static class ProductDetailBean {
 
         public String productId;
         public String categoryId;
@@ -21,5 +19,6 @@ public class ProductInfo {
         public String productDetail;
         public String productOtherDetail;
         public String productImage;
+        public String categoryName;
     }
 }

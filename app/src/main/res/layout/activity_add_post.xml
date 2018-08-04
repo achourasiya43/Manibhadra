@@ -42,10 +42,10 @@
         android:layout_marginTop="@dimen/_200sdp"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/category_image"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
             android:layout_gravity="center"
             android:src="@drawable/new_camera_ico" />
 
@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_below="@+id/sign_in_email"
+                    android:layout_below="@+id/ed_category"
                     android:background="@color/colorBlack" />
 
             </RelativeLayout>

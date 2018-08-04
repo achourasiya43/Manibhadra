@@ -195,18 +195,17 @@ public class SignUpActivity extends AppCompatActivity {
         Map<String, String> map = new HashMap<>();
         map.put("fullName", sign_in_name.getText().toString().trim());
         map.put("email", sign_in_email.getText().toString().trim());
-        map.put("countryCode", "91");
+        map.put("countryCode", "+91");
         map.put("contactNumber", sign_in_contact.getText().toString().trim());
         map.put("password", sign_in_password.getText().toString().trim());
-        map.put("deviceToken", "you will get soon");
-        map.put("userType", "1");
-        map.put("deviceType", "you will get soon");
+        map.put("deviceToken", "youwillgetsoon");
+        map.put("userType", "2");
+        map.put("deviceType", "1");
         map.put("socialId", "");
         map.put("socialType", "");
 
         Map<String, Bitmap> image = new HashMap<>();
         image.put("profileImage", bitmap);
-
 
         WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
 

@@ -1,6 +1,9 @@
 package com.manibhadra.activity.admin;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -65,7 +68,7 @@ public class AddCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isValidData()){
-
+                    addCategoryApi();
                 }
             }
         });
@@ -86,7 +89,7 @@ public class AddCategoryActivity extends AppCompatActivity {
             return false;
         }
         else if (!v.isNullValue(ed_category.getText().toString().trim())) {
-            Utils.openAlertDialog(AddCategoryActivity.this, getResources().getString(R.string.alert_email_null));
+            Utils.openAlertDialog(AddCategoryActivity.this, "Please Add Category Name");
             return false;
         }
 
@@ -163,6 +166,9 @@ public class AddCategoryActivity extends AppCompatActivity {
         Map<String, String> map = new HashMap<>();
         map.put("categoryName", ed_category.getText().toString().trim());
 
+        Map<String,Bitmap> bitmapMap = new HashMap<>();
+        bitmapMap.put("categoryImage",bitmap);
+
         WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
 
             @Override
@@ -177,11 +183,12 @@ public class AddCategoryActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
 
                     if (status.equals("success")) {
-                        finish();
+                        successDialog(AddCategoryActivity.this,message);
+
                     } else {
-                        progress_bar.setVisibility(View.GONE);
                         Utils.openAlertDialog(AddCategoryActivity.this, message);
                     }
+                    progress_bar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     add_category_Btn.setEnabled(true);
@@ -196,8 +203,24 @@ public class AddCategoryActivity extends AppCompatActivity {
                 add_category_Btn.setEnabled(true);
             }
         });
-        service.callMultiPartApi("user/addCategory", map, null);
+        service.callMultiPartApi("user/addCategory", map, bitmapMap);
 
+    }
+
+    public  void successDialog(Context context, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                finish();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 

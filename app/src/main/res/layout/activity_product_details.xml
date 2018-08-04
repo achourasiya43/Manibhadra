@@ -53,16 +53,18 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/product_image"
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_height="@dimen/_120sdp"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/add_product_image"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
                     android:layout_gravity="center"
+                    app:civ_border_color="@color/colorPrimaryDark"
+                    app:civ_border_width="0.8dp"
                     android:layout_margin="@dimen/_10sdp"
                     android:src="@drawable/new_camera_ico" />
 
                 <EditText
-                    android:id="@+id/sign_in_email"
+                    android:id="@+id/ed_product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
@@ -88,6 +90,7 @@
                     android:background="@color/colorBlack" />
 
                 <EditText
+                    android:id="@+id/ed_produc_sizes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
@@ -113,6 +116,7 @@
                     android:background="@color/colorBlack" />
 
                 <EditText
+                    android:id="@+id/ed_produc_color_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
@@ -138,6 +142,7 @@
                     android:background="@color/colorBlack" />
 
                 <EditText
+                    android:id="@+id/ed_product_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
@@ -163,6 +168,7 @@
                     android:background="@color/colorBlack" />
 
                 <EditText
+                    android:id="@+id/ed_product_other_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_35sdp"
@@ -194,23 +200,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/_14sdp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_gravity="center"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    android:elevation="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_5sdp">
+
+                    <com.github.siyamed.shapeimageview.RoundedImageView
+                       android:id="@+id/product_details_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:siBorderColor="@color/colorLightGray"
+                        app:siBorderWidth="1dp"
+                        android:src="@drawable/ico_user_placeholder"
+                        app:siRadius="@dimen/_10sdp"/>
+
+                </android.support.v7.widget.CardView>
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/josefinsans_regular"
                     android:text="Product Name :"
+                    android:layout_marginTop="@dimen/_25sdp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_Large_Size" />
 
                 <TextView
+                    android:id="@+id/tv_product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_primary_left_chat_border"
                     android:fontFamily="@font/josefinsans_regular"
                     android:padding="@dimen/_10sdp"
-                    android:text="ARTICLES THAT CAN CHANGE YOUR LIFE"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
@@ -226,12 +256,12 @@
                     android:textSize="@dimen/text_Large_Size" />
 
                 <TextView
+                    android:id="@+id/tv_product_size"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_primary_left_chat_border"
                     android:fontFamily="@font/josefinsans_regular"
                     android:padding="@dimen/_10sdp"
-                    android:text="4 inch , 2 inch , 10 inch"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
@@ -248,12 +278,12 @@
                     android:textSize="@dimen/text_Large_Size" />
 
                 <TextView
+                    android:id="@+id/tv_color_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_primary_left_chat_border"
                     android:fontFamily="@font/josefinsans_regular"
                     android:padding="@dimen/_10sdp"
-                    android:text="Blue #2121, Black #33333"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
@@ -270,12 +300,12 @@
                     android:textSize="@dimen/text_Large_Size" />
 
                 <TextView
+                    android:id="@+id/tv_product_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_primary_left_chat_border"
                     android:fontFamily="@font/josefinsans_regular"
                     android:padding="@dimen/_10sdp"
-                    android:text="There are enough articles on this site to fill two books, so it can sometimes be daunting to know where to start."
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
@@ -292,19 +322,18 @@
                     android:textSize="@dimen/text_Large_Size" />
 
                 <TextView
+                    android:id="@+id/tv_other_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_primary_left_chat_border"
                     android:fontFamily="@font/josefinsans_regular"
                     android:padding="@dimen/_10sdp"
-                    android:text="Below are what many consider to be my “greatest hits,” the articles that have been the most popular, the most shared, "
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_Small_Size" />
 
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/addProductBtn"

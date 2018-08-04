@@ -33,13 +33,6 @@ public class MainActivity extends AppCompatActivity {
         recycler_view = findViewById(R.id.recycler_view);
         vendorProductList = new ArrayList<>();
 
-        for(int i = 0; i< 100 ; i++){
-            ProductInfo productInfo = new ProductInfo();
-            productInfo.productImage = "";
-            productInfo.productName = "Hexagon Head Self-drilling Screw";
-            productInfo.productDescription = "Overview Warehouse, godowns, libraries, etc require ladders for easy access to heights above the normal reaching position of a person. PAffy folding ladder with 5 wide steps is one such equipment suited for such places for easy a";
-            vendorProductList.add(productInfo);
-        }
         adapter = new VendorProductAdapter(this,vendorProductList);
         recycler_view.setAdapter(adapter);
 
