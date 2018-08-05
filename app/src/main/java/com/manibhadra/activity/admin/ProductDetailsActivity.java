@@ -140,7 +140,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         add_product_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPermissionAndPicImage();
+               // getPermissionAndPicImage();
             }
         });
 

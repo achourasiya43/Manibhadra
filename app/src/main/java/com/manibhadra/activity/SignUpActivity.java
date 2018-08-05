@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPermissionAndPicImage();
+               // getPermissionAndPicImage();
             }
         });
 

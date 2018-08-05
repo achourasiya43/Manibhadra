@@ -33,7 +33,7 @@
     <string name="alert_gmail_already_login">Already registered with Gmail</string>
 
     <string name="alert_password_null">Please enter password </string>
-    <string name="alert_invalid_password">Enter valid password</string>
+    <string name="alert_invalid_password">Password should be at least 8 characters long</string>
     <string name="login_with_facebook">Login With Facebook</string>
 
     <string name="alert_invalid_email_password">Incorrect email or password.</string>

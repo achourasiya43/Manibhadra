@@ -65,6 +65,7 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, UserDetailsActivity.class);
+            intent.putExtra("userInfo",arrayList.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
 

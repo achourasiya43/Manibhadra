@@ -1,18 +1,19 @@
 package com.manibhadra.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Anil on 03-08-2018.
  */
 
-public class AllUsersInfo {
+public class AllUsersInfo implements Serializable {
 
     public int status;
     public String message;
     public List<UsersDataBean> usersData;
 
-    public static class UsersDataBean {
+    public static class UsersDataBean implements Serializable {
 
         public String userId;
         public String fullName;
