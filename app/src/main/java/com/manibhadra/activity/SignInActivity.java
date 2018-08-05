@@ -1,7 +1,6 @@
 package com.manibhadra.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +15,9 @@ import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.AdminHomeActivity;
+import com.manibhadra.activity.customer.MainActivity;
 import com.manibhadra.app.App;
+import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
 import com.manibhadra.model.SignInInfo;
 import com.manibhadra.serverTask.Utils;
@@ -111,11 +112,23 @@ public class SignInActivity extends AppCompatActivity {
                         SignInInfo signInInfo = gson.fromJson(String.valueOf(jsonObject), SignInInfo.class);
                         session.createSession(signInInfo);
 
-                        startActivity(new Intent(SignInActivity.this, AdminHomeActivity.class));
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            finishAfterTransition();
+
+                        if(signInInfo.userDetail.email.equals(Constant.AdminEmail) &&
+                                sign_in_password.getText().toString().trim().equals(Constant.AdminPassword)){
+                            startActivity(new Intent(SignInActivity.this, AdminHomeActivity.class));
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                finishAfterTransition();
+                            }
+                        }else {
+                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                finishAfterTransition();
+                            }
                         }
+
+
                     } else {
                         progress_bar.setVisibility(View.GONE);
                         Utils.openAlertDialog(SignInActivity.this, message);

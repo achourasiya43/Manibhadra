@@ -159,10 +159,7 @@ public class SignUpActivity extends AppCompatActivity {
     public boolean isValidData() {
         Validation v = new Validation();
 
-        if (bitmap == null) {
-            Utils.openAlertDialog(SignUpActivity.this, "Please select profile image");
-            return false;
-        } else if (!v.isNullValue(sign_in_name.getText().toString().trim())) {
+        if (!v.isNullValue(sign_in_name.getText().toString().trim())) {
             Utils.openAlertDialog(SignUpActivity.this, getResources().getString(R.string.alert_name_null));
 
             return false;
@@ -198,14 +195,20 @@ public class SignUpActivity extends AppCompatActivity {
         map.put("countryCode", "+91");
         map.put("contactNumber", sign_in_contact.getText().toString().trim());
         map.put("password", sign_in_password.getText().toString().trim());
-        map.put("deviceToken", "youwillgetsoon");
+        map.put("deviceToken", "ewrf3qr43werf34rf3w4f4e");
         map.put("userType", "2");
         map.put("deviceType", "1");
         map.put("socialId", "");
         map.put("socialType", "");
 
         Map<String, Bitmap> image = new HashMap<>();
-        image.put("profileImage", bitmap);
+        if(bitmap != null){
+            image.put("profileImage", bitmap);
+        }else {
+            image = null;
+        }
+
+
 
         WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
 
@@ -248,7 +251,7 @@ public class SignUpActivity extends AppCompatActivity {
                 signUpBtn.setEnabled(true);
             }
         });
-        service.callMultiPartApi("userLogin", map, image);
+        service.callMultiPartApi("userRegistration", map, image);
 
     }
 

@@ -50,7 +50,8 @@
             android:text="Add product"
             android:textAllCaps="false"
             android:textColor="@drawable/continue_btn_text_color"
-            android:textSize="@dimen/text_Large_Size" />
+            android:textSize="@dimen/text_Large_Size"
+            />
 
 
         <android.support.v7.widget.RecyclerView

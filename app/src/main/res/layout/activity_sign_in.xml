@@ -34,13 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_gravity="center"
-                android:src="@drawable/new_camera_ico" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -233,6 +228,27 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:textSize="@dimen/text_Large_Size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_105sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_50sdp"
+        android:text="Manibhadra"
+        android:textSize="@dimen/_24sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_80sdp"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="@dimen/_12sdp"
+        android:background="@drawable/rounded_primary_left_chat_border"
+        android:fontFamily="@font/josefinsans_light"/>
+
+
 
     <ProgressBar
         android:id="@+id/progress_bar"

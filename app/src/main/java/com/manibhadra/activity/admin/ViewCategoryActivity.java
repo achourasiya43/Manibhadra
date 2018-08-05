@@ -42,7 +42,7 @@ public class ViewCategoryActivity extends AppCompatActivity {
         recycler_view = findViewById(R.id.recycler_view);
         categorytList = new ArrayList<>();
 
-        adapter = new CategoryAdapter(this,categorytList);
+        adapter = new CategoryAdapter(this,categorytList,"admin");
         recycler_view.setAdapter(adapter);
 
 

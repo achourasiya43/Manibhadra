@@ -38,6 +38,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ImageView back;
     ProgressBar progress_bar;
     private String categoryId = "";
+    private String userType = "";
 
 
     @Override
@@ -45,15 +46,22 @@ public class ProductListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
 
-        if(getIntent().getStringExtra("categoryId") != null){
-            categoryId = getIntent().getStringExtra("categoryId");
-        }
-
         progress_bar = findViewById(R.id.progress_bar);
         back = findViewById(R.id.back);
         btn_add_product = findViewById(R.id.btn_add_product);
         recycler_view = findViewById(R.id.recycler_view);
         productList = new ArrayList<>();
+
+        if(getIntent().getStringExtra("categoryId") != null){
+            categoryId = getIntent().getStringExtra("categoryId");
+            userType = getIntent().getStringExtra("userType");
+        }
+
+        if(userType.equals("custmer")){
+            btn_add_product.setVisibility(View.GONE);
+        }
+
+
 
 
         adapter = new ProductAdapter(this, productList, new GetProductId.getId() {
@@ -62,6 +70,7 @@ public class ProductListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ProductListActivity.this,ProductDetailsActivity.class);
                 intent.putExtra("product_key","viewProduct");
                 intent.putExtra("productId",productId);
+                intent.putExtra("userType",userType);
                 startActivity(intent);
             }
         });
@@ -79,6 +88,7 @@ public class ProductListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ProductListActivity.this,ProductDetailsActivity.class);
                 intent.putExtra("product_key","addProduct");
                 intent.putExtra("categoryId",categoryId);
+                intent.putExtra("userType",userType);
                 startActivity(intent);
             }
         });

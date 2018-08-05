@@ -84,11 +84,7 @@ public class AddCategoryActivity extends AppCompatActivity {
     public boolean isValidData() {
         Validation v = new Validation();
 
-        if(bitmap == null){
-            Utils.openAlertDialog(AddCategoryActivity.this, getString(R.string.select_category_image));
-            return false;
-        }
-        else if (!v.isNullValue(ed_category.getText().toString().trim())) {
+        if (!v.isNullValue(ed_category.getText().toString().trim())) {
             Utils.openAlertDialog(AddCategoryActivity.this, "Please Add Category Name");
             return false;
         }
@@ -166,8 +162,14 @@ public class AddCategoryActivity extends AppCompatActivity {
         Map<String, String> map = new HashMap<>();
         map.put("categoryName", ed_category.getText().toString().trim());
 
-        Map<String,Bitmap> bitmapMap = new HashMap<>();
-        bitmapMap.put("categoryImage",bitmap);
+        Map<String, Bitmap> image ;
+        if(bitmap != null){
+            image = new HashMap<>();
+            image.put("categoryImage", bitmap);
+        }else {
+            image = null;
+        }
+
 
         WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
 
@@ -203,7 +205,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                 add_category_Btn.setEnabled(true);
             }
         });
-        service.callMultiPartApi("user/addCategory", map, bitmapMap);
+        service.callMultiPartApi("user/addCategory", map, image);
 
     }
 

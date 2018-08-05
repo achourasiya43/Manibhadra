@@ -25,10 +25,12 @@ import java.util.ArrayList;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     Context mContext;
     ArrayList<CategoryInfo.CategoryListBean> categoryList;
+    String userType;
 
-    public CategoryAdapter(Context mContext, ArrayList<CategoryInfo.CategoryListBean> categoryList) {
+    public CategoryAdapter(Context mContext, ArrayList<CategoryInfo.CategoryListBean> categoryList,String userType) {
         this.mContext = mContext;
         this.categoryList = categoryList;
+        this.userType = userType;
     }
 
     @NonNull
@@ -66,7 +68,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public void onClick(View v) {
             Intent intent = new Intent(mContext,ProductListActivity.class);
             intent.putExtra("categoryId",categoryList.get(getAdapterPosition()).catId);
+            intent.putExtra("userType",userType);
             mContext.startActivity(intent);
+
         }
 
     }

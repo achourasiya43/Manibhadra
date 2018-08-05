@@ -2,11 +2,13 @@ package com.manibhadra.activity.admin;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -39,10 +41,13 @@ import com.manibhadra.model.SignInInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ProductDetailsActivity extends AppCompatActivity {
@@ -50,18 +55,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
     String product_key = "";
     TextView action_bar_title;
     Button addProductBtn;
-    LinearLayout details_view_layout,add_view_layout;
-    ImageView add_product_image,product_details_image;
+    LinearLayout details_view_layout, add_view_layout;
+    ImageView add_product_image, product_details_image;
     Bitmap bitmap;
     String productId = "";
     String categoryId = "";
+    String userType = "";
     ProgressBar progress_bar;
+    ProductDetailsInfo productDetailsInfo;
+
 
     /*...........add product.............*/
-    EditText ed_product_name,ed_produc_sizes,ed_produc_color_code,ed_product_details,ed_product_other_details;
+    EditText ed_product_name, ed_produc_sizes, ed_produc_color_code, ed_product_details, ed_product_other_details;
 
     /*...........product details ......*/
-    TextView tv_product_name,tv_product_size,tv_color_code,tv_product_details,tv_other_details;
+    TextView tv_product_name, tv_product_size, tv_color_code, tv_product_details, tv_other_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,19 +101,26 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ed_product_other_details = findViewById(R.id.ed_product_other_details);
 
 
-        if(getIntent().getStringExtra("product_key") != null){
+        if (getIntent().getStringExtra("product_key") != null) {
             product_key = getIntent().getStringExtra("product_key");
             productId = getIntent().getStringExtra("productId");
+            userType = getIntent().getStringExtra("userType");
 
-            if(product_key.equals("viewProduct")){
+            if(userType.equals("custmer")){
+                action_bar_title.setText("Product Details");
+                addProductBtn.setText("Add To Card");
+
+                add_view_layout.setVisibility(View.GONE);
+                details_view_layout.setVisibility(View.VISIBLE);
+            }
+            else if (product_key.equals("viewProduct")) {
                 action_bar_title.setText("Product Details");
                 addProductBtn.setText("Delete Product");
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
 
-            }
-            else if(product_key.equals("addProduct")){
+            } else if (product_key.equals("addProduct")) {
                 categoryId = getIntent().getStringExtra("categoryId");
                 action_bar_title.setText("Add Product");
 
@@ -132,13 +147,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
         addProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(addProductBtn.getText().toString().trim().equals("Delete Product")){
+                if (addProductBtn.getText().toString().trim().equals("Delete Product")) {
                     deleteproduct();
-                }
-                else if(addProductBtn.getText().toString().trim().equals("Add Product")){
-                    if( isValidData()){
+                } else if (addProductBtn.getText().toString().trim().equals("Add Product")) {
+                    if (isValidData()) {
                         addProducts();
                     }
+                }else if(addProductBtn.getText().toString().trim().equals("Add To Card")){
+                    openEnterWeightDialog();
                 }
             }
         });
@@ -148,7 +164,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(product_key.equals("viewProduct")){
+        if (product_key.equals("viewProduct")) {
             productdetails();
         }
     }
@@ -156,10 +172,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     public boolean isValidData() {
         Validation v = new Validation();
 
-        if (bitmap == null) {
-            Utils.openAlertDialog(ProductDetailsActivity.this, "Please select product image");
-            return false;
-        } else if (!v.isNullValue(ed_product_name.getText().toString().trim())) {
+        if (!v.isNullValue(ed_product_name.getText().toString().trim())) {
             Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product name");
 
             return false;
@@ -167,15 +180,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
             Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product sizes(comma seperator)");
 
             return false;
-        }  else if (!v.isNullValue(ed_produc_color_code.getText().toString().trim())) {
+        } else if (!v.isNullValue(ed_produc_color_code.getText().toString().trim())) {
             Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product color code(comma seperator)");
             return false;
         } else if (!v.isNullValue(ed_product_details.getText().toString().trim())) {
-            Utils.openAlertDialog(ProductDetailsActivity.this,"Please enter product details");
+            Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product details");
 
             return false;
         } else if (!v.isNullValue(ed_product_other_details.getText().toString().trim())) {
-            Utils.openAlertDialog(ProductDetailsActivity.this,"Please enter others details");
+            Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter others details");
             return false;
         }
 
@@ -200,7 +213,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     if (status.equals("success")) {
                         Gson gson = new Gson();
-                        ProductDetailsInfo productDetailsInfo = gson.fromJson(response,ProductDetailsInfo.class);
+                        productDetailsInfo = gson.fromJson(response, ProductDetailsInfo.class);
                         setDetaislData(productDetailsInfo.productDetail);
 
                     } else {
@@ -219,10 +232,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 progress_bar.setVisibility(View.GONE);
             }
         });
-        service.callGetSimpleVolley("user/getProductDetail?productId="+productId+"");
+        service.callGetSimpleVolley("user/getProductDetail?productId=" + productId + "");
     }
 
-    private void setDetaislData(ProductDetailsInfo.ProductDetailBean productDetailsInfo){
+    private void setDetaislData(ProductDetailsInfo.ProductDetailBean productDetailsInfo) {
         tv_product_name.setText(productDetailsInfo.productName);
         tv_product_size.setText(productDetailsInfo.productSize);
         tv_color_code.setText(productDetailsInfo.productColorCode);
@@ -250,7 +263,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
 
                     if (status.equals("success")) {
-                        successDeleteDialog(ProductDetailsActivity.this,message);
+                        successDeleteDialog(ProductDetailsActivity.this, message);
                     } else {
                         Utils.openAlertDialog(ProductDetailsActivity.this, message);
                     }
@@ -267,7 +280,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 progress_bar.setVisibility(View.GONE);
             }
         });
-        service.callGetSimpleVolley("user/deleteProduct?productId="+productId+"");
+        service.callGetSimpleVolley("user/deleteProduct?productId=" + productId + "");
     }
 
     public void successDeleteDialog(Context context, String message) {
@@ -290,19 +303,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 /*..........................getting Images code.............................*/
 
-public void getPermissionAndPicImage() {
-    if (Build.VERSION.SDK_INT >= 23) {
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    Constant.MY_PERMISSIONS_REQUEST_CEMERA_OR_GALLERY);
+    public void getPermissionAndPicImage() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(
+                        new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        Constant.MY_PERMISSIONS_REQUEST_CEMERA_OR_GALLERY);
+            } else {
+                ImagePicker.pickImage(ProductDetailsActivity.this);
+            }
         } else {
             ImagePicker.pickImage(ProductDetailsActivity.this);
         }
-    } else {
-        ImagePicker.pickImage(ProductDetailsActivity.this);
     }
-}
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -363,12 +376,18 @@ public void getPermissionAndPicImage() {
         map.put("categoryId", categoryId);
         map.put("productName", ed_product_name.getText().toString().trim());
         map.put("productSize", ed_produc_sizes.getText().toString().trim());
-        map.put("productColorCode",ed_produc_color_code.getText().toString().trim());
+        map.put("productColorCode", ed_produc_color_code.getText().toString().trim());
         map.put("productDetail", ed_product_details.getText().toString().trim());
         map.put("productOtherDetail", ed_product_other_details.getText().toString().trim());
 
-        Map<String, Bitmap> image = new HashMap<>();
-        image.put("productImage", bitmap);
+        Map<String, Bitmap> image;
+        if (bitmap != null){
+            image = new HashMap<>();
+            image.put("productImage", bitmap);
+        }else {
+            image = null;
+        }
+
 
         WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
 
@@ -384,7 +403,7 @@ public void getPermissionAndPicImage() {
                     String message = jsonObject.getString("message");
 
                     if (status.equals("success")) {
-                        successAddProductDialog(ProductDetailsActivity.this,message);
+                        successAddProductDialog(ProductDetailsActivity.this, message);
                     } else {
                         progress_bar.setVisibility(View.GONE);
                         Utils.openAlertDialog(ProductDetailsActivity.this, message);
@@ -421,5 +440,47 @@ public void getPermissionAndPicImage() {
         AlertDialog alert = builder.create();
         alert.show();
     }
+    
+    /*...............dialog add to card..............*/
 
-}
+    private void openEnterWeightDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.add_to_card_dialog_layout);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        Button add_card_btn = dialog.findViewById(R.id.add_card_btn);
+        EditText ed_quentity = dialog.findViewById(R.id.ed_quentity);
+        EditText ed_note = dialog.findViewById(R.id.ed_note);
+        ImageView close_button = dialog.findViewById(R.id.close_button);
+
+        close_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        add_card_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String json = new Gson().toJson(productDetailsInfo.productDetail);
+
+                try {
+                    JSONArray array = new JSONArray(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+
+    }
+
+    }

@@ -1,5 +1,9 @@
 package com.manibhadra.activity.admin;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.manibhadra.R;
+import com.manibhadra.activity.customer.MainActivity;
 import com.manibhadra.session.SessionManager;
 
 public class AdminHomeActivity extends AppCompatActivity {
@@ -56,7 +61,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sessionManager.logout();
+                logoutDialog(AdminHomeActivity.this,"Do you want to logout.?");
             }
         });
 
@@ -80,4 +85,30 @@ public class AdminHomeActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
+    public void logoutDialog(Context context, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                sessionManager.logout();
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
+    }
+
 }

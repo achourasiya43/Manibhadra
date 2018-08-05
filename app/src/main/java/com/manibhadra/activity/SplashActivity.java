@@ -8,7 +8,8 @@ import android.os.Bundle;
 
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.AdminHomeActivity;
-import com.manibhadra.model.SignInInfo;
+import com.manibhadra.activity.customer.MainActivity;
+import com.manibhadra.helper.Constant;
 import com.manibhadra.session.SessionManager;
 
 public class SplashActivity extends AppCompatActivity {
@@ -27,11 +28,22 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
 
                 if(sessionManager.isLoggedIn()){
-                    startActivity(new Intent(SplashActivity.this, AdminHomeActivity.class));
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        finishAfterTransition();
+                    String email = sessionManager.getUser().userDetail.email;
+
+                    if(email.equals(Constant.AdminEmail)){
+                        startActivity(new Intent(SplashActivity.this, AdminHomeActivity.class));
+                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            finishAfterTransition();
+                        }
+                    }else {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            finishAfterTransition();
+                        }
                     }
+
                 }else {
                     startActivity(new Intent(SplashActivity.this, SignInActivity.class));
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
