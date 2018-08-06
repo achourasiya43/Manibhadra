@@ -21,6 +21,7 @@ public class AllUsersInfo implements Serializable {
         public String http;
         public String https;
         public String profileImage;
-        
+        public String contactNumber;
+
     }
 }

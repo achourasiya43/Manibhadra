@@ -22,6 +22,7 @@ import com.manibhadra.activity.admin.AddCategoryActivity;
 import com.manibhadra.adapter.CategoryAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.model.CategoryInfo;
+import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 import com.manibhadra.session.SessionManager;
@@ -30,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private CategoryAdapter adapter;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView iv_logout;
     ProgressBar progress_bar;
     SessionManager sessionManager;
+  List<ProductDetailsInfo.ProductDetailBean> productDetailsInfo;
 
 
     @Override
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
         categorytList = new ArrayList<>();
+
+        productDetailsInfo = sessionManager.getsavecardList();
 
         adapter = new CategoryAdapter(this,categorytList,"custmer");
         recycler_view.setAdapter(adapter);

@@ -204,25 +204,15 @@
                 android:visibility="visible">
 
 
-                <android.support.v7.widget.CardView
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:id="@+id/product_details_image"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
+                    app:siBorderColor="@color/colorPrimaryDark"
+                    app:siBorderWidth="1dp"
                     android:layout_gravity="center"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    android:elevation="@dimen/_5sdp"
-                    app:cardCornerRadius="@dimen/_10sdp"
-                    app:cardElevation="@dimen/_5sdp">
-
-                    <com.github.siyamed.shapeimageview.RoundedImageView
-                       android:id="@+id/product_details_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:siBorderColor="@color/colorLightGray"
-                        app:siBorderWidth="1dp"
-                        android:src="@drawable/ico_user_placeholder"
-                        app:siRadius="@dimen/_10sdp"/>
-
-                </android.support.v7.widget.CardView>
+                    android:src="@drawable/ico_user_placeholder"
+                    app:siRadius="@dimen/_5sdp"/>
 
 
                 <TextView

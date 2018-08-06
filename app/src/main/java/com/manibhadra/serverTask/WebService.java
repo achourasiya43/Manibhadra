@@ -133,7 +133,7 @@ public class WebService {
             }
         };
 
-        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 0, 1f));
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, 1f));
         VolleySingleton.getInstance(mContext.getApplicationContext()).addToRequestQueue(multipartRequest, TAG);
         //ImLink.getInstance().addToRequestQueue(multipartRequest, TAG);
     }

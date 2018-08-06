@@ -15,10 +15,14 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.github.siyamed.shapeimageview.RoundedImageView
                 android:id="@+id/category_image"
-                android:layout_width="@dimen/_75sdp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                app:siBorderWidth="0.7dp"
+                app:siBorderColor="@color/colorPrimaryDark"
+                app:siRadius="@dimen/_5sdp"
                 android:src="@drawable/ico_user_placeholder"
                 android:layout_gravity="center"/>
 

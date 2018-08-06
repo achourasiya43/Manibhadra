@@ -8,8 +8,13 @@ import android.preference.PreferenceManager;
 
 import com.manibhadra.R;
 import com.manibhadra.activity.SignInActivity;
+import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.model.SignInInfo;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Anil on 30-07-2018.
@@ -76,4 +81,22 @@ public class SessionManager  {
         return sharedPreferences.getString("authToken", "");
     }
 
+    public void savecardList(ArrayList<ProductDetailsInfo.ProductDetailBean> interestInfoList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(interestInfoList);
+        editor.putString(USER_INTEREST_LIST, json);
+        editor.commit();
+    }
+
+    public List<ProductDetailsInfo.ProductDetailBean> getsavecardList(){
+        Gson gson = new Gson();
+        String str = sharedPreferences.getString(USER_INTEREST_LIST,"");
+        if (!str.isEmpty()){
+
+            ProductDetailsInfo.ProductDetailBean[] interestInfo = gson.fromJson(str, ProductDetailsInfo.ProductDetailBean[].class);
+            List<ProductDetailsInfo.ProductDetailBean> interestInfos = Arrays.asList(interestInfo);
+            return  interestInfos;
+        }
+        else return null;
+    }
 }

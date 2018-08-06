@@ -40,6 +40,7 @@ import com.manibhadra.model.ProductInfo;
 import com.manibhadra.model.SignInInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
+import com.manibhadra.session.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +64,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     String userType = "";
     ProgressBar progress_bar;
     ProductDetailsInfo productDetailsInfo;
+    ArrayList<ProductDetailsInfo.ProductDetailBean> cardProductList;
+    SessionManager sessionManager;
 
 
     /*...........add product.............*/
@@ -100,6 +103,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ed_product_details = findViewById(R.id.ed_product_details);
         ed_product_other_details = findViewById(R.id.ed_product_other_details);
 
+        cardProductList = new ArrayList<>();
+        sessionManager = new SessionManager(this);
 
         if (getIntent().getStringExtra("product_key") != null) {
             product_key = getIntent().getStringExtra("product_key");
@@ -140,7 +145,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         add_product_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // getPermissionAndPicImage();
+                getPermissionAndPicImage();
             }
         });
 
@@ -452,8 +457,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
 
         Button add_card_btn = dialog.findViewById(R.id.add_card_btn);
-        EditText ed_quentity = dialog.findViewById(R.id.ed_quentity);
-        EditText ed_note = dialog.findViewById(R.id.ed_note);
+        final EditText ed_quentity = dialog.findViewById(R.id.ed_quentity);
+        final EditText ed_note = dialog.findViewById(R.id.ed_note);
         ImageView close_button = dialog.findViewById(R.id.close_button);
 
         close_button.setOnClickListener(new View.OnClickListener() {
@@ -466,15 +471,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
         add_card_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String json = new Gson().toJson(productDetailsInfo.productDetail);
+                if(!ed_quentity.getText().toString().trim().equals("")){
+                    productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();;
+                    productDetailsInfo.productDetail.quantity = ed_quentity.getText().toString().trim();
 
-                try {
-                    JSONArray array = new JSONArray(json);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    cardProductList.add(productDetailsInfo.productDetail);
+                    sessionManager.savecardList(cardProductList);
+
+                    dialog.dismiss();
+                    finish();
+                }else {
+                    Toast.makeText(ProductDetailsActivity.this, "Please enter the quantity", Toast.LENGTH_SHORT).show();
                 }
 
-                dialog.dismiss();
+
+
             }
         });
 

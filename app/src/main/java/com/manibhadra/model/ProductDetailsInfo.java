@@ -20,5 +20,7 @@ public class ProductDetailsInfo {
         public String productOtherDetail;
         public String productImage;
         public String categoryName;
+        public String quantity;
+        public String note;
     }
 }
