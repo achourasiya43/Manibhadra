@@ -1,4 +1,4 @@
-package com.manibhadra.activity;
+package com.manibhadra.activity.comman;
 
 import android.Manifest;
 import android.content.Intent;
@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.AdminHomeActivity;
+import com.manibhadra.activity.customer.MainActivity;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
@@ -207,9 +208,6 @@ public class SignUpActivity extends AppCompatActivity {
         }else {
             image = null;
         }
-
-
-
         WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
 
             @Override
@@ -227,12 +225,23 @@ public class SignUpActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         SignInInfo signInInfo = gson.fromJson(String.valueOf(jsonObject), SignInInfo.class);
                         session.createSession(signInInfo);
+                        session.savePassword(sign_in_password.getText().toString().trim());
 
-                        startActivity(new Intent(SignUpActivity.this, AdminHomeActivity.class));
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            finishAfterTransition();
+                        if(signInInfo.userDetail.email.equals(Constant.AdminEmail) &&
+                                sign_in_password.getText().toString().trim().equals(Constant.AdminPassword)){
+                            startActivity(new Intent(SignUpActivity.this, AdminHomeActivity.class));
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                finishAfterTransition();
+                            }
+                        }else {
+                            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                finishAfterTransition();
+                            }
                         }
+
                     } else {
                         progress_bar.setVisibility(View.GONE);
                         Utils.openAlertDialog(SignUpActivity.this, message);

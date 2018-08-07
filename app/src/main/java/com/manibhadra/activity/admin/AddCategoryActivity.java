@@ -22,14 +22,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
-import com.manibhadra.activity.SignUpActivity;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
-import com.manibhadra.model.SignInInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 
@@ -200,7 +197,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
             @Override
             public void ErrorListener(VolleyError error) {
-                Utils.openAlertDialog(AddCategoryActivity.this, "Something went wrong...");
+               // Utils.openAlertDialog(AddCategoryActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
                 add_category_Btn.setEnabled(true);
             }

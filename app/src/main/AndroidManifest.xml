@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.comman.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoStatusBar">
             <intent-filter>
@@ -39,11 +39,11 @@
         </provider>
 
         <activity
-            android:name=".activity.SignInActivity"
+            android:name=".activity.comman.SignInActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.SignUpActivity"
+            android:name=".activity.comman.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -55,7 +55,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ForgotPassActivity"
+            android:name=".activity.comman.ForgotPassActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -78,14 +78,19 @@
             android:name=".activity.admin.ProductListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".activity.admin.UserDetailsActivity"
+        <activity
+            android:name=".activity.admin.UserDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".activity.customer.CardActivity"
+        <activity
+            android:name=".activity.customer.CardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.comman.ChangePasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

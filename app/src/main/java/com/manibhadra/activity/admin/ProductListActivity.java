@@ -138,7 +138,7 @@ public class ProductListActivity extends AppCompatActivity {
 
             @Override
             public void ErrorListener(VolleyError error) {
-                Utils.openAlertDialog(ProductListActivity.this, "Something went wrong...");
+               // Utils.openAlertDialog(ProductListActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
             }
         });

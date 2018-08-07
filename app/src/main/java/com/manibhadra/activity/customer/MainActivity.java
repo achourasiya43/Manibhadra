@@ -2,23 +2,31 @@ package com.manibhadra.activity.customer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.AddCategoryActivity;
+import com.manibhadra.activity.admin.AdminHomeActivity;
+import com.manibhadra.activity.admin.ProductDetailsActivity;
+import com.manibhadra.activity.comman.ChangePasswordActivity;
 import com.manibhadra.adapter.CategoryAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.model.CategoryInfo;
@@ -39,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
     private boolean doubleBackToExitPressedOnce = false;
     private ImageView iv_add_card;
-    private ImageView iv_logout;
+    private ImageView iv_settings;
     ProgressBar progress_bar;
     SessionManager sessionManager;
-  List<ProductDetailsInfo.ProductDetailBean> productDetailsInfo;
+    List<ProductDetailsInfo.ProductDetailBean> productDetailsInfo;
 
 
     @Override
@@ -51,9 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progress_bar = findViewById(R.id.progress_bar);
-        iv_logout = findViewById(R.id.iv_logout);
+        iv_settings = findViewById(R.id.iv_settings);
         iv_add_card = findViewById(R.id.iv_add_card);
-        iv_logout = findViewById(R.id.iv_logout);
         recycler_view = findViewById(R.id.recycler_view);
 
         sessionManager = new SessionManager(this);
@@ -61,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         productDetailsInfo = sessionManager.getsavecardList();
 
-        adapter = new CategoryAdapter(this,categorytList,"custmer");
+        adapter = new CategoryAdapter(this, categorytList, "custmer");
         recycler_view.setAdapter(adapter);
 
         iv_add_card.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +78,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        iv_logout.setOnClickListener(new View.OnClickListener() {
+        iv_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logoutDialog(MainActivity.this,"Do you want to logout.?");
+
             }
         });
     }
@@ -100,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         Activity activity = (Activity) context;
-        if(!activity.isFinishing())
+        if (!activity.isFinishing())
             alert.show();
     }
 
@@ -142,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     categorytList.clear();
                     if (status.equals("success")) {
                         Gson gson = new Gson();
-                        CategoryInfo categoryInfo = gson.fromJson(response,CategoryInfo.class);
+                        CategoryInfo categoryInfo = gson.fromJson(response, CategoryInfo.class);
                         categorytList.addAll(categoryInfo.categoryList);
 
                     } else {
@@ -158,10 +165,52 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void ErrorListener(VolleyError error) {
-                Utils.openAlertDialog(MainActivity.this, "Something went wrong...");
+                // Utils.openAlertDialog(MainActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
             }
         });
         service.callGetSimpleVolley("user/getAllCategory");
+    }
+
+
+    private void addToCardDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.settings_dialog_layout);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        TextView tv_change_pass = dialog.findViewById(R.id.tv_change_pass);
+        TextView tv_logout = dialog.findViewById(R.id.tv_logout);
+
+        ImageView close_button = dialog.findViewById(R.id.close_button);
+
+        tv_change_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent intent = new Intent(MainActivity.this,ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tv_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                logoutDialog(MainActivity.this, "Do you want to logout.?");
+            }
+        });
+
+        close_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 }

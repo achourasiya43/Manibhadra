@@ -1,28 +1,20 @@
 package com.manibhadra.activity.admin;
 
-import android.content.Intent;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.manibhadra.R;
-import com.manibhadra.activity.SignInActivity;
 import com.manibhadra.adapter.AllUserAdapter;
-import com.manibhadra.adapter.ProductAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.model.AllUsersInfo;
-import com.manibhadra.model.ProductInfo;
-import com.manibhadra.model.SignInInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 
@@ -30,8 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class ViewAllUserActivity extends AppCompatActivity {
@@ -102,7 +92,7 @@ public class ViewAllUserActivity extends AppCompatActivity {
 
             @Override
             public void ErrorListener(VolleyError error) {
-                Utils.openAlertDialog(ViewAllUserActivity.this, "Something went wrong...");
+               // Utils.openAlertDialog(ViewAllUserActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
             }
         });

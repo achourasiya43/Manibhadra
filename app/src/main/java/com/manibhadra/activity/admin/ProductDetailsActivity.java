@@ -31,24 +31,19 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
-import com.manibhadra.activity.SignUpActivity;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
 import com.manibhadra.model.ProductDetailsInfo;
-import com.manibhadra.model.ProductInfo;
-import com.manibhadra.model.SignInInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 import com.manibhadra.session.SessionManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ProductDetailsActivity extends AppCompatActivity {
@@ -111,14 +106,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
             productId = getIntent().getStringExtra("productId");
             userType = getIntent().getStringExtra("userType");
 
-            if(userType.equals("custmer")){
+            if (userType.equals("custmer")) {
                 action_bar_title.setText("Product Details");
                 addProductBtn.setText("Add To Card");
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
-            }
-            else if (product_key.equals("viewProduct")) {
+            } else if (product_key.equals("viewProduct")) {
                 action_bar_title.setText("Product Details");
                 addProductBtn.setText("Delete Product");
 
@@ -158,8 +152,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     if (isValidData()) {
                         addProducts();
                     }
-                }else if(addProductBtn.getText().toString().trim().equals("Add To Card")){
-                    openEnterWeightDialog();
+                } else if (addProductBtn.getText().toString().trim().equals("Add To Card")) {
+                    addToCardDialog();
                 }
             }
         });
@@ -233,7 +227,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             @Override
             public void ErrorListener(VolleyError error) {
-                Utils.openAlertDialog(ProductDetailsActivity.this, "Something went wrong...");
+                //Utils.openAlertDialog(ProductDetailsActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
             }
         });
@@ -281,7 +275,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             @Override
             public void ErrorListener(VolleyError error) {
-                Utils.openAlertDialog(ProductDetailsActivity.this, "Something went wrong...");
+                //Utils.openAlertDialog(ProductDetailsActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
             }
         });
@@ -386,10 +380,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         map.put("productOtherDetail", ed_product_other_details.getText().toString().trim());
 
         Map<String, Bitmap> image;
-        if (bitmap != null){
+        if (bitmap != null) {
             image = new HashMap<>();
             image.put("productImage", bitmap);
-        }else {
+        } else {
             image = null;
         }
 
@@ -422,7 +416,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             @Override
             public void ErrorListener(VolleyError error) {
-                Utils.openAlertDialog(ProductDetailsActivity.this, "Something went wrong...");
+                //Utils.openAlertDialog(ProductDetailsActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
                 addProductBtn.setEnabled(true);
             }
@@ -448,7 +442,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     
     /*...............dialog add to card..............*/
 
-    private void openEnterWeightDialog() {
+    private void addToCardDialog() {
 
         final Dialog dialog = new Dialog(this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -471,8 +465,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         add_card_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!ed_quentity.getText().toString().trim().equals("")){
-                    productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();;
+                if (!ed_quentity.getText().toString().trim().equals("")) {
+                    productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();
+                    ;
                     productDetailsInfo.productDetail.quantity = ed_quentity.getText().toString().trim();
 
                     cardProductList.add(productDetailsInfo.productDetail);
@@ -480,18 +475,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     dialog.dismiss();
                     finish();
-                }else {
+                } else {
                     Toast.makeText(ProductDetailsActivity.this, "Please enter the quantity", Toast.LENGTH_SHORT).show();
                 }
-
-
-
             }
         });
-
-
         dialog.show();
 
     }
 
-    }
+}

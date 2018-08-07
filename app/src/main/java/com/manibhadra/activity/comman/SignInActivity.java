@@ -1,4 +1,4 @@
-package com.manibhadra.activity;
+package com.manibhadra.activity.comman;
 
 import android.content.Intent;
 import android.os.Build;
@@ -112,7 +112,7 @@ public class SignInActivity extends AppCompatActivity {
                         SignInInfo signInInfo = gson.fromJson(String.valueOf(jsonObject), SignInInfo.class);
                         session.createSession(signInInfo);
 
-
+                        session.savePassword(sign_in_password.getText().toString().trim());
                         if(signInInfo.userDetail.email.equals(Constant.AdminEmail) &&
                                 sign_in_password.getText().toString().trim().equals(Constant.AdminPassword)){
                             startActivity(new Intent(SignInActivity.this, AdminHomeActivity.class));

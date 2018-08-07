@@ -36,7 +36,7 @@
             android:gravity="center" />
 
         <ImageView
-            android:id="@+id/iv_logout"
+            android:id="@+id/iv_settings"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:padding="@dimen/_9sdp"
@@ -44,7 +44,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/_5sdp"
-            android:src="@drawable/logout"
+            android:src="@drawable/settings"
             android:gravity="center" />
 
     </RelativeLayout>

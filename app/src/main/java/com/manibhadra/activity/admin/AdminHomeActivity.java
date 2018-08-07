@@ -11,16 +11,18 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.manibhadra.R;
-import com.manibhadra.activity.customer.MainActivity;
+import com.manibhadra.activity.comman.ChangePasswordActivity;
 import com.manibhadra.session.SessionManager;
 
 public class AdminHomeActivity extends AppCompatActivity {
     private CardView cv_view_all_user,cv_add_category,cv_view_category;
     private Button btn_logout;
     private SessionManager sessionManager;
+    private ImageView change_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,17 @@ public class AdminHomeActivity extends AppCompatActivity {
         cv_add_category = findViewById(R.id.cv_add_category);
         cv_view_category = findViewById(R.id.cv_view_category);
         btn_logout = findViewById(R.id.btn_logout);
+        change_password = findViewById(R.id.change_password);
 
         sessionManager = new SessionManager(this);
+
+        change_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminHomeActivity.this,ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         cv_view_all_user.setOnClickListener(new View.OnClickListener() {
             @Override

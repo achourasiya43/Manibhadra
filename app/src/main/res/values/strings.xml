@@ -50,6 +50,7 @@
     <string name="google_plus">Gmail</string>
     <string name="register_sign_in">Sign in</string>
     <string name="select_category_image">Please Select Category Image</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
 
 
 </resources>

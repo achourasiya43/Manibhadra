@@ -1,4 +1,4 @@
-package com.manibhadra.activity;
+package com.manibhadra.activity.comman;
 
 import android.content.Intent;
 import android.os.Build;

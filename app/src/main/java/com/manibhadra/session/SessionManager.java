@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.manibhadra.R;
-import com.manibhadra.activity.SignInActivity;
+import com.manibhadra.activity.comman.SignInActivity;
 import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.model.SignInInfo;
 import com.google.gson.Gson;
@@ -72,6 +72,16 @@ public class SessionManager  {
             ((Activity)context).finish();
         }
     }
+
+    public void savePassword(String password) {
+        editor.putString(PASSWORD, password);
+        editor.commit();
+    }
+
+    public String getPassword(){
+        return sharedPreferences.getString(PASSWORD,"");
+    }
+
 
     public boolean isLoggedIn() {
         return sharedPreferences.getBoolean(IS_LOGGEDIN, false);

@@ -24,6 +24,15 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_XXLarge_Size" />
 
+        <ImageView
+            android:id="@+id/change_password"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:src="@drawable/forgot_passwprd_ico"/>
+
     </RelativeLayout>
 
     <LinearLayout
