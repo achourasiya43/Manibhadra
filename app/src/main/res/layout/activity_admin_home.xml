@@ -35,92 +35,109 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:background="@drawable/continue_btn_bg"
-            android:fontFamily="@font/josefinsans_regular"
-            android:text="Logout"
-            android:textAllCaps="false"
-            android:layout_gravity="right"
-            android:layout_margin="@dimen/_12sdp"
-            android:textColor="@drawable/continue_btn_text_color"
-            android:textSize="@dimen/text_Large_Size" />
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_view_all_user"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
-            app:cardBackgroundColor="@color/colorWhite"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardCornerRadius="@dimen/_5sdp">
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View All Users"
-                android:layout_gravity="center"
-                android:textSize="@dimen/text_Large_Size"
-                android:fontFamily="@font/josefinsans_regular"
-                android:textColor="@color/colorBlack"/>
 
-        </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="?actionBarSize"
+                android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_add_category"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:cardBackgroundColor="@color/colorWhite"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardCornerRadius="@dimen/_5sdp">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_view_all_user"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    android:layout_gravity="center"
+                    app:cardElevation="@dimen/_5sdp"
+                    android:elevation="@dimen/_5sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_50sdp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add category"
-                android:layout_gravity="center"
-                android:textSize="@dimen/text_Large_Size"
-                android:fontFamily="@font/josefinsans_regular"
-                android:textColor="@color/colorBlack"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View All Users"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/text_Large_Size"
+                        android:fontFamily="@font/josefinsans_regular"
+                        android:textColor="@color/colorBlack"/>
 
-        </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_view_category"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            app:cardBackgroundColor="@color/colorWhite"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            app:cardElevation="@dimen/_3sdp"
-            app:cardCornerRadius="@dimen/_5sdp">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_add_category"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    android:layout_gravity="center"
+                    app:cardElevation="@dimen/_5sdp"
+                    android:elevation="@dimen/_5sdp"
+                    android:layout_margin="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_50sdp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View Category"
-                android:layout_gravity="center"
-                android:textSize="@dimen/text_Large_Size"
-                android:fontFamily="@font/josefinsans_regular"
-                android:textColor="@color/colorBlack"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add category"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/text_Large_Size"
+                        android:fontFamily="@font/josefinsans_regular"
+                        android:textColor="@color/colorBlack"/>
 
-        </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
 
-    </LinearLayout>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cv_view_category"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    android:layout_gravity="center"
+                    app:cardElevation="@dimen/_5sdp"
+                    android:elevation="@dimen/_5sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    app:cardCornerRadius="@dimen/_50sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="View Category"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/text_Large_Size"
+                        android:fontFamily="@font/josefinsans_regular"
+                        android:textColor="@color/colorBlack"/>
+
+                </android.support.v7.widget.CardView>
+
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/continue_btn_bg"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:text="Logout"
+                    android:textAllCaps="false"
+                    android:layout_gravity="right"
+                    android:layout_margin="@dimen/_15sdp"
+                    android:textColor="@drawable/continue_btn_text_color"
+                    android:textSize="@dimen/text_Large_Size" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
 
 
 

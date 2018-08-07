@@ -227,8 +227,7 @@ public class SignUpActivity extends AppCompatActivity {
                         session.createSession(signInInfo);
                         session.savePassword(sign_in_password.getText().toString().trim());
 
-                        if(signInInfo.userDetail.email.equals(Constant.AdminEmail) &&
-                                sign_in_password.getText().toString().trim().equals(Constant.AdminPassword)){
+                        if(signInInfo.userDetail.email.equals(Constant.AdminEmail)){
                             startActivity(new Intent(SignUpActivity.this, AdminHomeActivity.class));
                             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

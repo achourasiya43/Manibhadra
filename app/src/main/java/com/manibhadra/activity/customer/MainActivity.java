@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         iv_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                addToCardDialog();
             }
         });
     }
