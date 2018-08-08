@@ -15,6 +15,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +33,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
+import com.manibhadra.adapter.AddProductItemAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
@@ -52,7 +55,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     TextView action_bar_title;
     Button addProductBtn;
     LinearLayout details_view_layout, add_view_layout;
-    ImageView add_product_image, product_details_image;
+    ImageView add_product_image, product_details_image,iv_add_item;
     Bitmap bitmap;
     String productId = "";
     String categoryId = "";
@@ -60,7 +63,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ProgressBar progress_bar;
     ProductDetailsInfo productDetailsInfo;
     ArrayList<ProductDetailsInfo.ProductDetailBean> cardProductList;
+    ArrayList<ProductDetailsInfo.AddProduct> addProducts;
     SessionManager sessionManager;
+    AddProductItemAdapter productItemAdapter;
+    RecyclerView recycler_view;
+
 
 
     /*...........add product.............*/
@@ -97,9 +104,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ed_produc_color_code = findViewById(R.id.ed_produc_color_code);
         ed_product_details = findViewById(R.id.ed_product_details);
         ed_product_other_details = findViewById(R.id.ed_product_other_details);
+        iv_add_item = findViewById(R.id.iv_add_item);
+        recycler_view = findViewById(R.id.recycler_view);
+
+
+
 
         cardProductList = new ArrayList<>();
+        addProducts = new ArrayList<>();
         sessionManager = new SessionManager(this);
+
+        productItemAdapter = new AddProductItemAdapter(addProducts,this);
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view.setAdapter(productItemAdapter);
 
         if (getIntent().getStringExtra("product_key") != null) {
             product_key = getIntent().getStringExtra("product_key");
@@ -129,6 +146,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
 
+        iv_add_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
+                product.productColors =  "";
+                product.productRates =  "";
+                product.productSizes =  "";
+
+                addProducts.add(product);
+                productItemAdapter.notifyDataSetChanged();
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +176,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         addProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (addProductBtn.getText().toString().trim().equals("Delete Product")) {
                     deleteproduct();
                 } else if (addProductBtn.getText().toString().trim().equals("Add Product")) {
@@ -375,9 +406,42 @@ public class ProductDetailsActivity extends AppCompatActivity {
         map.put("categoryId", categoryId);
         map.put("productName", ed_product_name.getText().toString().trim());
         map.put("productSize", ed_produc_sizes.getText().toString().trim());
+        map.put("productPrice", "0");
         map.put("productColorCode", ed_produc_color_code.getText().toString().trim());
-        map.put("productDetail", ed_product_details.getText().toString().trim());
+
         map.put("productOtherDetail", ed_product_other_details.getText().toString().trim());
+
+        for (int i = 0; i < addProducts.size(); i++) {
+            View view = recycler_view.getChildAt(i);
+            if(view != null){
+                EditText productSizes =  view.findViewById(R.id.ed_size);
+                EditText productRate =  view.findViewById(R.id.ed_rate);
+                EditText productColor =  view.findViewById(R.id.ed_color);
+
+                ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
+                product.productSizes = productSizes.getText().toString();
+                product.productRates = productRate.getText().toString();
+                product.productColors = productColor.getText().toString();
+                Log.d("sds",product+"");
+
+                if(!product.productSizes.equals("") &&
+                        !product.productRates.equals("") && !product.productColors.equals("")  ){
+                    addProducts.add(product);
+                }
+            }
+        }
+
+        for (int i = 0; i < addProducts.size(); i++) {
+            if(addProducts.get(i).productSizes.equals("") &&
+                    addProducts.get(i).productRates.equals("") && addProducts.get(i).productColors.equals("")  ){
+                addProducts.remove(i);
+            }
+        }
+        productItemAdapter.notifyDataSetChanged();
+
+        Gson gson = new Gson();
+        String addProducts_json = gson.toJson(addProducts);
+        map.put("productDetail", addProducts_json);
 
         Map<String, Bitmap> image;
         if (bitmap != null) {
@@ -406,11 +470,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     } else {
                         progress_bar.setVisibility(View.GONE);
                         Utils.openAlertDialog(ProductDetailsActivity.this, message);
+                        addProducts.clear();
+                        productItemAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     addProductBtn.setEnabled(true);
                     progress_bar.setVisibility(View.GONE);
+                    addProducts.clear();
+                    productItemAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -419,6 +487,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 //Utils.openAlertDialog(ProductDetailsActivity.this, "Something went wrong...");
                 progress_bar.setVisibility(View.GONE);
                 addProductBtn.setEnabled(true);
+                addProducts.clear();
+                productItemAdapter.notifyDataSetChanged();
             }
         });
         service.callMultiPartApi("user/addProduct", map, image);

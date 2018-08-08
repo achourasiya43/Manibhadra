@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+
+    <EditText
+        android:id="@+id/ed_size"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:hint="Size"
+        android:padding="@dimen/_2sdp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_primary_left_chat_border" />
+
+    <EditText
+        android:id="@+id/ed_color"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:hint="Color"
+        android:padding="@dimen/_2sdp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_primary_left_chat_border" />
+
+    <EditText
+        android:id="@+id/ed_rate"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:hint="Rate"
+        android:padding="@dimen/_2sdp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:background="@drawable/rounded_primary_left_chat_border" />
+
+    <ImageView
+        android:id="@+id/iv_remove_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:tint="@color/colorPrimaryDark"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        />
+
+</LinearLayout>

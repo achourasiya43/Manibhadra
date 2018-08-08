@@ -8,6 +8,7 @@ public class ProductDetailsInfo {
     public String status;
     public String message;
     public ProductDetailBean productDetail;
+    public AddProduct addProduct;
 
     public static class ProductDetailBean {
 
@@ -22,5 +23,13 @@ public class ProductDetailsInfo {
         public String categoryName;
         public String quantity;
         public String note;
+
+    }
+
+    public static class AddProduct {
+
+        public String productSizes;
+        public String productColors;
+        public String productRates;
     }
 }
