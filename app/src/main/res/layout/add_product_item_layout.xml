@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/ed_size"
-        android:layout_width="@dimen/_80sdp"
+        android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_margin="@dimen/_5sdp"
         android:hint="Size"
@@ -19,7 +19,7 @@
 
     <EditText
         android:id="@+id/ed_color"
-        android:layout_width="@dimen/_80sdp"
+        android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_margin="@dimen/_5sdp"
         android:hint="Color"
@@ -30,7 +30,7 @@
 
     <EditText
         android:id="@+id/ed_rate"
-        android:layout_width="@dimen/_80sdp"
+        android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_margin="@dimen/_5sdp"
         android:hint="Rate"

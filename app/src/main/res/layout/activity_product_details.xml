@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/welcome_screen_bg"
     tools:context="com.manibhadra.activity.admin.ProductDetailsActivity">
 
     <RelativeLayout
@@ -50,6 +51,7 @@
                 android:id="@+id/add_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/_8sdp"
                 android:orientation="vertical"
                 android:visibility="visible">
 
@@ -72,85 +74,6 @@
                     android:backgroundTint="@color/colorBlack"
                     android:fontFamily="@font/nunito_light"
                     android:hint="Product Name"
-                    android:imeOptions="actionNext"
-                    android:maxLines="1"
-                    android:paddingRight="@dimen/_7sdp"
-                    android:singleLine="true"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/text_Medium_Size" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/sign_in_email"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@color/colorBlack" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/iv_add_item"
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:src="@drawable/ico_add"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"/>
-
-                    <android.support.v4.widget.NestedScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recycler_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"/>
-
-
-                    </android.support.v4.widget.NestedScrollView>
-
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/ed_produc_sizes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@null"
-                    android:backgroundTint="@color/colorBlack"
-                    android:fontFamily="@font/nunito_light"
-                    android:hint="Product Size (Comma Separator)"
-                    android:imeOptions="actionNext"
-                    android:maxLines="1"
-                    android:paddingRight="@dimen/_7sdp"
-                    android:singleLine="true"
-                    android:textColor="@color/colorBlack"
-                    android:textColorHint="@color/colorBlack"
-                    android:textSize="@dimen/text_Medium_Size" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/sign_in_email"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@color/colorBlack" />
-
-                <EditText
-                    android:id="@+id/ed_produc_color_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@null"
-                    android:backgroundTint="@color/colorBlack"
-                    android:fontFamily="@font/nunito_light"
-                    android:hint="Color Code (Comma Separator)"
                     android:imeOptions="actionNext"
                     android:maxLines="1"
                     android:paddingRight="@dimen/_7sdp"
@@ -214,6 +137,36 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@color/colorBlack" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_add_item"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/ico_add"
+                        android:layout_gravity="right"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"/>
+
+                    <android.support.v4.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"/>
+
+
+                    </android.support.v4.widget.NestedScrollView>
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -223,7 +176,6 @@
                 android:layout_margin="@dimen/_14sdp"
                 android:orientation="vertical"
                 android:visibility="gone">
-
 
                 <com.github.siyamed.shapeimageview.RoundedImageView
                     android:id="@+id/product_details_image"
@@ -256,50 +208,6 @@
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_Small_Size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefinsans_regular"
-                    android:text="Product Size :"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_Large_Size" />
-
-                <TextView
-                    android:id="@+id/tv_product_size"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_primary_left_chat_border"
-                    android:fontFamily="@font/josefinsans_regular"
-                    android:padding="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_Small_Size" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefinsans_regular"
-                    android:text="Color Code :"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_Large_Size" />
-
-                <TextView
-                    android:id="@+id/tv_color_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_primary_left_chat_border"
-                    android:fontFamily="@font/josefinsans_regular"
-                    android:padding="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_7sdp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_Small_Size" />
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -343,6 +251,27 @@
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_Small_Size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v4.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_view_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"/>
+
+
+                    </android.support.v4.widget.NestedScrollView>
+
+                </LinearLayout>
 
             </LinearLayout>
 

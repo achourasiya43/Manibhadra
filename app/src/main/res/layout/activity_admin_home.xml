@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/welcome_screen_bg"
     tools:context="com.manibhadra.activity.admin.AdminHomeActivity">
 
     <RelativeLayout
         android:id="@+id/main_view"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:animateLayoutChanges="true"
         android:background="@drawable/header_bg">
 
         <TextView
@@ -24,14 +24,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_XXLarge_Size" />
 
-        <ImageView
-            android:id="@+id/change_password"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:src="@drawable/forgot_passwprd_ico"/>
+
 
     </RelativeLayout>
 

@@ -17,4 +17,6 @@ public class Constant {
     public final static int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     public final static int MY_PERMISSIONS_CAMERA = 121;
     public final static int MY_PERMISSIONS_REQUEST_LOCATION = 100;
+
+
 }

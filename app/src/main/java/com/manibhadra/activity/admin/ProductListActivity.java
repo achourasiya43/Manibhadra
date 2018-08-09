@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -34,7 +37,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ProductAdapter adapter;
     private ArrayList<ProductInfo.ProductListBean> productList;
     private RecyclerView recycler_view;
-    private Button btn_add_product;
+    private ImageView btn_add_product;
     private ImageView back;
     ProgressBar progress_bar;
     private String categoryId = "";
@@ -61,9 +64,6 @@ public class ProductListActivity extends AppCompatActivity {
             btn_add_product.setVisibility(View.GONE);
         }
 
-
-
-
         adapter = new ProductAdapter(this, productList, new GetProductId.getId() {
             @Override
             public void getProductId(String productId) {
@@ -74,9 +74,6 @@ public class ProductListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
 
         recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
         recycler_view.setAdapter(adapter);
@@ -99,6 +96,43 @@ public class ProductListActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        SearchView searchview = findViewById(R.id.searchview);
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return false;
+            }
+        });
+    }
+
+
+    private void filter(String newText) {
+        ArrayList<ProductInfo.ProductListBean> tempList = new ArrayList<>();
+        for (ProductInfo.ProductListBean productListBean : productList) {
+            if (productListBean.productName.toLowerCase().contains(newText.toLowerCase())) {
+                tempList.add(productListBean);
+            }
+        }
+        adapter = new ProductAdapter(this, tempList, new GetProductId.getId() {
+            @Override
+            public void getProductId(String productId) {
+                Intent intent = new Intent(ProductListActivity.this,ProductDetailsActivity.class);
+                intent.putExtra("product_key","viewProduct");
+                intent.putExtra("productId",productId);
+                intent.putExtra("userType",userType);
+                startActivity(intent);
+            }
+        });
+
+        recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
+        recycler_view.setAdapter(adapter);
     }
 
     @Override

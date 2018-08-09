@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/welcome_screen_bg"
     tools:context="com.manibhadra.activity.admin.ViewCategoryActivity">
 
     <LinearLayout
@@ -37,22 +38,42 @@
                 android:src="@drawable/back_arrow_ico"
                 android:tint="@color/colorPrimaryDark" />
 
+            <ImageView
+                android:id="@+id/btn_add_product"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ico_add"
+                android:padding="@dimen/_7sdp"
+                android:tint="@color/colorPrimaryDark"
+                android:layout_marginRight="@dimen/_3sdp"/>
+
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btn_add_product"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_gravity="right"
-            android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/continue_btn_bg"
-            android:fontFamily="@font/josefinsans_regular"
-            android:text="Add product"
-            android:textAllCaps="false"
-            android:textColor="@drawable/continue_btn_text_color"
-            android:textSize="@dimen/text_Large_Size"
-            />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/colorWhite"
+            android:layout_margin="@dimen/_8sdp"
+            android:elevation="@dimen/_3sdp"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            android:background="@drawable/rectangular_darkgrey_border">
 
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                app:queryBackground="@android:color/transparent"
+                app:queryHint="search..."
+                app:iconifiedByDefault="false">
+                <requestFocus />
+            </android.support.v7.widget.SearchView>
+
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

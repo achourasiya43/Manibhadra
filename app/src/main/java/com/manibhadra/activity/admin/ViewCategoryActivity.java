@@ -2,15 +2,19 @@ package com.manibhadra.activity.admin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.manibhadra.R;
+import com.manibhadra.adapter.AllUserAdapter;
 import com.manibhadra.adapter.CategoryAdapter;
 import com.manibhadra.adapter.VendorProductAdapter;
 import com.manibhadra.app.App;
@@ -52,7 +56,33 @@ public class ViewCategoryActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        SearchView searchview = findViewById(R.id.searchview);
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return false;
+            }
+        });
     }
+
+    private void filter(String newText) {
+        ArrayList<CategoryInfo.CategoryListBean> tempList = new ArrayList<>();
+        for (CategoryInfo.CategoryListBean categoryListBean : categorytList) {
+            if (categoryListBean.categoryName.toLowerCase().contains(newText.toLowerCase())) {
+                tempList.add(categoryListBean);
+            }
+        }
+        adapter = new CategoryAdapter(this,tempList,"admin");
+        recycler_view.setAdapter(adapter);
+    }
+
 
     @Override
     protected void onResume() {

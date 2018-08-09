@@ -57,7 +57,7 @@ public class AddCategoryActivity extends AppCompatActivity {
         category_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPermissionAndPicImage();
+                //getPermissionAndPicImage();
             }
         });
 

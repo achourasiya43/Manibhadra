@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ public class ViewAllUserActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
     private ImageView back;
     ProgressBar progress_bar;
+    private SearchView searchview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +55,36 @@ public class ViewAllUserActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        searchview = findViewById(R.id.searchview);
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+             filter(newText);
+
+             return false;
+            }
+        });
+
+
+        viewAllUsers();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        viewAllUsers();
+    private void filter(String newText) {
+        ArrayList<AllUsersInfo.UsersDataBean> tempList = new ArrayList<>();
+        for (AllUsersInfo.UsersDataBean name : usertList) {
+            if (name.fullName.toLowerCase().contains(newText.toLowerCase())) {
+                tempList.add(name);
+            }
+        }
+        adapter = new AllUserAdapter(this,tempList);
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view.setAdapter(adapter);
     }
 
     private void viewAllUsers() {

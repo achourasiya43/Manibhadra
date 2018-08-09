@@ -15,21 +15,20 @@ public class ProductDetailsInfo {
         public String productId;
         public String categoryId;
         public String productName;
-        public String productSize;
-        public String productColorCode;
         public String productDetail;
         public String productOtherDetail;
         public String productImage;
         public String categoryName;
+        public String productData;
         public String quantity;
         public String note;
 
     }
 
     public static class AddProduct {
-
         public String productSizes;
         public String productColors;
         public String productRates;
+        public boolean isChecked;
     }
 }

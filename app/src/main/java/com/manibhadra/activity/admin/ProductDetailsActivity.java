@@ -34,6 +34,7 @@ import com.google.gson.Gson;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
 import com.manibhadra.adapter.AddProductItemAdapter;
+import com.manibhadra.adapter.DetailsProductAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
@@ -42,6 +43,7 @@ import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 import com.manibhadra.session.SessionManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,15 +68,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ArrayList<ProductDetailsInfo.AddProduct> addProducts;
     SessionManager sessionManager;
     AddProductItemAdapter productItemAdapter;
-    RecyclerView recycler_view;
-
-
+    DetailsProductAdapter detailsProductAdapter;
+    RecyclerView recycler_view,recycler_view_details;
 
     /*...........add product.............*/
-    EditText ed_product_name, ed_produc_sizes, ed_produc_color_code, ed_product_details, ed_product_other_details;
+    EditText ed_product_name, ed_product_details, ed_product_other_details;
 
     /*...........product details ......*/
-    TextView tv_product_name, tv_product_size, tv_color_code, tv_product_details, tv_other_details;
+    TextView tv_product_name, tv_product_details, tv_other_details;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,26 +90,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         /*.............for details..........*/
         tv_product_name = findViewById(R.id.tv_product_name);
-        tv_product_size = findViewById(R.id.tv_product_size);
-        tv_color_code = findViewById(R.id.tv_color_code);
         tv_product_details = findViewById(R.id.tv_product_details);
         tv_other_details = findViewById(R.id.tv_other_details);
         product_details_image = findViewById(R.id.product_details_image);
         details_view_layout = findViewById(R.id.details_view_layout);
+        recycler_view_details = findViewById(R.id.recycler_view_details);
 
         // for add product
         add_product_image = findViewById(R.id.add_product_image);
         add_view_layout = findViewById(R.id.add_view_layout);
         ed_product_name = findViewById(R.id.ed_product_name);
-        ed_produc_sizes = findViewById(R.id.ed_produc_sizes);
-        ed_produc_color_code = findViewById(R.id.ed_produc_color_code);
         ed_product_details = findViewById(R.id.ed_product_details);
         ed_product_other_details = findViewById(R.id.ed_product_other_details);
         iv_add_item = findViewById(R.id.iv_add_item);
         recycler_view = findViewById(R.id.recycler_view);
-
-
-
 
         cardProductList = new ArrayList<>();
         addProducts = new ArrayList<>();
@@ -146,6 +141,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
 
+        detailsProductAdapter = new DetailsProductAdapter(this,addProducts,userType);
+        recycler_view_details.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view_details.setAdapter(detailsProductAdapter);
+
         iv_add_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,7 +168,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         add_product_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPermissionAndPicImage();
+                //getPermissionAndPicImage();
             }
         });
 
@@ -188,12 +187,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         if (product_key.equals("viewProduct")) {
             productdetails();
         }
@@ -206,14 +200,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product name");
 
             return false;
-        } else if (!v.isNullValue(ed_produc_sizes.getText().toString().trim())) {
-            Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product sizes(comma seperator)");
-
-            return false;
-        } else if (!v.isNullValue(ed_produc_color_code.getText().toString().trim())) {
-            Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product color code(comma seperator)");
-            return false;
-        } else if (!v.isNullValue(ed_product_details.getText().toString().trim())) {
+        }else if (!v.isNullValue(ed_product_details.getText().toString().trim())) {
             Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product details");
 
             return false;
@@ -240,15 +227,37 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.getString("status");
                     String message = jsonObject.getString("message");
-
+                    addProducts.clear();
                     if (status.equals("success")) {
                         Gson gson = new Gson();
                         productDetailsInfo = gson.fromJson(response, ProductDetailsInfo.class);
+
+                        JSONArray array = new JSONArray(productDetailsInfo.productDetail.productData);
+
+
+                        for(int i = 0;i<array.length();i++){
+                            productDetailsInfo.addProduct = new ProductDetailsInfo.AddProduct();
+                            productDetailsInfo.addProduct.productSizes = array.getJSONObject(i).getString("productSizes");
+                            productDetailsInfo.addProduct.productColors = array.getJSONObject(i).getString("productColors");
+                            productDetailsInfo.addProduct.productRates = array.getJSONObject(i).getString("productRates");
+
+                            if(!productDetailsInfo.addProduct.productSizes.equals("") &&
+                                   !productDetailsInfo.addProduct.productColors.equals("")&&
+                                    ! productDetailsInfo.addProduct.productRates .equals("")){
+
+                                addProducts.add(productDetailsInfo.addProduct);
+                            }
+
+                        }
+                        //addProducts.add(productDetailsInfo.addProduct);
                         setDetaislData(productDetailsInfo.productDetail);
+
 
                     } else {
                         Utils.openAlertDialog(ProductDetailsActivity.this, message);
                     }
+                    detailsProductAdapter.notifyDataSetChanged();
+
                     progress_bar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -267,8 +276,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private void setDetaislData(ProductDetailsInfo.ProductDetailBean productDetailsInfo) {
         tv_product_name.setText(productDetailsInfo.productName);
-        tv_product_size.setText(productDetailsInfo.productSize);
-        tv_color_code.setText(productDetailsInfo.productColorCode);
         tv_product_details.setText(productDetailsInfo.productDetail);
         tv_other_details.setText(productDetailsInfo.productOtherDetail);
         Glide.with(ProductDetailsActivity.this).load(productDetailsInfo.productImage).apply(new RequestOptions().placeholder(R.drawable.ico_user_placeholder)).into(product_details_image);
@@ -405,11 +412,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Map<String, String> map = new HashMap<>();
         map.put("categoryId", categoryId);
         map.put("productName", ed_product_name.getText().toString().trim());
-        map.put("productSize", ed_produc_sizes.getText().toString().trim());
-        map.put("productPrice", "0");
-        map.put("productColorCode", ed_produc_color_code.getText().toString().trim());
-
+        map.put("productDetail",  ed_product_details.getText().toString().trim());
         map.put("productOtherDetail", ed_product_other_details.getText().toString().trim());
+
+       /* for (int i = 0; i < addProducts.size(); i++) {
+            if(addProducts.get(i).productSizes.equals("") &&
+                    addProducts.get(i).productRates.equals("") && addProducts.get(i).productColors.equals("")  ){
+                addProducts.remove(i);
+            }
+        }*/
 
         for (int i = 0; i < addProducts.size(); i++) {
             View view = recycler_view.getChildAt(i);
@@ -431,17 +442,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
 
-        for (int i = 0; i < addProducts.size(); i++) {
-            if(addProducts.get(i).productSizes.equals("") &&
-                    addProducts.get(i).productRates.equals("") && addProducts.get(i).productColors.equals("")  ){
-                addProducts.remove(i);
-            }
-        }
-        productItemAdapter.notifyDataSetChanged();
+
 
         Gson gson = new Gson();
         String addProducts_json = gson.toJson(addProducts);
-        map.put("productDetail", addProducts_json);
+        map.put("productData", addProducts_json);
 
         Map<String, Bitmap> image;
         if (bitmap != null) {
@@ -537,7 +542,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!ed_quentity.getText().toString().trim().equals("")) {
                     productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();
-                    ;
+
                     productDetailsInfo.productDetail.quantity = ed_quentity.getText().toString().trim();
 
                     cardProductList.add(productDetailsInfo.productDetail);

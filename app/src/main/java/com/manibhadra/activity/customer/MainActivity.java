@@ -10,7 +10,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,11 +28,15 @@ import com.manibhadra.R;
 import com.manibhadra.activity.admin.AddCategoryActivity;
 import com.manibhadra.activity.admin.AdminHomeActivity;
 import com.manibhadra.activity.admin.ProductDetailsActivity;
+import com.manibhadra.activity.admin.ProductListActivity;
 import com.manibhadra.activity.comman.ChangePasswordActivity;
 import com.manibhadra.adapter.CategoryAdapter;
+import com.manibhadra.adapter.ProductAdapter;
 import com.manibhadra.app.App;
+import com.manibhadra.listner.GetProductId;
 import com.manibhadra.model.CategoryInfo;
 import com.manibhadra.model.ProductDetailsInfo;
+import com.manibhadra.model.ProductInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 import com.manibhadra.session.SessionManager;
@@ -84,6 +90,31 @@ public class MainActivity extends AppCompatActivity {
                 addToCardDialog();
             }
         });
+
+        SearchView searchview = findViewById(R.id.searchview);
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return false;
+            }
+        });
+    }
+
+    private void filter(String newText) {
+        ArrayList<CategoryInfo.CategoryListBean> tempList = new ArrayList<>();
+        for (CategoryInfo.CategoryListBean categoryListBean : categorytList) {
+            if (categoryListBean.categoryName.toLowerCase().contains(newText.toLowerCase())) {
+                tempList.add(categoryListBean);
+            }
+        }
+        adapter = new CategoryAdapter(this, tempList, "custmer");
+        recycler_view.setAdapter(adapter);
     }
 
     public void logoutDialog(Context context, String message) {

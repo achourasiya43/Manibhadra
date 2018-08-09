@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/_25sdp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Size"
+            android:textSize="@dimen/text_Small_Size" />
+
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="start|center"
+            android:hint="Size"
+            android:maxLines="1"
+            android:background="@drawable/rounded_primary_left_chat_border"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Color"
+            android:textSize="@dimen/text_Small_Size" />
+
+
+        <TextView
+            android:id="@+id/tv_color"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/rounded_primary_left_chat_border"
+            android:gravity="start|center"
+            android:hint="Color"
+            android:maxLines="1"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Rate"
+            android:textSize="@dimen/text_Small_Size" />
+
+
+        <TextView
+            android:id="@+id/tv_rate"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/rounded_primary_left_chat_border"
+            android:gravity="start|center"
+            android:hint="Rate"
+            android:maxLines="1"
+            android:padding="@dimen/_2sdp"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:buttonTint="@color/colorPrimaryDark" />
+
+</LinearLayout>
