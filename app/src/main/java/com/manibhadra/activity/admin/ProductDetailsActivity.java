@@ -49,27 +49,29 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProductDetailsActivity extends AppCompatActivity {
-    ImageView back;
-    String product_key = "";
-    TextView action_bar_title;
-    Button addProductBtn;
-    LinearLayout details_view_layout, add_view_layout;
-    ImageView add_product_image, product_details_image,iv_add_item;
-    Bitmap bitmap;
-    String productId = "";
-    String categoryId = "";
-    String userType = "";
-    ProgressBar progress_bar;
-    ProductDetailsInfo productDetailsInfo;
-    ArrayList<ProductDetailsInfo.ProductDetailBean> cardProductList;
-    ArrayList<ProductDetailsInfo.AddProduct> addProducts;
-    SessionManager sessionManager;
-    AddProductItemAdapter productItemAdapter;
-    DetailsProductAdapter detailsProductAdapter;
-    RecyclerView recycler_view,recycler_view_details;
+
+    private ImageView back;
+    private String product_key = "";
+    private TextView action_bar_title;
+    private Button addProductBtn;
+    private LinearLayout details_view_layout, add_view_layout;
+    private ImageView add_product_image, product_details_image, iv_add_item;
+    private Bitmap bitmap;
+    private String productId = "";
+    private String categoryId = "";
+    private String userType = "";
+    private ProgressBar progress_bar;
+    private ProductDetailsInfo productDetailsInfo;
+    private ArrayList<ProductDetailsInfo.ProductDetailBean> cardProductList;
+    private ArrayList<ProductDetailsInfo.AddProduct> addProducts;
+    private SessionManager sessionManager;
+    private AddProductItemAdapter productItemAdapter;
+    private DetailsProductAdapter detailsProductAdapter;
+    private RecyclerView recycler_view, recycler_view_details;
 
     /*...........add product.............*/
     EditText ed_product_name, ed_product_details, ed_product_other_details;
@@ -109,7 +111,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         addProducts = new ArrayList<>();
         sessionManager = new SessionManager(this);
 
-        productItemAdapter = new AddProductItemAdapter(addProducts,this);
+        productItemAdapter = new AddProductItemAdapter(addProducts, this);
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
         recycler_view.setAdapter(productItemAdapter);
 
@@ -141,7 +143,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
 
-        detailsProductAdapter = new DetailsProductAdapter(this,addProducts,userType);
+        detailsProductAdapter = new DetailsProductAdapter(this, addProducts, userType);
         recycler_view_details.setLayoutManager(new LinearLayoutManager(this));
         recycler_view_details.setAdapter(detailsProductAdapter);
 
@@ -149,9 +151,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
-                product.productColors =  "";
-                product.productRates =  "";
-                product.productSizes =  "";
+                product.productColors = "";
+                product.productRates = "";
+                product.productSizes = "";
 
                 addProducts.add(product);
                 productItemAdapter.notifyDataSetChanged();
@@ -183,7 +185,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         addProducts();
                     }
                 } else if (addProductBtn.getText().toString().trim().equals("Add To Card")) {
-                    addToCardDialog();
+                    boolean isProductItemSelected = false;
+
+                    for (int i = 0; i < addProducts.size(); i++)
+                        if (addProducts.get(i).isChecked) isProductItemSelected = true;
+
+                    if (isProductItemSelected) {
+                        addToCardDialog();
+                    } else
+                        Utils.openAlertDialog(ProductDetailsActivity.this, "Please select product");
                 }
             }
         });
@@ -200,7 +210,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product name");
 
             return false;
-        }else if (!v.isNullValue(ed_product_details.getText().toString().trim())) {
+        } else if (!v.isNullValue(ed_product_details.getText().toString().trim())) {
             Utils.openAlertDialog(ProductDetailsActivity.this, "Please enter product details");
 
             return false;
@@ -234,20 +244,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         JSONArray array = new JSONArray(productDetailsInfo.productDetail.productData);
 
-
-                        for(int i = 0;i<array.length();i++){
+                        for (int i = 0; i < array.length(); i++) {
                             productDetailsInfo.addProduct = new ProductDetailsInfo.AddProduct();
                             productDetailsInfo.addProduct.productSizes = array.getJSONObject(i).getString("productSizes");
                             productDetailsInfo.addProduct.productColors = array.getJSONObject(i).getString("productColors");
                             productDetailsInfo.addProduct.productRates = array.getJSONObject(i).getString("productRates");
 
-                            if(!productDetailsInfo.addProduct.productSizes.equals("") &&
-                                   !productDetailsInfo.addProduct.productColors.equals("")&&
-                                    ! productDetailsInfo.addProduct.productRates .equals("")){
+                            if (!productDetailsInfo.addProduct.productSizes.equals("") &&
+                                    !productDetailsInfo.addProduct.productColors.equals("") &&
+                                    !productDetailsInfo.addProduct.productRates.equals("")) {
 
                                 addProducts.add(productDetailsInfo.addProduct);
                             }
-
                         }
                         //addProducts.add(productDetailsInfo.addProduct);
                         setDetaislData(productDetailsInfo.productDetail);
@@ -412,7 +420,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Map<String, String> map = new HashMap<>();
         map.put("categoryId", categoryId);
         map.put("productName", ed_product_name.getText().toString().trim());
-        map.put("productDetail",  ed_product_details.getText().toString().trim());
+        map.put("productDetail", ed_product_details.getText().toString().trim());
         map.put("productOtherDetail", ed_product_other_details.getText().toString().trim());
 
        /* for (int i = 0; i < addProducts.size(); i++) {
@@ -424,24 +432,23 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         for (int i = 0; i < addProducts.size(); i++) {
             View view = recycler_view.getChildAt(i);
-            if(view != null){
-                EditText productSizes =  view.findViewById(R.id.ed_size);
-                EditText productRate =  view.findViewById(R.id.ed_rate);
-                EditText productColor =  view.findViewById(R.id.ed_color);
+            if (view != null) {
+                EditText productSizes = view.findViewById(R.id.ed_size);
+                EditText productRate = view.findViewById(R.id.ed_rate);
+                EditText productColor = view.findViewById(R.id.ed_color);
 
                 ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
                 product.productSizes = productSizes.getText().toString();
                 product.productRates = productRate.getText().toString();
                 product.productColors = productColor.getText().toString();
-                Log.d("sds",product+"");
+                Log.d("sds", product + "");
 
-                if(!product.productSizes.equals("") &&
-                        !product.productRates.equals("") && !product.productColors.equals("")  ){
+                if (!product.productSizes.equals("") &&
+                        !product.productRates.equals("") && !product.productColors.equals("")) {
                     addProducts.add(product);
                 }
             }
         }
-
 
 
         Gson gson = new Gson();
@@ -541,11 +548,24 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!ed_quentity.getText().toString().trim().equals("")) {
-                    productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();
+ /*............................................................................................................*/                     //geting arraylist from session
+                    List<ProductDetailsInfo.ProductDetailBean> getproductDetailsList = sessionManager.getsavecardList();
+                    cardProductList.addAll(getproductDetailsList);
+ /*.................................................................................................................*/
 
+                    productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();
                     productDetailsInfo.productDetail.quantity = ed_quentity.getText().toString().trim();
 
+                    ArrayList<ProductDetailsInfo.AddProduct> tempList = new ArrayList<>();
+                    for (int i = 0; i < addProducts.size(); i++) {
+                        if (addProducts.get(i).isChecked) {
+                            Gson gson = new Gson();
+                            tempList.add(addProducts.get(i));
+                            productDetailsInfo.productDetail.productData = gson.toJson(tempList);
+                        }
+                    }
                     cardProductList.add(productDetailsInfo.productDetail);
+
                     sessionManager.savecardList(cardProductList);
 
                     dialog.dismiss();

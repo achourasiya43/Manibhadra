@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.manibhadra.R;
@@ -40,7 +41,7 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.tv_size.setText(productArrayList.get(position).productSizes);
         holder.tv_color.setText(productArrayList.get(position).productColors);
         holder.tv_rate.setText(productArrayList.get(position).productRates);
@@ -50,6 +51,18 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         }else {
             holder.check_box.setVisibility(View.GONE);
         }
+
+        holder.check_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    productArrayList.get(position).isChecked = true;
+                }else {
+                    productArrayList.get(position).isChecked = false;
+                }
+            }
+        });
+
     }
 
     @Override
