@@ -19,15 +19,11 @@
             android:animateLayoutChanges="true"
             android:background="@drawable/header_bg">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/josefinsans_regular"
-                android:gravity="center"
-                android:text="Product List"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_XXLarge_Size" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/mani_logo"/>
 
             <ImageView
                 android:id="@+id/back"
@@ -51,12 +47,26 @@
 
         </RelativeLayout>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/josefinsans_regular"
+            android:gravity="center"
+            android:text="Product List"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_8sdp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_XXLarge_Size" />
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
             app:cardBackgroundColor="@color/colorWhite"
-            android:layout_margin="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:elevation="@dimen/_3sdp"
             app:cardElevation="@dimen/_3sdp"
             app:cardCornerRadius="@dimen/_5sdp"

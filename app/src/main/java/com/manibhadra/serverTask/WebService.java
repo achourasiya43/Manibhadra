@@ -124,7 +124,7 @@ public class WebService {
                     for (Map.Entry<String, Bitmap> entry : bitmapList.entrySet()) {
                         String key = entry.getKey();
                         Bitmap bitmap = entry.getValue();
-                        params.put(key, new DataPart(key.concat(".jpg"), AppHelper.getFileDataFromBitmap(mContext, bitmap), "image/png"));
+                        params.put(key, new DataPart(key.concat(".jpg"), AppHelper.getFileDataFromBitmap(mContext, bitmap), "image/jpeg"));
                     }
 
                 }

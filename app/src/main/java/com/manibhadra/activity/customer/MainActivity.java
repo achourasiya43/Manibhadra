@@ -11,10 +11,12 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         productDetailsInfo = sessionManager.getsavecardList();
 
         adapter = new CategoryAdapter(this, categorytList, "custmer");
+        recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
         recycler_view.setAdapter(adapter);
 
         iv_add_card.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SearchView searchview = findViewById(R.id.searchview);
+        searchview.clearFocus();
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

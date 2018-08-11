@@ -14,16 +14,11 @@
         android:animateLayoutChanges="true"
         android:background="@drawable/header_bg">
 
-        <TextView
-            android:id="@+id/profile_action_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="Customer Dashboard"
-            android:fontFamily="@font/josefinsans_regular"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_XXLarge_Size" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/mani_logo"/>
 
         <ImageView
             android:id="@+id/iv_add_card"
@@ -31,8 +26,8 @@
             android:layout_height="@dimen/_40sdp"
             android:padding="@dimen/_9sdp"
             android:tint="@color/colorPrimaryDark"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_5sdp"
             android:src="@drawable/credit_card"
             android:gravity="center" />
 
@@ -43,8 +38,7 @@
             android:padding="@dimen/_9sdp"
             android:tint="@color/colorPrimaryDark"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:src="@drawable/settings"
             android:gravity="center" />
 
@@ -57,12 +51,26 @@
         android:layout_marginTop="?actionBarSize"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/profile_action_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Catrgories"
+            android:fontFamily="@font/josefinsans_regular"
+            android:textColor="@color/colorgreen"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:textSize="@dimen/text_XXLarge_Size" />
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
             app:cardBackgroundColor="@color/colorWhite"
-            android:layout_margin="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:elevation="@dimen/_3sdp"
             app:cardElevation="@dimen/_3sdp"
             app:cardCornerRadius="@dimen/_5sdp"

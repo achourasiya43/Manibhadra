@@ -31,6 +31,15 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_XXLarge_Size" />
 
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:src="@drawable/back_arrow_ico"
+                android:tint="@color/colorPrimaryDark" />
+
 
         </RelativeLayout>
 
@@ -58,6 +67,13 @@
         android:layout_marginBottom="@dimen/_15sdp"
         android:textColor="@drawable/continue_btn_text_color"
         android:textSize="@dimen/text_Large_Size" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 
 

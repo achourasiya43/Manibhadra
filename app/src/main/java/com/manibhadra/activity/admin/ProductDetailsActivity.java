@@ -33,6 +33,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
+import com.manibhadra.activity.customer.MainActivity;
 import com.manibhadra.adapter.AddProductItemAdapter;
 import com.manibhadra.adapter.DetailsProductAdapter;
 import com.manibhadra.app.App;
@@ -126,19 +127,32 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
-            } else if (product_key.equals("viewProduct")) {
+            }
+            else if (product_key.equals("viewProduct")) {
                 action_bar_title.setText("Product Details");
                 addProductBtn.setText("Delete Product");
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
 
-            } else if (product_key.equals("addProduct")) {
+            }
+            else if (product_key.equals("addProduct")) {
                 categoryId = getIntent().getStringExtra("categoryId");
                 action_bar_title.setText("Add Product");
 
                 add_view_layout.setVisibility(View.VISIBLE);
                 details_view_layout.setVisibility(View.GONE);
+
+            }
+            else if (product_key.equals("cardDetailsView")) {
+                ProductDetailsInfo.ProductDetailBean productDetailsInfo = (ProductDetailsInfo.ProductDetailBean) getIntent().getSerializableExtra("cardDetails");
+                action_bar_title.setText("Card Details");
+                addProductBtn.setText("");
+                viewCardDetails(productDetailsInfo);
+
+                add_view_layout.setVisibility(View.GONE);
+                details_view_layout.setVisibility(View.VISIBLE);
+                addProductBtn.setVisibility(View.GONE);
 
             }
         }
@@ -170,7 +184,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         add_product_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getPermissionAndPicImage();
+                getPermissionAndPicImage();
             }
         });
 
@@ -201,6 +215,34 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (product_key.equals("viewProduct")) {
             productdetails();
         }
+    }
+
+    private void viewCardDetails(ProductDetailsInfo.ProductDetailBean productDetailsInfo){
+
+        JSONArray array = null;
+        try {
+            array = new JSONArray(productDetailsInfo.productData);
+            for (int i = 0; i < array.length(); i++) {
+                ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
+                product.productSizes = array.getJSONObject(i).getString("productSizes");
+                product.productColors = array.getJSONObject(i).getString("productColors");
+                product.productRates = array.getJSONObject(i).getString("productRates");
+
+                if (!product.productSizes.equals("") &&
+                        !product.productColors.equals("") &&
+                        !product.productRates.equals("")) {
+
+                    addProducts.add(product);
+                }
+            }
+            setDetaislData(productDetailsInfo);
+            detailsProductAdapter = new DetailsProductAdapter(this, addProducts, userType);
+            recycler_view_details.setLayoutManager(new LinearLayoutManager(this));
+            recycler_view_details.setAdapter(detailsProductAdapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean isValidData() {
@@ -241,9 +283,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     if (status.equals("success")) {
                         Gson gson = new Gson();
                         productDetailsInfo = gson.fromJson(response, ProductDetailsInfo.class);
-
                         JSONArray array = new JSONArray(productDetailsInfo.productDetail.productData);
-
                         for (int i = 0; i < array.length(); i++) {
                             productDetailsInfo.addProduct = new ProductDetailsInfo.AddProduct();
                             productDetailsInfo.addProduct.productSizes = array.getJSONObject(i).getString("productSizes");
@@ -257,7 +297,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 addProducts.add(productDetailsInfo.addProduct);
                             }
                         }
-                        //addProducts.add(productDetailsInfo.addProduct);
                         setDetaislData(productDetailsInfo.productDetail);
 
 
@@ -550,6 +589,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 if (!ed_quentity.getText().toString().trim().equals("")) {
  /*............................................................................................................*/                     //geting arraylist from session
                     List<ProductDetailsInfo.ProductDetailBean> getproductDetailsList = sessionManager.getsavecardList();
+                   if(getproductDetailsList != null)
                     cardProductList.addAll(getproductDetailsList);
  /*.................................................................................................................*/
 
@@ -569,6 +609,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     sessionManager.savecardList(cardProductList);
 
                     dialog.dismiss();
+
+                    Intent intent = new Intent(ProductDetailsActivity.this, MainActivity.class);
+                   startActivity(intent);
                     finish();
                 } else {
                     Toast.makeText(ProductDetailsActivity.this, "Please enter the quantity", Toast.LENGTH_SHORT).show();

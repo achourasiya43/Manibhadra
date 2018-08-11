@@ -2,25 +2,19 @@ package com.manibhadra.activity.admin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.manibhadra.R;
-import com.manibhadra.adapter.AllUserAdapter;
 import com.manibhadra.adapter.CategoryAdapter;
-import com.manibhadra.adapter.VendorProductAdapter;
 import com.manibhadra.app.App;
-import com.manibhadra.model.AllUsersInfo;
 import com.manibhadra.model.CategoryInfo;
-import com.manibhadra.model.ProductInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 
@@ -58,6 +52,7 @@ public class ViewCategoryActivity extends AppCompatActivity {
         });
 
         SearchView searchview = findViewById(R.id.searchview);
+        searchview.clearFocus();
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

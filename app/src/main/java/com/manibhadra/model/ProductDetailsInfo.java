@@ -1,16 +1,18 @@
 package com.manibhadra.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Anil on 05-08-2018.
  */
 
-public class ProductDetailsInfo {
+public class ProductDetailsInfo implements Serializable{
     public String status;
     public String message;
     public ProductDetailBean productDetail;
     public AddProduct addProduct;
 
-    public static class ProductDetailBean {
+    public static class ProductDetailBean implements Serializable{
 
         public String productId;
         public String categoryId;
@@ -25,7 +27,7 @@ public class ProductDetailsInfo {
 
     }
 
-    public static class AddProduct {
+    public static class AddProduct implements Serializable{
         public String productSizes;
         public String productColors;
         public String productRates;

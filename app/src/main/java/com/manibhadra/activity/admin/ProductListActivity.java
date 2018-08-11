@@ -98,6 +98,7 @@ public class ProductListActivity extends AppCompatActivity {
         });
 
         SearchView searchview = findViewById(R.id.searchview);
+        searchview.clearFocus();
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -20,12 +20,11 @@
             android:layout_height="@dimen/_60sdp"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
+            <com.github.siyamed.shapeimageview.RoundedImageView
+                android:id="@+id/product_image"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-                app:civ_border_color="@color/colorGray"
-                app:civ_border_width="0.5dp"
+                app:siRadius="@dimen/_5sdp"
                 android:src="@drawable/ico_user_placeholder"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_gravity="center"/>
@@ -40,21 +39,40 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_product_name"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|start"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/nunito_regular"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:text="Hexagon Head Self-drilling Screw"
-                    android:textSize="@dimen/text_Small_Size"
-                    android:textColor="@color/colorBlack"/>
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_product_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:maxLines="1"
+                        android:layout_marginRight="@dimen/_60sdp"
+                        android:text="Hexagon Head Self-drilling Screw"
+                        android:textSize="@dimen/text_Small_Size"
+                        android:textColor="@color/colorBlack"/>
+
+                    <TextView
+                        android:id="@+id/tv_product_qty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:maxLines="1"
+                        android:text="Qty 12"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/text_Small_Size"
+                        android:textColor="@color/colorBlack"/>
+
+
+                </RelativeLayout>
+
 
                 <TextView
-                    android:id="@+id/time_ago"
+                    android:id="@+id/product_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_regular"

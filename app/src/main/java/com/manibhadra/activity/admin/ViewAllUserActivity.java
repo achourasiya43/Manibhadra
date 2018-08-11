@@ -57,6 +57,7 @@ public class ViewAllUserActivity extends AppCompatActivity {
         });
 
         searchview = findViewById(R.id.searchview);
+        searchview.clearFocus();
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

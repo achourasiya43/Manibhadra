@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context="com.manibhadra.activity.comman.SignUpActivity">
 
     <TextView
@@ -229,26 +230,13 @@
         android:layout_centerInParent="true"
         android:textSize="@dimen/text_Large_Size" />
 
-    <View
+
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0.7dp"
-        android:background="@color/colorPrimaryDark"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_105sdp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_50sdp"
-        android:text="Manibhadra"
-        android:textSize="@dimen/_24sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_80sdp"
-        android:textColor="@color/colorPrimaryDark"
-        android:padding="@dimen/_12sdp"
-        android:background="@drawable/rounded_primary_left_chat_border"
-        android:fontFamily="@font/josefinsans_light"/>
-
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_90sdp"
+        android:src="@drawable/mani_logo"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"

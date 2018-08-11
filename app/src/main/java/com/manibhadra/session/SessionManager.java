@@ -27,6 +27,9 @@ public class SessionManager  {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
+    private static SharedPreferences sharedPreferences1;
+    private static SharedPreferences.Editor editor1;
+
     private static final String IS_LOGGEDIN = "isLoggedIn";
     private static final String IS_FIrebaseLogin = "isFirebaseLogin";
     private static final String PROFILEINFO = "profileInfo";
@@ -40,6 +43,9 @@ public class SessionManager  {
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = sharedPreferences.edit();
+
+        sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(context);
+        editor1 = sharedPreferences1.edit();
     }
 
     public void createSession(SignInInfo signInInfo) {
@@ -94,13 +100,13 @@ public class SessionManager  {
     public void savecardList(ArrayList<ProductDetailsInfo.ProductDetailBean> interestInfoList) {
         Gson gson = new Gson();
         String json = gson.toJson(interestInfoList);
-        editor.putString(USER_INTEREST_LIST, json);
-        editor.commit();
+        editor1.putString(USER_INTEREST_LIST, json);
+        editor1.commit();
     }
 
     public List<ProductDetailsInfo.ProductDetailBean> getsavecardList(){
         Gson gson = new Gson();
-        String str = sharedPreferences.getString(USER_INTEREST_LIST,"");
+        String str = sharedPreferences1.getString(USER_INTEREST_LIST,"");
         if (!str.isEmpty()){
 
             ProductDetailsInfo.ProductDetailBean[] interestInfo = gson.fromJson(str, ProductDetailsInfo.ProductDetailBean[].class);
