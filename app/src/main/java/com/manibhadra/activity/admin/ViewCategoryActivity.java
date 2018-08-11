@@ -2,6 +2,7 @@ package com.manibhadra.activity.admin;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class ViewCategoryActivity extends AppCompatActivity {
         categorytList = new ArrayList<>();
 
         adapter = new CategoryAdapter(this,categorytList,"admin");
+        recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
         recycler_view.setAdapter(adapter);
 
 

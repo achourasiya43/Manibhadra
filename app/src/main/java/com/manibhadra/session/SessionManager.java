@@ -23,12 +23,8 @@ import java.util.List;
 public class SessionManager  {
 
     private Context context;
-    private Activity activity;
-    private static SharedPreferences sharedPreferences;
-    private static SharedPreferences.Editor editor;
-
-    private static SharedPreferences sharedPreferences1;
-    private static SharedPreferences.Editor editor1;
+    private  SharedPreferences sharedPreferences,sharedPreferences1;
+    private  SharedPreferences.Editor editor,editor1;
 
     private static final String IS_LOGGEDIN = "isLoggedIn";
     private static final String IS_FIrebaseLogin = "isFirebaseLogin";
@@ -39,13 +35,25 @@ public class SessionManager  {
     private static final String SAVELATLNG = "savelatlng";
     private static final String PASSWORD = "password";
 
+    private static final String PREF_NAME = "ManiBhadra";
+    private static final String PREF_NAME1 = "ManiBhadra1";
+
     public SessionManager(Context context) {
         this.context = context;
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+       /* sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         editor = sharedPreferences.edit();
 
         sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(context);
+        editor1 = sharedPreferences1.edit();*/
+
+        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences1 = context.getSharedPreferences(PREF_NAME1, Context.MODE_PRIVATE);
+
+        editor = sharedPreferences.edit();
         editor1 = sharedPreferences1.edit();
+
+        editor.apply();
+        editor1.apply();
     }
 
     public void createSession(SignInInfo signInInfo) {

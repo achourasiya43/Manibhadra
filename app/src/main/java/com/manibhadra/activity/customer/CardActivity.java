@@ -1,5 +1,9 @@
 package com.manibhadra.activity.customer;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -61,8 +65,8 @@ public class CardActivity extends AppCompatActivity {
         addProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(productDetailsInfo != null){
-                    submitCardToAdmin();
+                if(productDetailsInfo != null && productDetailsInfo.size() != 0){
+                    askDialog(CardActivity.this,"Are you sure want to submit ?");
                 }else {
                     Utils.openAlertDialog(CardActivity.this,"Please Add Some Product");
                 }
@@ -100,17 +104,12 @@ public class CardActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
 
                     if (status.equals("success")) {
-
-                        productDetailsInfo.clear();
-                        adapter.notifyDataSetChanged();
-
                         ArrayList<ProductDetailsInfo.ProductDetailBean> productDetailsInfo = new ArrayList<>();
                         sessionManager.savecardList(productDetailsInfo);
-
-
                     } else {
-                        Utils.openAlertDialog(CardActivity.this, message);
+
                     }
+                    successDialog(CardActivity.this, message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     addProductBtn.setEnabled(true);
@@ -125,5 +124,41 @@ public class CardActivity extends AppCompatActivity {
             }
         });
         service.callMultiPartApi("user/placeOrder", map,null);
+    }
+
+    public void successDialog(Context context, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                finish();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
+    }
+
+    public void askDialog(Context context, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                submitCardToAdmin();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
     }
 }

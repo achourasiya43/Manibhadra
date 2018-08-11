@@ -609,9 +609,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     sessionManager.savecardList(cardProductList);
 
                     dialog.dismiss();
-
-                    Intent intent = new Intent(ProductDetailsActivity.this, MainActivity.class);
-                   startActivity(intent);
                     finish();
                 } else {
                     Toast.makeText(ProductDetailsActivity.this, "Please enter the quantity", Toast.LENGTH_SHORT).show();
