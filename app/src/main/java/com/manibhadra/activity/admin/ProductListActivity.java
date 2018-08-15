@@ -42,6 +42,7 @@ public class ProductListActivity extends AppCompatActivity {
     ProgressBar progress_bar;
     private String categoryId = "";
     private String userType = "";
+    private int spanCount = 2;
 
 
     @Override
@@ -62,9 +63,10 @@ public class ProductListActivity extends AppCompatActivity {
 
         if(userType.equals("custmer")){
             btn_add_product.setVisibility(View.GONE);
+            spanCount = 1;
         }
 
-        adapter = new ProductAdapter(this, productList, new GetProductId.getId() {
+        adapter = new ProductAdapter(userType,this, productList, new GetProductId.getId() {
             @Override
             public void getProductId(String productId) {
                 Intent intent = new Intent(ProductListActivity.this,ProductDetailsActivity.class);
@@ -75,7 +77,7 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
-        recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
+        recycler_view.setLayoutManager(new GridLayoutManager(this, spanCount));
         recycler_view.setAdapter(adapter);
 
 
@@ -121,7 +123,7 @@ public class ProductListActivity extends AppCompatActivity {
                 tempList.add(productListBean);
             }
         }
-        adapter = new ProductAdapter(this, tempList, new GetProductId.getId() {
+        adapter = new ProductAdapter("custmer",this, tempList, new GetProductId.getId() {
             @Override
             public void getProductId(String productId) {
                 Intent intent = new Intent(ProductListActivity.this,ProductDetailsActivity.class);
@@ -132,7 +134,7 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
-        recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
+        recycler_view.setLayoutManager(new GridLayoutManager(this, spanCount));
         recycler_view.setAdapter(adapter);
     }
 

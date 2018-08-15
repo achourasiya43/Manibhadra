@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
 
-    <EditText
+    <TextView
         android:id="@+id/ed_size"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_30sdp"
@@ -15,9 +15,11 @@
         android:padding="@dimen/_2sdp"
         android:maxLines="1"
         android:singleLine="true"
-        android:background="@drawable/rounded_primary_left_chat_border" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/bg_interest_list_items" />
 
-    <EditText
+    <TextView
         android:id="@+id/ed_color"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_30sdp"
@@ -26,9 +28,10 @@
         android:padding="@dimen/_2sdp"
         android:maxLines="1"
         android:singleLine="true"
-        android:background="@drawable/rounded_primary_left_chat_border" />
+        android:gravity="center"
+        android:background="@drawable/bg_interest_list_items" />
 
-    <EditText
+    <TextView
         android:id="@+id/ed_rate"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_30sdp"
@@ -37,7 +40,8 @@
         android:padding="@dimen/_2sdp"
         android:maxLines="1"
         android:singleLine="true"
-        android:background="@drawable/rounded_primary_left_chat_border" />
+        android:gravity="center"
+        android:background="@drawable/bg_interest_list_items" />
 
     <ImageView
         android:id="@+id/iv_remove_item"

@@ -22,6 +22,7 @@ import com.manibhadra.activity.comman.SignInActivity;
 import com.manibhadra.adapter.CardAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
+import com.manibhadra.listner.Delete_Listner;
 import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.model.SignInInfo;
 import com.manibhadra.serverTask.Utils;
@@ -40,6 +41,7 @@ public class CardActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
     private SessionManager sessionManager;
     List<ProductDetailsInfo.ProductDetailBean> productDetailsInfo;
+    ArrayList<ProductDetailsInfo.ProductDetailBean> productDetailsArrayList;
     private CardAdapter adapter;
     private ProgressBar progress_bar;
     private Button addProductBtn;
@@ -54,6 +56,8 @@ public class CardActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
         productDetailsInfo = sessionManager.getsavecardList();
+        productDetailsArrayList = new ArrayList<>();
+        productDetailsArrayList.addAll(productDetailsInfo);
 
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +69,7 @@ public class CardActivity extends AppCompatActivity {
         addProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(productDetailsInfo != null && productDetailsInfo.size() != 0){
+                if(productDetailsArrayList != null && productDetailsArrayList.size() != 0){
                     askDialog(CardActivity.this,"Are you sure want to submit ?");
                 }else {
                     Utils.openAlertDialog(CardActivity.this,"Please Add Some Product");
@@ -74,8 +78,14 @@ public class CardActivity extends AppCompatActivity {
             }
         });
 
-        if(productDetailsInfo != null){
-            adapter = new CardAdapter(productDetailsInfo,this);
+        if(productDetailsArrayList != null){
+            adapter = new CardAdapter(productDetailsArrayList, this, new Delete_Listner() {
+                @Override
+                public void getDelete(int position) {
+                    askDeleteDialog(CardActivity.this,"Do you want to remove?",position);
+
+                }
+            });
             recycler_view.setAdapter(adapter);
         }
 
@@ -85,7 +95,7 @@ public class CardActivity extends AppCompatActivity {
         addProductBtn.setEnabled(false);
         progress_bar.setVisibility(View.VISIBLE);
         Gson gson = new Gson();
-        String json = gson.toJson(productDetailsInfo);
+        String json = gson.toJson(productDetailsArrayList);
 
         Map<String, String> map = new HashMap<>();
         map.put("orderList", json);
@@ -154,6 +164,33 @@ public class CardActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
                 submitCardToAdmin();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
+    }
+
+    public void askDeleteDialog(Context context, String message, final int position) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                productDetailsArrayList.remove(position);
+                sessionManager.savecardList(productDetailsArrayList);
+                adapter.notifyDataSetChanged();
             }
         });
         AlertDialog alert = builder.create();

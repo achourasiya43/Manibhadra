@@ -22,7 +22,6 @@ public class ProductDetailsInfo implements Serializable{
         public String productImage;
         public String categoryName;
         public String productData;
-        public String quantity;
         public String note;
 
     }
@@ -31,6 +30,7 @@ public class ProductDetailsInfo implements Serializable{
         public String productSizes;
         public String productColors;
         public String productRates;
+        public String productQty;
         public boolean isChecked;
     }
 }

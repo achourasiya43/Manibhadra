@@ -1,19 +1,31 @@
 package com.manibhadra.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.manibhadra.R;
+import com.manibhadra.activity.admin.ProductDetailsActivity;
 import com.manibhadra.model.ProductDetailsInfo;
+import com.manibhadra.serverTask.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Anil on 09-08-2018.
@@ -41,27 +53,89 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.tv_size.setText(productArrayList.get(position).productSizes);
         holder.tv_color.setText(productArrayList.get(position).productColors);
         holder.tv_rate.setText(productArrayList.get(position).productRates);
+        holder.tv_qty.setText(productArrayList.get(position).productQty);
 
         if(userType.equals("custmer")){
             holder.check_box.setVisibility(View.VISIBLE);
-        }else {
-            holder.check_box.setVisibility(View.GONE);
+            holder.ly_qyt.setVisibility(View.VISIBLE);
+        }else if(userType.equals("")){
+            holder.ly_qyt.setVisibility(View.VISIBLE);
+            holder.check_box.setVisibility(View.INVISIBLE);
+        }else if(userType.equals("admin")){
+            holder.ly_qyt.setVisibility(View.INVISIBLE);
+            holder.check_box.setVisibility(View.INVISIBLE);
+        }
+        else{
+            holder.check_box.setVisibility(View.INVISIBLE);
         }
 
-        holder.check_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if( productArrayList.get(position).isChecked){
+            holder.check_box.setChecked(true);
+        }else {
+            holder.check_box.setChecked(false);
+        }
+
+        /*holder.check_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    productArrayList.get(position).isChecked = true;
+                    if(!holder.tv_qty.getText().toString().trim().equals("")){
+                        productArrayList.get(position).isChecked = true;
+                    }else {
+                        qtyToCardDialog(holder,position);
+                    }
                 }else {
+                    holder.tv_qty.setText("");
+                    productArrayList.get(position).productQty = "";
                     productArrayList.get(position).isChecked = false;
+                    notifyDataSetChanged();
+                }
+            }
+        });*/
+
+    }
+
+    private void qtyToCardDialog(final ArrayList<ProductDetailsInfo.AddProduct> productArrayList , final int position) {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.add_to_card_dialog_layout);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        Button add_card_btn = dialog.findViewById(R.id.add_card_btn);
+        final EditText ed_quentity = dialog.findViewById(R.id.ed_quentity);
+        final RelativeLayout ly_notes = dialog.findViewById(R.id.ly_notes);
+        ly_notes.setVisibility(View.GONE);
+        ImageView close_button = dialog.findViewById(R.id.close_button);
+
+        close_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productArrayList.get(position).isChecked = false;
+                notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+
+        add_card_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String qty = ed_quentity.getText().toString().trim();
+                if(!qty.equals("")){
+
+                    productArrayList.get(position).isChecked = true;
+                    productArrayList.get(position).productQty = qty;
+                    dialog.dismiss();
+                    notifyDataSetChanged();
+
                 }
             }
         });
+        dialog.show();
 
     }
 
@@ -70,9 +144,10 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         return productArrayList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_size,tv_color,tv_rate;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView tv_size,tv_color,tv_rate,tv_qty;
         CheckBox check_box;
+        LinearLayout ly_qyt;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +155,32 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
             tv_color = itemView.findViewById(R.id.tv_color);
             tv_rate = itemView.findViewById(R.id.tv_rate);
             check_box = itemView.findViewById(R.id.check_box);
+            tv_qty = itemView.findViewById(R.id.tv_qty);
+            ly_qyt = itemView.findViewById(R.id.ly_qyt);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(productArrayList.get(getAdapterPosition()).isChecked){
+
+                if(!tv_qty.getText().toString().trim().equals("")){
+                    productArrayList.get(getAdapterPosition()).productQty = "";
+
+                }
+                productArrayList.get(getAdapterPosition()).isChecked = false;
+
+            }else {
+
+                if(tv_qty.getText().toString().trim().equals("")){
+                    qtyToCardDialog( productArrayList,getAdapterPosition());
+                }
+                productArrayList.get(getAdapterPosition()).isChecked = true;
+            }
+
+            notifyDataSetChanged();
+
         }
     }
 }

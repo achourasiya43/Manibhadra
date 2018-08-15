@@ -28,17 +28,22 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
     Context mContext;
     ArrayList<ProductInfo.ProductListBean> ProductList;
     GetProductId.getId getId;
+    String userType;
 
-    public ProductAdapter(Context mContext, ArrayList<ProductInfo.ProductListBean> ProductList,GetProductId.getId getId) {
+    public ProductAdapter(String userType,Context mContext, ArrayList<ProductInfo.ProductListBean> ProductList,GetProductId.getId getId) {
         this.mContext = mContext;
         this.ProductList = ProductList;
         this.getId = getId;
+        this.userType = userType;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item_layout, parent, false);
+        View view;
+        if(userType.equals("custmer")){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item_layout, parent, false);
+        }else view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item_layout, parent, false);
         return new ViewHolder(view);
     }
 

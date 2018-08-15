@@ -34,4 +34,5 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     implementation 'cz.msebera.android:httpclient:4.4.1.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }

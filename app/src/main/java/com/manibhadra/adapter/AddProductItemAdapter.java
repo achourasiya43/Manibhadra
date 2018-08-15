@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.manibhadra.R;
 import com.manibhadra.model.ProductDetailsInfo;
@@ -37,6 +38,10 @@ public class AddProductItemAdapter  extends RecyclerView.Adapter<AddProductItemA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
+        holder.ed_size.setText(productsList.get(position).productRates);
+        holder.ed_color.setText(productsList.get(position).productColors);
+        holder.ed_rate.setText(productsList.get(position).productRates);
+
         holder.iv_remove_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +58,7 @@ public class AddProductItemAdapter  extends RecyclerView.Adapter<AddProductItemA
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_remove_item;
-        EditText ed_size,ed_color,ed_rate;
+        TextView ed_size,ed_color,ed_rate;
 
         public ViewHolder(View itemView) {
             super(itemView);

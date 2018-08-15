@@ -24,11 +24,12 @@
             android:gravity="center"
             android:padding="@dimen/_8sdp"
             android:fontFamily="@font/nunito_regular"
-            android:text="Add to card"
+            android:text="Add Quantity"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_Large_Size" />
 
         <RelativeLayout
+            android:id="@+id/ly_qyt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_margin="@dimen/_15sdp"
@@ -54,10 +55,12 @@
 
 
         <RelativeLayout
+            android:id="@+id/ly_notes"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginRight="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rounded_primary_left_chat_border">
 
             <EditText

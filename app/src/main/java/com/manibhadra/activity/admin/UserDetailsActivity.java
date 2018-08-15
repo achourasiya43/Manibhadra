@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.manibhadra.R;
 import com.manibhadra.model.AllUsersInfo;
+import com.manibhadra.serverTask.Utils;
 
 public class UserDetailsActivity extends AppCompatActivity {
     AllUsersInfo.UsersDataBean usersData;
@@ -36,7 +37,17 @@ public class UserDetailsActivity extends AppCompatActivity {
 
             Glide.with(this).load(usersData.profileImage).apply(new RequestOptions().placeholder(R.drawable.ico_user_placeholder)).into(user_img);
 
+
+
         }
+        user_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!usersData.profileImage.equals("")){
+                    Utils.full_screen_photo_dialog(UserDetailsActivity.this,usersData.profileImage);
+                }
+            }
+        });
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

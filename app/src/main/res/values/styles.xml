@@ -28,4 +28,10 @@
         <item name="submitBackground">@color/colorPrimaryDark</item>
         <item name="queryBackground">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_dialog</item>
+    </style>
+
 </resources>

@@ -140,17 +140,67 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <EditText
+                        android:id="@+id/ed_size"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:hint="Size"
+                        android:padding="@dimen/_2sdp"
+                        android:maxLines="1"
+                        android:focusable="true"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:background="@drawable/rounded_primary_left_chat_border" />
+
+
+
+                    <EditText
+                        android:id="@+id/ed_color"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:hint="Color"
+                        android:padding="@dimen/_2sdp"
+                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:background="@drawable/rounded_primary_left_chat_border" />
+
+                    <EditText
+                        android:id="@+id/ed_rate"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:hint="Rate"
+                        android:padding="@dimen/_2sdp"
+                        android:maxLines="1"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:background="@drawable/rounded_primary_left_chat_border" />
 
                     <ImageView
-                        android:id="@+id/iv_add_item"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
+                        android:id="@+id/add_item_in_card"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:tint="@color/colorPrimaryDark"
                         android:src="@drawable/ico_add"
-                        android:layout_gravity="right"
-                        android:padding="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"/>
+                        />
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <android.support.v4.widget.NestedScrollView
                         android:layout_width="match_parent"
@@ -173,7 +223,7 @@
                 android:id="@+id/details_view_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/_14sdp"
+                android:layout_margin="@dimen/_8sdp"
                 android:orientation="vertical"
                 android:visibility="visible">
 
@@ -202,7 +252,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/josefinsans_regular"
+                        android:fontFamily="@font/nunito_bold"
                         android:text="Product Name :"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:textColor="@color/colorBlack"
@@ -212,13 +262,11 @@
                         android:id="@+id/tv_product_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_primary_left_chat_border"
                         android:fontFamily="@font/josefinsans_regular"
-                        android:padding="@dimen/_10sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_7sdp"
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/text_Small_Size" />
+                        android:textSize="@dimen/text_Large_Size" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -229,7 +277,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefinsans_regular"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="Product Details :"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:textColor="@color/colorBlack"
@@ -239,19 +287,16 @@
                     android:id="@+id/tv_product_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_primary_left_chat_border"
                     android:fontFamily="@font/josefinsans_regular"
-                    android:padding="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_Small_Size" />
+                    android:textSize="@dimen/text_Large_Size" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefinsans_regular"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="Other Details :"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:textColor="@color/colorBlack"
@@ -261,19 +306,16 @@
                     android:id="@+id/tv_other_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_primary_left_chat_border"
                     android:fontFamily="@font/josefinsans_regular"
-                    android:padding="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_Small_Size" />
+                    android:textSize="@dimen/text_Large_Size" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/josefinsans_regular"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="Availability :"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:textColor="@color/colorBlack"
