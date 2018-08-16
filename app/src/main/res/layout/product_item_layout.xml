@@ -27,6 +27,7 @@
                 app:siRadius="@dimen/_5sdp"
                 app:siBorderColor="@color/colorPrimaryDark"
                 app:siBorderWidth="0.7dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ico_user_placeholder"
                 android:layout_gravity="center"/>
 
@@ -45,6 +46,15 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/delete_icon"
+            android:tint="@color/colorBlack"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/_6sdp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

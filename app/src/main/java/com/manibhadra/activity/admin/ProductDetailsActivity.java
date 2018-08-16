@@ -57,7 +57,7 @@ import java.util.Map;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private ImageView back;
+    private ImageView back, iv_card_update,iv_card_edit;
     private String product_key = "";
     private TextView action_bar_title;
     private Button addProductBtn;
@@ -76,7 +76,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private DetailsProductAdapter detailsProductAdapter;
     private RecyclerView recycler_view, recycler_view_details;
     private ImageView add_item_in_card;
-    private EditText ed_size,ed_color,ed_rate;
+    private EditText ed_size, ed_color, ed_rate;
+
+    //add to card
+    ArrayList<ProductDetailsInfo.ProductDetailBean> cardItemList;
 
     /*...........add product.............*/
     EditText ed_product_name, ed_product_details, ed_product_other_details;
@@ -115,6 +118,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ed_color = findViewById(R.id.ed_color);
         ed_rate = findViewById(R.id.ed_rate);
 
+        //for card details
+        iv_card_update = findViewById(R.id.iv_card_update);
+        iv_card_edit = findViewById(R.id.iv_card_edit);
+
         cardProductList = new ArrayList<>();
         addProducts = new ArrayList<>();
         sessionManager = new SessionManager(this);
@@ -134,25 +141,28 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
-            }
-            else if (product_key.equals("viewProduct")) {
+            } else if (product_key.equals("viewProduct")) {
                 action_bar_title.setText("Product Details");
                 addProductBtn.setText("Delete Product");
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
 
-            }
-            else if (product_key.equals("addProduct")) {
+            } else if (product_key.equals("addProduct")) {
                 categoryId = getIntent().getStringExtra("categoryId");
                 action_bar_title.setText("Add Product");
 
                 add_view_layout.setVisibility(View.VISIBLE);
                 details_view_layout.setVisibility(View.GONE);
 
-            }
-            else if (product_key.equals("cardDetailsView")) {
-                ProductDetailsInfo.ProductDetailBean productDetailsInfo = (ProductDetailsInfo.ProductDetailBean) getIntent().getSerializableExtra("cardDetails");
+            } else if (product_key.equals("cardDetailsView")) {
+                iv_card_edit.setVisibility(View.VISIBLE);
+
+                cardItemList = (ArrayList<ProductDetailsInfo.ProductDetailBean>) getIntent().getSerializableExtra("cardItemList");
+                int position = getIntent().getIntExtra("position", 0);
+
+                ProductDetailsInfo.ProductDetailBean productDetailsInfo = cardItemList.get(position);
+
                 action_bar_title.setText("Card Details");
                 addProductBtn.setText("");
                 viewCardDetails(productDetailsInfo);
@@ -163,6 +173,25 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         }
+        iv_card_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iv_card_update.setVisibility(View.GONE);
+                iv_card_edit.setVisibility(View.VISIBLE);
+                detailsProductAdapter.getUpdate("upDateCard");
+                /*detailsProductAdapter = new DetailsProductAdapter(ProductDetailsActivity.this, cardItemList.get(), "upDateCard");
+                sessionManager.savecardList(cardItemList);*/
+
+            }
+        });
+        iv_card_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iv_card_edit.setVisibility(View.GONE);
+                iv_card_update.setVisibility(View.VISIBLE);
+                detailsProductAdapter.getUpdate("editCard");
+            }
+        });
 
         detailsProductAdapter = new DetailsProductAdapter(this, addProducts, userType);
         recycler_view_details.setLayoutManager(new LinearLayoutManager(this));
@@ -175,9 +204,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 String color = ed_color.getText().toString().trim();
                 String rate = ed_rate.getText().toString().trim();
 
-                if(!TextUtils.isEmpty(size) &&
+                if (!TextUtils.isEmpty(size) &&
                         !TextUtils.isEmpty(color) &&
-                        !TextUtils.isEmpty(rate)){
+                        !TextUtils.isEmpty(rate)) {
 
 
                     ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
@@ -185,7 +214,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     product.productRates = rate;
                     product.productSizes = size;
 
-                    addProducts.add(0,product);
+                    addProducts.add(product);
                     productItemAdapter.notifyDataSetChanged();
 
                     ed_size.setText("");
@@ -219,21 +248,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                 if (addProductBtn.getText().toString().trim().equals("Delete Product")) {
                     deleteproduct();
-                }
-                else if (addProductBtn.getText().toString().trim().equals("Add Product")) {
+                } else if (addProductBtn.getText().toString().trim().equals("Add Product")) {
                     if (isValidData()) {
-                        if(addProducts.size() != 0) {
+                        if (addProducts.size() != 0) {
                             addProducts();
-                        }else {
-                            Utils.openAlertDialog(ProductDetailsActivity.this,"Please add product sizes,colors and rates");
+                        } else {
+                            Utils.openAlertDialog(ProductDetailsActivity.this, "Please add product sizes,colors and rates");
                         }
                     }
-                }
-                else if (addProductBtn.getText().toString().trim().equals("Add To Card")) {
+                } else if (addProductBtn.getText().toString().trim().equals("Add To Card")) {
                     boolean isProductItemSelected = false;
 
                     for (int i = 0; i < addProducts.size(); i++)
-                        if (addProducts.get(i).isChecked) isProductItemSelected = true;
+                        if (addProducts.get(i).isChecked)
+                            isProductItemSelected = true;
 
                     if (isProductItemSelected) {
                         addToCardDialog();
@@ -248,8 +276,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void viewCardDetails(ProductDetailsInfo.ProductDetailBean productDetailsInfo){
-
+    private void viewCardDetails(ProductDetailsInfo.ProductDetailBean productDetailsInfo) {
         JSONArray array = null;
         try {
             array = new JSONArray(productDetailsInfo.productData);
@@ -259,6 +286,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 product.productColors = array.getJSONObject(i).getString("productColors");
                 product.productRates = array.getJSONObject(i).getString("productRates");
                 product.productQty = array.getJSONObject(i).getString("productQty");
+                product.isChecked = array.getJSONObject(i).getBoolean("isChecked");
 
                 if (!product.productSizes.equals("") &&
                         !product.productColors.equals("") &&
@@ -287,8 +315,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         return true;
     }
-
-
 
     /*...............productdetails.................*/
 
@@ -356,7 +382,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         product_details_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.full_screen_photo_dialog(ProductDetailsActivity.this,productDetailsInfo.productImage);
+                Utils.full_screen_photo_dialog(ProductDetailsActivity.this, productDetailsInfo.productImage);
             }
         });
 
@@ -599,7 +625,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     /*...............dialog add to card..............*/
 
     private void addToCardDialog() {
-
         final Dialog dialog = new Dialog(this);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.add_to_card_dialog_layout);
@@ -625,28 +650,28 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
  /*............................................................................................................*/                     //geting arraylist from session
-                    List<ProductDetailsInfo.ProductDetailBean> getproductDetailsList = sessionManager.getsavecardList();
-                   if(getproductDetailsList != null)
+                List<ProductDetailsInfo.ProductDetailBean> getproductDetailsList = sessionManager.getsavecardList();
+                if (getproductDetailsList != null)
                     cardProductList.addAll(getproductDetailsList);
  /*.................................................................................................................*/
 
-                    productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();
+                productDetailsInfo.productDetail.note = ed_note.getText().toString().trim();
 
-                    ArrayList<ProductDetailsInfo.AddProduct> tempList = new ArrayList<>();
-                    for (int i = 0; i < addProducts.size(); i++) {
-                        if (addProducts.get(i).isChecked) {
-                            Gson gson = new Gson();
-                            tempList.add(addProducts.get(i));
-                            productDetailsInfo.productDetail.productData = gson.toJson(tempList);
-                        }
+                ArrayList<ProductDetailsInfo.AddProduct> tempList = new ArrayList<>();
+                for (int i = 0; i < addProducts.size(); i++) {
+                    if (addProducts.get(i).isChecked) {
+                        Gson gson = new Gson();
+                        tempList.add(addProducts.get(i));
+                        productDetailsInfo.productDetail.productData = gson.toJson(tempList);
                     }
-                    cardProductList.add(productDetailsInfo.productDetail);
-
-                    sessionManager.savecardList(cardProductList);
-
-                    dialog.dismiss();
-                    finish();
                 }
+                cardProductList.add(productDetailsInfo.productDetail);
+
+                sessionManager.savecardList(cardProductList);
+
+                dialog.dismiss();
+                finish();
+            }
 
         });
         dialog.show();

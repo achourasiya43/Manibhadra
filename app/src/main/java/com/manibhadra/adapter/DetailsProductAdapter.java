@@ -1,7 +1,10 @@
 package com.manibhadra.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -62,10 +65,23 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         if(userType.equals("custmer")){
             holder.check_box.setVisibility(View.VISIBLE);
             holder.ly_qyt.setVisibility(View.VISIBLE);
-        }else if(userType.equals("")){
+        }
+        else if(userType.equals("cardDetails")){
+            holder.itemView.setEnabled(false);
             holder.ly_qyt.setVisibility(View.VISIBLE);
             holder.check_box.setVisibility(View.INVISIBLE);
-        }else if(userType.equals("admin")){
+        }
+        else if(userType.equals("editCard")){
+            holder.itemView.setEnabled(true);
+            holder.ly_qyt.setVisibility(View.VISIBLE);
+            holder.check_box.setVisibility(View.VISIBLE);
+        }
+        else if(userType.equals("upDateCard")){
+            holder.itemView.setEnabled(false);
+            holder.ly_qyt.setVisibility(View.VISIBLE);
+            holder.check_box.setVisibility(View.INVISIBLE);
+        }
+        else if(userType.equals("admin")){
             holder.ly_qyt.setVisibility(View.INVISIBLE);
             holder.check_box.setVisibility(View.INVISIBLE);
         }
@@ -78,25 +94,11 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         }else {
             holder.check_box.setChecked(false);
         }
+    }
 
-        /*holder.check_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    if(!holder.tv_qty.getText().toString().trim().equals("")){
-                        productArrayList.get(position).isChecked = true;
-                    }else {
-                        qtyToCardDialog(holder,position);
-                    }
-                }else {
-                    holder.tv_qty.setText("");
-                    productArrayList.get(position).productQty = "";
-                    productArrayList.get(position).isChecked = false;
-                    notifyDataSetChanged();
-                }
-            }
-        });*/
-
+    public void getUpdate( String userType){
+        this.userType = userType;
+        notifyDataSetChanged();
     }
 
     private void qtyToCardDialog(final ArrayList<ProductDetailsInfo.AddProduct> productArrayList , final int position) {
@@ -164,13 +166,11 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         @Override
         public void onClick(View v) {
             if(productArrayList.get(getAdapterPosition()).isChecked){
-
                 if(!tv_qty.getText().toString().trim().equals("")){
-                    productArrayList.get(getAdapterPosition()).productQty = "";
-
+                    wantToClearDialog(mContext,"Do yo want to unselect",getAdapterPosition());
+                }else {
+                    productArrayList.get(getAdapterPosition()).isChecked = false;
                 }
-                productArrayList.get(getAdapterPosition()).isChecked = false;
-
             }else {
 
                 if(tv_qty.getText().toString().trim().equals("")){
@@ -182,5 +182,31 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
             notifyDataSetChanged();
 
         }
+    }
+    public void wantToClearDialog(Context context, String message, final int adapterPosition) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                productArrayList.get(adapterPosition).productQty = "";
+                productArrayList.get(adapterPosition).isChecked = false;
+                notifyDataSetChanged();
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
     }
 }

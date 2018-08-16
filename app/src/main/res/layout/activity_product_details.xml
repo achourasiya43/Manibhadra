@@ -34,6 +34,28 @@
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_XXLarge_Size" />
 
+
+
+        <ImageView
+            android:id="@+id/iv_card_edit"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:src="@drawable/edit_icon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_8sdp"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/iv_card_update"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:src="@drawable/ico_right"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_8sdp"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 
     <ScrollView
@@ -193,9 +215,6 @@
                         />
 
                 </LinearLayout>
-
-
-
 
                 <LinearLayout
                     android:layout_width="match_parent"

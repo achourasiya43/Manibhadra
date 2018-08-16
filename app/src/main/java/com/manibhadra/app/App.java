@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.manibhadra.helper.Constant;
+import com.manibhadra.session.SessionManager;
 
 /**
  * Created by Anil on 30-07-2018.
@@ -27,6 +29,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
     }
 
     public <T> void addToRequestQueue(Request<T> req, String tag) {

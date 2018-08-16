@@ -44,6 +44,10 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     }
 
+                    if(session.getUser().userDetail.email.equals(Constant.AdminEmail)){
+                        Constant.isYouAreAdmin = true;
+                    }else Constant.isYouAreAdmin = false;
+
                 }else {
                     startActivity(new Intent(SplashActivity.this, SignInActivity.class));
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);

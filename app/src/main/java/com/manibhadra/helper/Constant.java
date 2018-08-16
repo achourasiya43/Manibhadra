@@ -6,7 +6,7 @@ package com.manibhadra.helper;
 
 public class Constant {
 
-
+    public static boolean isYouAreAdmin = false;
     public static final String AdminEmail = "admin@gmail.com";
    // public static final String AdminPassword = "admin@123";
 

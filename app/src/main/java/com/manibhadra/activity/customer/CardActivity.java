@@ -40,8 +40,8 @@ import java.util.Map;
 public class CardActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
     private SessionManager sessionManager;
-    List<ProductDetailsInfo.ProductDetailBean> productDetailsInfo;
-    ArrayList<ProductDetailsInfo.ProductDetailBean> productDetailsArrayList;
+    private List<ProductDetailsInfo.ProductDetailBean> productDetailsInfo;
+    private ArrayList<ProductDetailsInfo.ProductDetailBean> productDetailsArrayList;
     private CardAdapter adapter;
     private ProgressBar progress_bar;
     private Button addProductBtn;
@@ -159,7 +159,13 @@ public class CardActivity extends AppCompatActivity {
         builder.setTitle("Manibhadra");
         builder.setCancelable(false);
         builder.setMessage(message);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("Yes, Submit now", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();

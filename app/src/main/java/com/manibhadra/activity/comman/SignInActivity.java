@@ -39,6 +39,7 @@ public class SignInActivity extends AppCompatActivity {
     ProgressBar progress_bar;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +112,10 @@ public class SignInActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         SignInInfo signInInfo = gson.fromJson(String.valueOf(jsonObject), SignInInfo.class);
                         session.createSession(signInInfo);
+
+                        if(session.getUser().userDetail.email.equals(Constant.AdminEmail)){
+                            Constant.isYouAreAdmin = true;
+                        }else Constant.isYouAreAdmin = false;
 
                         session.savePassword(sign_in_password.getText().toString().trim());
                         if(signInInfo.userDetail.email.equals(Constant.AdminEmail)){

@@ -1,5 +1,9 @@
 package com.manibhadra.activity.admin;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,7 +19,9 @@ import com.google.gson.Gson;
 import com.manibhadra.R;
 import com.manibhadra.adapter.CategoryAdapter;
 import com.manibhadra.app.App;
+import com.manibhadra.listner.DeleteCategory;
 import com.manibhadra.model.CategoryInfo;
+import com.manibhadra.model.ProductInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 
@@ -41,7 +47,12 @@ public class ViewCategoryActivity extends AppCompatActivity {
         recycler_view = findViewById(R.id.recycler_view);
         categorytList = new ArrayList<>();
 
-        adapter = new CategoryAdapter(this,categorytList,"admin");
+        adapter = new CategoryAdapter(this, categorytList, "admin", new DeleteCategory() {
+            @Override
+            public void deleteCategory(int position, String categoryId) {
+                successDialog(ViewCategoryActivity.this,"Do you want to delete "+categorytList.get(position).categoryName+"category?",position,categoryId);
+            }
+        });
         recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
         recycler_view.setAdapter(adapter);
 
@@ -76,7 +87,12 @@ public class ViewCategoryActivity extends AppCompatActivity {
                 tempList.add(categoryListBean);
             }
         }
-        adapter = new CategoryAdapter(this,tempList,"admin");
+        adapter = new CategoryAdapter(this, tempList, "admin", new DeleteCategory() {
+            @Override
+            public void deleteCategory(int position, String categoryId) {
+                successDialog(ViewCategoryActivity.this,"Do you want to delete "+categorytList.get(position).categoryName+"category?",position,categoryId);
+            }
+        });
         recycler_view.setAdapter(adapter);
     }
 
@@ -124,4 +140,64 @@ public class ViewCategoryActivity extends AppCompatActivity {
         });
         service.callGetSimpleVolley("user/getAllCategory");
     }
+
+    private void deleteCategoryTask(final int position, String categoryId) {
+        progress_bar.setVisibility(View.VISIBLE);
+        WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
+
+            @Override
+            public void onResponse(String response) {
+                //loadingView.setVisibility(View.GONE);
+                Log.e("SIGN IN RESPONSE", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.getString("status");
+                    String message = jsonObject.getString("message");
+
+                    if (status.equals("success")) {
+                        categorytList.remove(position);
+                    } else {
+                        Utils.openAlertDialog(ViewCategoryActivity.this, message);
+                    }
+                    progress_bar.setVisibility(View.GONE);
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progress_bar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void ErrorListener(VolleyError error) {
+                // Utils.openAlertDialog(ProductListActivity.this, "Something went wrong...");
+                progress_bar.setVisibility(View.GONE);
+            }
+        });
+        service.callGetSimpleVolley("user/deleteCategory?categoryId="+categoryId+"");
+    }
+
+    public void successDialog(Context context, String message, final int position, final String categoryId) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteCategoryTask(position,categoryId);
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
+    }
+
 }

@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         productDetailsInfo = sessionManager.getsavecardList();
 
-        adapter = new CategoryAdapter(this, categorytList, "custmer");
+        adapter = new CategoryAdapter(this, categorytList, "custmer",null);
         recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
         recycler_view.setAdapter(adapter);
 
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 tempList.add(categoryListBean);
             }
         }
-        adapter = new CategoryAdapter(this, tempList, "custmer");
+        adapter = new CategoryAdapter(this, tempList, "custmer",null);
         recycler_view.setAdapter(adapter);
     }
 
