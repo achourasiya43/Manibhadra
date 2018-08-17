@@ -135,13 +135,22 @@ public class ProductDetailsActivity extends AppCompatActivity {
             productId = getIntent().getStringExtra("productId");
             userType = getIntent().getStringExtra("userType");
 
-            if (userType.equals("custmer")) {
+            if(userType.equals("updateProduct")){
+                categoryId = getIntent().getStringExtra("categoryId");
+                add_view_layout.setVisibility(View.VISIBLE);
+                details_view_layout.setVisibility(View.GONE);
+                action_bar_title.setText("Update Product");
+                addProductBtn.setText("Update Product");
+                productdetails();
+            }
+            else if (userType.equals("custmer")) {
                 action_bar_title.setText("Product Details");
                 addProductBtn.setText("Add To Card");
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
-            } else if (product_key.equals("viewProduct")) {
+            }
+            else if (product_key.equals("viewProduct")) {
                 action_bar_title.setText("Product Details");
                 addProductBtn.setText("Delete Product");
 
@@ -157,20 +166,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             } else if (product_key.equals("cardDetailsView")) {
                 iv_card_edit.setVisibility(View.VISIBLE);
-
                 cardItemList = (ArrayList<ProductDetailsInfo.ProductDetailBean>) getIntent().getSerializableExtra("cardItemList");
                 int position = getIntent().getIntExtra("position", 0);
-
                 ProductDetailsInfo.ProductDetailBean productDetailsInfo = cardItemList.get(position);
-
                 action_bar_title.setText("Card Details");
                 addProductBtn.setText("");
                 viewCardDetails(productDetailsInfo);
-
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
                 addProductBtn.setVisibility(View.GONE);
-
             }
         }
         iv_card_update.setOnClickListener(new View.OnClickListener() {
@@ -248,7 +252,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                 if (addProductBtn.getText().toString().trim().equals("Delete Product")) {
                     deleteproduct();
-                } else if (addProductBtn.getText().toString().trim().equals("Add Product")) {
+                } else if (addProductBtn.getText().toString().trim().equals("Add Product") ||
+                        addProductBtn.getText().toString().trim().equals("Update Product")) {
                     if (isValidData()) {
                         if (addProducts.size() != 0) {
                             addProducts();
@@ -386,6 +391,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
+        if(userType.equals("updateProduct")){
+            ed_product_name.setText(productDetailsInfo.productName);
+            ed_product_details.setText(productDetailsInfo.productDetail);
+            ed_product_other_details.setText(productDetailsInfo.productOtherDetail);
+            Glide.with(ProductDetailsActivity.this).load(productDetailsInfo.productImage)
+                    .apply(new RequestOptions().placeholder(R.drawable.ico_user_placeholder)).into(add_product_image);
+
+        }
+
     }
 /*.....................end details product............................................*/
 
@@ -503,7 +517,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             if (requestCode == 234) {
                 Uri imageUri = ImagePicker.getImageURIFromResult(ProductDetailsActivity.this, requestCode, resultCode, data);
                 bitmap = ImagePicker.getImageResized(ProductDetailsActivity.this, imageUri);
-                add_product_image.setImageBitmap(bitmap);
+
+                if(userType.equals("updateProduct")){
+                  add_product_image.setImageBitmap(bitmap);
+                }else add_product_image.setImageBitmap(bitmap);
             }
         }
     }
@@ -516,40 +533,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
         progress_bar.setVisibility(View.VISIBLE);
 
         Map<String, String> map = new HashMap<>();
+
+        if(userType.equals("updateProduct")){
+            map.put("productId", productId);
+        }
+        /*............................................*/
         map.put("categoryId", categoryId);
         map.put("productName", ed_product_name.getText().toString().trim());
         map.put("productDetail", ed_product_details.getText().toString().trim());
         map.put("productOtherDetail", ed_product_other_details.getText().toString().trim());
 
-      /*  for (int i = 0; i < addProducts.size(); i++) {
-            View view = recycler_view.getChildAt(i);
-            if (view != null) {
-                EditText productSizes = view.findViewById(R.id.ed_size);
-                EditText productRate = view.findViewById(R.id.ed_rate);
-                EditText productColor = view.findViewById(R.id.ed_color);
-
-                ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
-                product.productSizes = productSizes.getText().toString();
-                product.productRates = productRate.getText().toString();
-                product.productColors = productColor.getText().toString();
-                Log.d("sds", product + "");
-
-                if (!product.productSizes.equals("") &&
-                        !product.productRates.equals("") && !product.productColors.equals("")) {
-                    addProducts.add(product);
-                }
-            }
-        }*/
-
-      /*  if(addProducts.get(0).productColors.equals("") &&
-                addProducts.get(0).productRates.equals("") &&
-                addProducts.get(0).productSizes.equals("")){
-
-            Utils.openAlertDialog(ProductDetailsActivity.this,"Please enter product sizes,colors and rates");
-
-            return;
-        }
-*/
 
         Gson gson = new Gson();
         String addProducts_json = gson.toJson(addProducts);
@@ -603,7 +596,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 productItemAdapter.notifyDataSetChanged();
             }
         });
-        service.callMultiPartApi("user/addProduct", map, image);
+
+
+        if(userType.equals("updateProduct")){
+            service.callMultiPartApi("user/updateProduct", map, image);
+        }else {
+            service.callMultiPartApi("user/addProduct", map, image);
+        }
+
     }
 
     public void successAddProductDialog(Context context, String message) {

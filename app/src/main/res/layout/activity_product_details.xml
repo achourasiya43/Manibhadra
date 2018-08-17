@@ -35,7 +35,6 @@
             android:textSize="@dimen/text_XXLarge_Size" />
 
 
-
         <ImageView
             android:id="@+id/iv_card_edit"
             android:layout_width="@dimen/_35sdp"
@@ -85,6 +84,7 @@
                     app:civ_border_color="@color/colorPrimaryDark"
                     app:civ_border_width="0.8dp"
                     android:layout_margin="@dimen/_10sdp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/new_camera_ico" />
 
                 <EditText
@@ -258,6 +258,7 @@
                         android:layout_height="@dimen/_100sdp"
                         app:siBorderColor="@color/colorPrimaryDark"
                         app:siBorderWidth="1dp"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/ico_user_placeholder"
                         app:siRadius="@dimen/_5sdp"/>
 

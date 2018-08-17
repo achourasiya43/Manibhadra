@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.manibhadra.R;
+import com.manibhadra.activity.admin.AddCategoryActivity;
 import com.manibhadra.activity.admin.ProductListActivity;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
@@ -63,8 +64,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         if(Constant.isYouAreAdmin){
             holder.iv_delete.setVisibility(View.VISIBLE);
+            holder.iv_edit.setVisibility(View.VISIBLE);
         }else {
             holder.iv_delete.setVisibility(View.GONE);
+            holder.iv_edit.setVisibility(View.GONE);
         }
 
 
@@ -79,6 +82,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 deleteCategory.deleteCategory(position, categoryList.get(position).catId);
             }
         });
+
+        holder.iv_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, AddCategoryActivity.class).putExtra("categoryInfo",categoryList.get(position)));
+            }
+        });
     }
 
     @Override
@@ -87,7 +97,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView category_image, iv_delete;
+        ImageView category_image, iv_delete,iv_edit;
         TextView tv_category_name;
 
         public ViewHolder(View itemView) {
@@ -95,6 +105,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             itemView.setOnClickListener(this);
             category_image = itemView.findViewById(R.id.product_image);
             iv_delete = itemView.findViewById(R.id.iv_delete);
+            iv_edit = itemView.findViewById(R.id.iv_edit);
             tv_category_name = itemView.findViewById(R.id.tv_product_name);
 
         }

@@ -48,12 +48,28 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+
+        if(!userType.equals("custmer")){
+            holder.tv_edit.setVisibility(View.VISIBLE);
+        }
+
         if (ProductList.get(position).productImage != null)
             Glide.with(mContext).load(ProductList.get(position).productImage).apply(new RequestOptions().placeholder(R.drawable.ico_user_placeholder)).into( holder.product_image);
 
-
         holder.tv_product_name.setText(ProductList.get(position).productName);
+
+        if(!userType.equals("custmer")){
+        holder.tv_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext,ProductDetailsActivity.class).
+                        putExtra("product_key","updateProduct").
+                        putExtra("userType","updateProduct").
+                        putExtra("productId",ProductList.get(position).productId).
+                        putExtra("categoryId",ProductList.get(position).categoryId));
+            }
+        });}
     }
 
     @Override
@@ -63,11 +79,12 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView product_image;
-        TextView tv_product_name;
+        TextView tv_product_name,tv_edit;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            tv_edit = itemView.findViewById(R.id.tv_edit);
             product_image = itemView.findViewById(R.id.product_image);
             tv_product_name = itemView.findViewById(R.id.tv_product_name);
         }
@@ -75,7 +92,6 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
         @Override
         public void onClick(View v) {
             getId.getProductId(ProductList.get(getAdapterPosition()).productId);
-
         }
 
     }

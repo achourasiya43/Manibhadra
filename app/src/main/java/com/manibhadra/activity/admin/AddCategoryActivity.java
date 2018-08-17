@@ -19,14 +19,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
+import com.manibhadra.model.CategoryInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
 
@@ -43,6 +47,8 @@ public class AddCategoryActivity extends AppCompatActivity {
     private Button add_category_Btn;
     private EditText ed_category;
     private ProgressBar progress_bar;
+    CategoryInfo.CategoryListBean bean;
+    private TextView profile_action_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,27 @@ public class AddCategoryActivity extends AppCompatActivity {
         add_category_Btn = findViewById(R.id.add_category_Btn);
         ed_category = findViewById(R.id.ed_category);
         progress_bar = findViewById(R.id.progress_bar);
+        profile_action_bar = findViewById(R.id.profile_action_bar);
+
+        bean = new CategoryInfo.CategoryListBean();
+        bean = (CategoryInfo.CategoryListBean) getIntent().getSerializableExtra("categoryInfo");
+
+        if(bean != null){
+            if(bean.catId != null){
+                add_category_Btn.setText("Update");
+                profile_action_bar.setText("Update Category");
+            }
+
+            if(bean.categoryImage != null){
+                Glide.with(this).load(bean.categoryImage).apply(new RequestOptions().placeholder(R.drawable.ico_user_placeholder)).into(category_image);
+            }
+
+            if(bean.categoryName != null){
+                ed_category.setText(bean.categoryName);
+                ed_category.setSelection(bean.categoryName.length());
+            }
+        }
+
 
         category_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +92,9 @@ public class AddCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isValidData()){
-                    addCategoryApi();
+                    if(add_category_Btn.getText().toString().trim().equals("Update")){
+                        addCategoryApi(bean.catId);
+                    }else addCategoryApi(null);
                 }
             }
         });
@@ -152,12 +181,15 @@ public class AddCategoryActivity extends AppCompatActivity {
         }
     }
 
-    private void addCategoryApi() {
+    private void addCategoryApi(String categoryId) {
         add_category_Btn.setEnabled(false);
         progress_bar.setVisibility(View.VISIBLE);
 
         Map<String, String> map = new HashMap<>();
         map.put("categoryName", ed_category.getText().toString().trim());
+        if(categoryId != null){
+            map.put("categoryId", categoryId);
+        }
 
         Map<String, Bitmap> image ;
         if(bitmap != null){

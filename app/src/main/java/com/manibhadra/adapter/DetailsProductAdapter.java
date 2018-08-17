@@ -82,6 +82,7 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
             holder.check_box.setVisibility(View.INVISIBLE);
         }
         else if(userType.equals("admin")){
+            holder.itemView.setEnabled(false);
             holder.ly_qyt.setVisibility(View.INVISIBLE);
             holder.check_box.setVisibility(View.INVISIBLE);
         }
