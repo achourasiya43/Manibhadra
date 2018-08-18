@@ -26,6 +26,9 @@ import com.manibhadra.R;
 import com.manibhadra.activity.admin.ProductDetailsActivity;
 import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.serverTask.Utils;
+import com.manibhadra.session.SessionManager;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,8 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         this.mContext = mContext;
         this.productArrayList = productArrayList;
         this.userType = userType;
+
+
     }
 
     @NonNull
@@ -97,54 +102,23 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         }
     }
 
-    public void getUpdate( String userType){
+    public void getUpdate(String userType){
         this.userType = userType;
         notifyDataSetChanged();
     }
 
-    private void qtyToCardDialog(final ArrayList<ProductDetailsInfo.AddProduct> productArrayList , final int position) {
-        final Dialog dialog = new Dialog(mContext);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setContentView(R.layout.add_to_card_dialog_layout);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
+    public ArrayList<ProductDetailsInfo.AddProduct> getProductArrayList(){
+        return productArrayList;
+    };
 
-        Button add_card_btn = dialog.findViewById(R.id.add_card_btn);
-        final EditText ed_quentity = dialog.findViewById(R.id.ed_quentity);
-        final RelativeLayout ly_notes = dialog.findViewById(R.id.ly_notes);
-        ly_notes.setVisibility(View.GONE);
-        ImageView close_button = dialog.findViewById(R.id.close_button);
-
-        close_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productArrayList.get(position).isChecked = false;
-                notifyDataSetChanged();
-                dialog.dismiss();
-            }
-        });
-
-        add_card_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String qty = ed_quentity.getText().toString().trim();
-                if(!qty.equals("")){
-
-                    productArrayList.get(position).isChecked = true;
-                    productArrayList.get(position).productQty = qty;
-                    dialog.dismiss();
-                    notifyDataSetChanged();
-
-                }
-            }
-        });
-        dialog.show();
-
-    }
 
     @Override
     public int getItemCount() {
         return productArrayList.size();
+    }
+
+    public void saveDataListInSession() {
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -183,6 +157,47 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
             notifyDataSetChanged();
 
         }
+
+        private void qtyToCardDialog(final ArrayList<ProductDetailsInfo.AddProduct> productArrayList , final int position) {
+            final Dialog dialog = new Dialog(mContext);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialog.setContentView(R.layout.add_to_card_dialog_layout);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+
+            Button add_card_btn = dialog.findViewById(R.id.add_card_btn);
+            final EditText ed_quentity = dialog.findViewById(R.id.ed_quentity);
+            final RelativeLayout ly_notes = dialog.findViewById(R.id.ly_notes);
+            ly_notes.setVisibility(View.GONE);
+            ImageView close_button = dialog.findViewById(R.id.close_button);
+
+            close_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    productArrayList.get(position).isChecked = false;
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                }
+            });
+
+            add_card_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String qty = ed_quentity.getText().toString().trim();
+                    if(!qty.equals("")){
+
+                        productArrayList.get(position).isChecked = true;
+                        productArrayList.get(position).productQty = qty;
+                        dialog.dismiss();
+                        notifyDataSetChanged();
+
+                    }
+                }
+            });
+            dialog.show();
+
+        }
+
     }
     public void wantToClearDialog(Context context, String message, final int adapterPosition) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);

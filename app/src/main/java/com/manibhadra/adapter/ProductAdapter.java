@@ -50,7 +50,9 @@ public class ProductAdapter  extends RecyclerView.Adapter<ProductAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        if(!userType.equals("custmer")){
+        if(userType.equals("custmer")){
+            holder.tv_edit.setVisibility(View.GONE);
+        }else if(userType.equals("admin")){
             holder.tv_edit.setVisibility(View.VISIBLE);
         }
 

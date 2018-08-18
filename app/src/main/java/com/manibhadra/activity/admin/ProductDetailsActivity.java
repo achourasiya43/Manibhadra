@@ -77,6 +77,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private RecyclerView recycler_view, recycler_view_details;
     private ImageView add_item_in_card;
     private EditText ed_size, ed_color, ed_rate;
+    ProductDetailsInfo.ProductDetailBean productDetailsInfoCardData;
 
     //add to card
     ArrayList<ProductDetailsInfo.ProductDetailBean> cardItemList;
@@ -168,10 +169,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 iv_card_edit.setVisibility(View.VISIBLE);
                 cardItemList = (ArrayList<ProductDetailsInfo.ProductDetailBean>) getIntent().getSerializableExtra("cardItemList");
                 int position = getIntent().getIntExtra("position", 0);
-                ProductDetailsInfo.ProductDetailBean productDetailsInfo = cardItemList.get(position);
+                productDetailsInfoCardData = cardItemList.get(position);
                 action_bar_title.setText("Card Details");
                 addProductBtn.setText("");
-                viewCardDetails(productDetailsInfo);
+                viewCardDetails(productDetailsInfoCardData);
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
                 addProductBtn.setVisibility(View.GONE);
@@ -183,9 +184,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 iv_card_update.setVisibility(View.GONE);
                 iv_card_edit.setVisibility(View.VISIBLE);
                 detailsProductAdapter.getUpdate("upDateCard");
-                /*detailsProductAdapter = new DetailsProductAdapter(ProductDetailsActivity.this, cardItemList.get(), "upDateCard");
-                sessionManager.savecardList(cardItemList);*/
+                detailsProductAdapter.saveDataListInSession();
 
+                ArrayList<ProductDetailsInfo.AddProduct> ProductArrayList = detailsProductAdapter.getProductArrayList();
+                Gson gson = new Gson();
+                String json = gson.toJson(ProductArrayList);
+
+                productDetailsInfoCardData.productData = json;
+
+                sessionManager.savecardList(cardItemList);
             }
         });
         iv_card_edit.setOnClickListener(new View.OnClickListener() {
@@ -338,19 +345,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     if (status.equals("success")) {
                         Gson gson = new Gson();
                         productDetailsInfo = gson.fromJson(response, ProductDetailsInfo.class);
-                        JSONArray array = new JSONArray(productDetailsInfo.productDetail.productData);
+                        String data = productDetailsInfo.productDetail.productData;
+                        JSONArray array = new JSONArray(data);
                         for (int i = 0; i < array.length(); i++) {
                             productDetailsInfo.addProduct = new ProductDetailsInfo.AddProduct();
                             productDetailsInfo.addProduct.productSizes = array.getJSONObject(i).getString("productSizes");
                             productDetailsInfo.addProduct.productColors = array.getJSONObject(i).getString("productColors");
                             productDetailsInfo.addProduct.productRates = array.getJSONObject(i).getString("productRates");
 
-                            if (!productDetailsInfo.addProduct.productSizes.equals("") &&
+                            /*if (!productDetailsInfo.addProduct.productSizes.equals("") &&
                                     !productDetailsInfo.addProduct.productColors.equals("") &&
                                     !productDetailsInfo.addProduct.productRates.equals("")) {
 
-                                addProducts.add(productDetailsInfo.addProduct);
-                            }
+
+                            }*/
+                            addProducts.add(productDetailsInfo.addProduct);
                         }
                         setDetaislData(productDetailsInfo.productDetail);
 

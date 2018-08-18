@@ -38,7 +38,7 @@ public class AddProductItemAdapter  extends RecyclerView.Adapter<AddProductItemA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        holder.ed_size.setText(productsList.get(position).productRates);
+        holder.ed_size.setText(productsList.get(position).productSizes);
         holder.ed_color.setText(productsList.get(position).productColors);
         holder.ed_rate.setText(productsList.get(position).productRates);
 

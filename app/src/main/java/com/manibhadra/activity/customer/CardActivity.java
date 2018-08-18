@@ -54,10 +54,7 @@ public class CardActivity extends AppCompatActivity {
         progress_bar = findViewById(R.id.progress_bar);
         addProductBtn = findViewById(R.id.addProductBtn);
 
-        sessionManager = new SessionManager(this);
-        productDetailsInfo = sessionManager.getsavecardList();
-        productDetailsArrayList = new ArrayList<>();
-        productDetailsArrayList.addAll(productDetailsInfo);
+
 
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,26 +66,38 @@ public class CardActivity extends AppCompatActivity {
         addProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(productDetailsArrayList != null && productDetailsArrayList.size() != 0){
-                    askDialog(CardActivity.this,"Are you sure want to submit ?");
-                }else {
-                    Utils.openAlertDialog(CardActivity.this,"Please Add Some Product");
+                if (productDetailsArrayList != null && productDetailsArrayList.size() != 0) {
+                    askDialog(CardActivity.this, "Are you sure want to submit ?");
+                } else {
+                    Utils.openAlertDialog(CardActivity.this, "Please Add Some Product");
                 }
 
             }
         });
 
-        if(productDetailsArrayList != null){
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sessionManager = new SessionManager(this);
+        productDetailsInfo = sessionManager.getsavecardList();
+        productDetailsArrayList = new ArrayList<>();
+        if (productDetailsInfo != null)
+            productDetailsArrayList.addAll(productDetailsInfo);
+
+        if (productDetailsArrayList != null) {
             adapter = new CardAdapter(productDetailsArrayList, this, new Delete_Listner() {
                 @Override
                 public void getDelete(int position) {
-                    askDeleteDialog(CardActivity.this,"Do you want to remove?",position);
+                    askDeleteDialog(CardActivity.this, "Do you want to remove?", position);
 
                 }
             });
             recycler_view.setAdapter(adapter);
         }
-
     }
 
     private void submitCardToAdmin() {
@@ -133,7 +142,7 @@ public class CardActivity extends AppCompatActivity {
                 addProductBtn.setEnabled(true);
             }
         });
-        service.callMultiPartApi("user/placeOrder", map,null);
+        service.callMultiPartApi("user/placeOrder", map, null);
     }
 
     public void successDialog(Context context, String message) {
@@ -150,7 +159,7 @@ public class CardActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         Activity activity = (Activity) context;
-        if(!activity.isFinishing())
+        if (!activity.isFinishing())
             alert.show();
     }
 
@@ -174,7 +183,7 @@ public class CardActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         Activity activity = (Activity) context;
-        if(!activity.isFinishing())
+        if (!activity.isFinishing())
             alert.show();
     }
 
@@ -201,7 +210,7 @@ public class CardActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         Activity activity = (Activity) context;
-        if(!activity.isFinishing())
+        if (!activity.isFinishing())
             alert.show();
     }
 }
