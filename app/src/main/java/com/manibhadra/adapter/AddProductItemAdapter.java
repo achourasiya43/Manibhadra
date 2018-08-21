@@ -1,6 +1,9 @@
 package com.manibhadra.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 
 import com.manibhadra.R;
 import com.manibhadra.model.ProductDetailsInfo;
+import com.manibhadra.serverTask.Utils;
 
 import java.util.ArrayList;
 
@@ -45,11 +49,38 @@ public class AddProductItemAdapter  extends RecyclerView.Adapter<AddProductItemA
         holder.iv_remove_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productsList.remove(position);
-                notifyDataSetChanged();
+                wantToRemove(mContext,"Do you want to remove?",position);
+
             }
         });
     }
+
+
+    public void wantToRemove(Context context, String message, final int pos) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                productsList.remove(pos);
+                notifyDataSetChanged();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
+    }
+
 
     @Override
     public int getItemCount() {

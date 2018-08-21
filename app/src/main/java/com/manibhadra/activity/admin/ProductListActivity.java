@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.manibhadra.R;
+import com.manibhadra.activity.customer.CardActivity;
+import com.manibhadra.activity.customer.MainActivity;
 import com.manibhadra.adapter.CategoryAdapter;
 import com.manibhadra.adapter.ProductAdapter;
 import com.manibhadra.app.App;
@@ -37,7 +39,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ProductAdapter adapter;
     private ArrayList<ProductInfo.ProductListBean> productList;
     private RecyclerView recycler_view;
-    private ImageView btn_add_product;
+    private ImageView btn_add_product,btn_cart_product;
     private ImageView back;
     ProgressBar progress_bar;
     private String categoryId = "";
@@ -53,6 +55,7 @@ public class ProductListActivity extends AppCompatActivity {
         progress_bar = findViewById(R.id.progress_bar);
         back = findViewById(R.id.back);
         btn_add_product = findViewById(R.id.btn_add_product);
+        btn_cart_product = findViewById(R.id.btn_cart_product);
         recycler_view = findViewById(R.id.recycler_view);
         productList = new ArrayList<>();
 
@@ -63,9 +66,19 @@ public class ProductListActivity extends AppCompatActivity {
 
         if(userType.equals("custmer")){
             btn_add_product.setVisibility(View.GONE);
+            btn_cart_product.setVisibility(View.VISIBLE);
             spanCount = 1;
+        }else {
+            btn_add_product.setVisibility(View.VISIBLE);
+            btn_cart_product.setVisibility(View.GONE);
         }
 
+        btn_cart_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProductListActivity.this, CardActivity.class));
+            }
+        });
         adapter = new ProductAdapter(userType,this, productList, new GetProductId.getId() {
             @Override
             public void getProductId(String productId) {

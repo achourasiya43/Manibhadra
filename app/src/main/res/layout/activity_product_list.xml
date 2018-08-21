@@ -43,6 +43,18 @@
                 android:src="@drawable/ico_add"
                 android:padding="@dimen/_7sdp"
                 android:tint="@color/colorPrimaryDark"
+                android:layout_marginRight="@dimen/_3sdp"
+                />
+
+            <ImageView
+                android:id="@+id/btn_cart_product"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/trolley"
+                android:padding="@dimen/_5sdp"
+                android:tint="@color/colorPrimaryDark"
                 android:layout_marginRight="@dimen/_3sdp"/>
 
         </RelativeLayout>

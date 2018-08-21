@@ -1,6 +1,7 @@
 package com.manibhadra.activity.admin;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.util.Util;
 import com.google.gson.Gson;
 import com.manibhadra.ImagePickerPackge.ImagePicker;
 import com.manibhadra.R;
@@ -258,7 +260,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (addProductBtn.getText().toString().trim().equals("Delete Product")) {
-                    deleteproduct();
+                    deleteSuccessDialog(ProductDetailsActivity.this,"Do you want to delete ?");
+
                 } else if (addProductBtn.getText().toString().trim().equals("Add Product") ||
                         addProductBtn.getText().toString().trim().equals("Update Product")) {
                     if (isValidData()) {
@@ -286,6 +289,30 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (product_key.equals("viewProduct")) {
             productdetails();
         }
+    }
+
+    public void deleteSuccessDialog(Context context, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                deleteproduct();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
     }
 
     private void viewCardDetails(ProductDetailsInfo.ProductDetailBean productDetailsInfo) {
@@ -359,15 +386,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
                             }*/
+
                             addProducts.add(productDetailsInfo.addProduct);
                         }
                         setDetaislData(productDetailsInfo.productDetail);
+                        detailsProductAdapter = new DetailsProductAdapter(ProductDetailsActivity.this,
+                                addProducts,userType);
+                        recycler_view_details.setLayoutManager(new LinearLayoutManager(ProductDetailsActivity.this));
+                        recycler_view_details.setAdapter(detailsProductAdapter);
+
 
 
                     } else {
                         Utils.openAlertDialog(ProductDetailsActivity.this, message);
                     }
-                    detailsProductAdapter.notifyDataSetChanged();
+                    //detailsProductAdapter.notifyDataSetChanged();
 
                     progress_bar.setVisibility(View.GONE);
                 } catch (JSONException e) {
@@ -416,7 +449,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 /*...............delete product................................*/
 
     private void deleteproduct() {
-
         progress_bar.setVisibility(View.VISIBLE);
         WebService service = new WebService(this, App.TAG, new WebService.LoginRegistrationListener() {
             @Override

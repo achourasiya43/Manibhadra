@@ -71,12 +71,8 @@ public class CardActivity extends AppCompatActivity {
                 } else {
                     Utils.openAlertDialog(CardActivity.this, "Please Add Some Product");
                 }
-
             }
         });
-
-
-
     }
 
     @Override
