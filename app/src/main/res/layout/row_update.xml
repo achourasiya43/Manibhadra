@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="@dimen/_2sdp">
+
+    <LinearLayout
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_primary_left_chat_border">
+
+        <TextView
+            android:id="@+id/dialog_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:fontFamily="@font/nunito_regular"
+            android:text="Update Item"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_Large_Size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/ed_size"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_30sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:hint="Size"
+                android:padding="@dimen/_3sdp"
+                android:focusable="true"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/rounded_primary_left_chat_border" />
+
+
+
+            <EditText
+                android:id="@+id/ed_color"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_30sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:hint="Color"
+                android:padding="@dimen/_3sdp"
+                android:textSize="@dimen/_12sdp"
+                android:layout_gravity="top"
+                android:imeOptions="actionNext"
+                android:background="@drawable/rounded_primary_left_chat_border" />
+
+            <EditText
+                android:id="@+id/ed_rate"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/_30sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_gravity="top"
+                android:hint="Rate"
+                android:textSize="@dimen/_12sdp"
+                android:padding="@dimen/_3sdp"
+                android:imeOptions="actionDone"
+                android:background="@drawable/rounded_primary_left_chat_border" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/add_done_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/continue_btn_bg"
+            android:fontFamily="@font/josefinsans_regular"
+            android:text="Done"
+            android:textAllCaps="false"
+            android:textColor="@drawable/continue_btn_text_color"
+            android:textSize="@dimen/text_Large_Size" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/_1sdp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/close_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ico_close_popup_a_black"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

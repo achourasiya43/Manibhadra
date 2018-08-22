@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.manibhadra.R;
+import com.manibhadra.listner.ListnerClass;
 import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.serverTask.Utils;
 
@@ -26,10 +28,14 @@ import java.util.ArrayList;
 public class AddProductItemAdapter  extends RecyclerView.Adapter<AddProductItemAdapter.ViewHolder>{
     ArrayList<ProductDetailsInfo.AddProduct> productsList;
     Context mContext;
+    ListnerClass listnerClass;
 
-    public AddProductItemAdapter(ArrayList<ProductDetailsInfo.AddProduct> productsList, Context mContext) {
+    public AddProductItemAdapter(ArrayList<ProductDetailsInfo.AddProduct> productsList,
+                                 Context mContext,
+                                 ListnerClass listnerClass) {
         this.productsList = productsList;
         this.mContext = mContext;
+        this.listnerClass = listnerClass;
     }
 
     @NonNull
@@ -87,7 +93,7 @@ public class AddProductItemAdapter  extends RecyclerView.Adapter<AddProductItemA
         return productsList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView iv_remove_item;
         TextView ed_size,ed_color,ed_rate;
 
@@ -97,6 +103,12 @@ public class AddProductItemAdapter  extends RecyclerView.Adapter<AddProductItemA
             ed_size = itemView.findViewById(R.id.ed_size);
             ed_color = itemView.findViewById(R.id.ed_color);
             ed_rate = itemView.findViewById(R.id.ed_rate);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+         listnerClass.getPosition(getAdapterPosition());
         }
     }
 }

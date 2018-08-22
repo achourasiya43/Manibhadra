@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +44,7 @@ import com.manibhadra.adapter.DetailsProductAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
+import com.manibhadra.listner.ListnerClass;
 import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.serverTask.WebService;
@@ -129,7 +131,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
         addProducts = new ArrayList<>();
         sessionManager = new SessionManager(this);
 
-        productItemAdapter = new AddProductItemAdapter(addProducts, this);
+        productItemAdapter = new AddProductItemAdapter(addProducts, this, new ListnerClass() {
+            @Override
+            public void getPosition(int position) {
+                updateRowDialog(position);
+            }
+        });
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
         recycler_view.setAdapter(productItemAdapter);
 
@@ -355,6 +362,58 @@ public class ProductDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    /*...........edit product dialog*/
+    private void updateRowDialog(final int position) {
+        final Dialog dialog = new Dialog(this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.row_update);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        Button add_done_btn = dialog.findViewById(R.id.add_done_btn);
+        final EditText ed_size = dialog.findViewById(R.id.ed_size);
+        final EditText ed_color = dialog.findViewById(R.id.ed_color);
+        final EditText ed_rate = dialog.findViewById(R.id.ed_rate);
+        ImageView close_button = dialog.findViewById(R.id.close_button);
+
+        ed_size.setText(addProducts.get(position).productSizes);
+        ed_color.setText(addProducts.get(position).productColors);
+        ed_rate.setText(addProducts.get(position).productRates);
+
+        add_done_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String size = ed_size.getText().toString().trim();
+                String color = ed_color.getText().toString().trim();
+                String rate = ed_rate.getText().toString().trim();
+
+                if(!TextUtils.isEmpty(size) &&
+                        !TextUtils.isEmpty(color) &&
+                        !TextUtils.isEmpty(rate)){
+                    ProductDetailsInfo.AddProduct product = new ProductDetailsInfo.AddProduct();
+                    product.productSizes = size;
+                    product.productRates  = rate;
+                    product.productColors = color;
+                    addProducts.set(position,product);
+                    productItemAdapter.notifyDataSetChanged();
+
+                    Utils.hideKeyboard(ProductDetailsActivity.this);
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        close_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+    }
+
     /*...............productdetails.................*/
 
     private void productdetails() {
@@ -390,17 +449,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             addProducts.add(productDetailsInfo.addProduct);
                         }
                         setDetaislData(productDetailsInfo.productDetail);
-                        detailsProductAdapter = new DetailsProductAdapter(ProductDetailsActivity.this,
-                                addProducts,userType);
-                        recycler_view_details.setLayoutManager(new LinearLayoutManager(ProductDetailsActivity.this));
-                        recycler_view_details.setAdapter(detailsProductAdapter);
-
-
 
                     } else {
                         Utils.openAlertDialog(ProductDetailsActivity.this, message);
                     }
-                    //detailsProductAdapter.notifyDataSetChanged();
+                    detailsProductAdapter.notifyDataSetChanged();
+                    productItemAdapter.notifyDataSetChanged();
 
                     progress_bar.setVisibility(View.GONE);
                 } catch (JSONException e) {
@@ -718,5 +772,4 @@ public class ProductDetailsActivity extends AppCompatActivity {
         dialog.show();
 
     }
-
 }
