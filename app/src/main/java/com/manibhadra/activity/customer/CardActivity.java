@@ -54,8 +54,6 @@ public class CardActivity extends AppCompatActivity {
         progress_bar = findViewById(R.id.progress_bar);
         addProductBtn = findViewById(R.id.addProductBtn);
 
-
-
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

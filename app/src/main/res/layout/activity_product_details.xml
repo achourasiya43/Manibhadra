@@ -186,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="@dimen/_30sdp"
                         android:layout_margin="@dimen/_5sdp"
-                        android:hint="Color"
+                        android:hint="Type"
                         android:padding="@dimen/_3sdp"
                         android:textSize="@dimen/_12sdp"
                         android:layout_gravity="top"
@@ -326,6 +326,29 @@
                     android:layout_marginTop="@dimen/_7sdp"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_Large_Size" />
+
+                <TextView
+                    android:id="@+id/tv_notes_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="Notes :"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Large_Size"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/josefinsans_regular"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_Large_Size"
+                    android:visibility="gone"/>
+
+
 
 
                 <TextView

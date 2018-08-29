@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +57,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="Color"
+                android:text="Type"
                 android:textSize="@dimen/text_Small_Size" />
 
 
@@ -67,7 +68,7 @@
                 android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/rounded_primary_left_chat_border"
                 android:gravity="center"
-                android:hint="Color"
+                android:hint="Type"
                 android:minHeight="@dimen/_30sdp"
                 android:minWidth="@dimen/_50sdp"
                 android:padding="@dimen/_3sdp"
@@ -156,6 +157,23 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_remove"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_gravity="right"
+        android:background="@drawable/continue_btn_bg_rectangle"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:text="Remove"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:padding="@dimen/_3sdp"
+        android:textSize="@dimen/_8sdp"
+        android:fontFamily="@font/nunito_semibold"
+        android:visibility="gone"/>
+
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
@@ -163,4 +181,4 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorGray" />
 
-</RelativeLayout>
+</LinearLayout>

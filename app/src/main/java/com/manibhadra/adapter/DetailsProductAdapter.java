@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.ProductDetailsActivity;
+import com.manibhadra.listner.GetPosition;
 import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.serverTask.Utils;
 import com.manibhadra.session.SessionManager;
@@ -42,14 +43,16 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
     Context mContext;
     ArrayList<ProductDetailsInfo.AddProduct> productArrayList;
     String userType;
+    GetPosition getPosition;
+
 
     public DetailsProductAdapter(Context mContext,
                                  ArrayList<ProductDetailsInfo.AddProduct> productArrayList,
-                                 String userType) {
+                                 String userType,GetPosition getPosition) {
         this.mContext = mContext;
         this.productArrayList = productArrayList;
         this.userType = userType;
-
+        this.getPosition = getPosition;
 
     }
 
@@ -70,26 +73,31 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         if(userType.equals("custmer")){
             holder.check_box.setVisibility(View.VISIBLE);
             holder.ly_qyt.setVisibility(View.VISIBLE);
+            holder.tv_remove.setVisibility(View.GONE);
         }
         else if(userType.equals("cardDetails")){
             holder.itemView.setEnabled(false);
             holder.ly_qyt.setVisibility(View.VISIBLE);
             holder.check_box.setVisibility(View.INVISIBLE);
+            holder.tv_remove.setVisibility(View.VISIBLE);
         }
         else if(userType.equals("editCard")){
             holder.itemView.setEnabled(true);
             holder.ly_qyt.setVisibility(View.VISIBLE);
             holder.check_box.setVisibility(View.VISIBLE);
+            holder.tv_remove.setVisibility(View.VISIBLE);
         }
         else if(userType.equals("upDateCard")){
             holder.itemView.setEnabled(false);
             holder.ly_qyt.setVisibility(View.VISIBLE);
             holder.check_box.setVisibility(View.INVISIBLE);
+            holder.tv_remove.setVisibility(View.VISIBLE);
         }
         else if(userType.equals("admin")){
             holder.itemView.setEnabled(false);
             holder.ly_qyt.setVisibility(View.INVISIBLE);
             holder.check_box.setVisibility(View.INVISIBLE);
+            holder.tv_remove.setVisibility(View.GONE);
         }
         else{
             holder.check_box.setVisibility(View.INVISIBLE);
@@ -100,6 +108,12 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         }else {
             holder.check_box.setChecked(false);
         }
+
+        holder.tv_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPosition.getCardItemPosition(position);            }
+        });
     }
 
     public void getUpdate(String userType){
@@ -117,12 +131,9 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
         return productArrayList.size();
     }
 
-    public void saveDataListInSession() {
-
-    }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tv_size,tv_color,tv_rate,tv_qty;
+        TextView tv_size,tv_color,tv_rate,tv_qty,tv_remove;
         CheckBox check_box;
         LinearLayout ly_qyt;
 
@@ -134,6 +145,7 @@ public class DetailsProductAdapter extends RecyclerView.Adapter<DetailsProductAd
             check_box = itemView.findViewById(R.id.check_box);
             tv_qty = itemView.findViewById(R.id.tv_qty);
             ly_qyt = itemView.findViewById(R.id.ly_qyt);
+            tv_remove = itemView.findViewById(R.id.tv_remove);
 
             itemView.setOnClickListener(this);
         }

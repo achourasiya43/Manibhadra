@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Catrgories"
+            android:text="Categories"
             android:fontFamily="@font/josefinsans_regular"
             android:textColor="@color/colorgreen"
             android:layout_gravity="center"

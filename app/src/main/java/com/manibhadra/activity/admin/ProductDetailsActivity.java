@@ -44,6 +44,7 @@ import com.manibhadra.adapter.DetailsProductAdapter;
 import com.manibhadra.app.App;
 import com.manibhadra.helper.Constant;
 import com.manibhadra.helper.Validation;
+import com.manibhadra.listner.GetPosition;
 import com.manibhadra.listner.ListnerClass;
 import com.manibhadra.model.ProductDetailsInfo;
 import com.manibhadra.serverTask.Utils;
@@ -63,7 +64,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ImageView back, iv_card_update,iv_card_edit;
     private String product_key = "";
-    private TextView action_bar_title;
+    private TextView action_bar_title,tv_notes,tv_notes_text;
     private Button addProductBtn;
     private LinearLayout details_view_layout, add_view_layout;
     private ImageView add_product_image, product_details_image;
@@ -81,9 +82,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private RecyclerView recycler_view, recycler_view_details;
     private ImageView add_item_in_card;
     private EditText ed_size, ed_color, ed_rate;
-    ProductDetailsInfo.ProductDetailBean productDetailsInfoCardData;
+    private ProductDetailsInfo.ProductDetailBean productDetailsInfoCardData;
 
-    //add to card
+    //Add To Cart
     ArrayList<ProductDetailsInfo.ProductDetailBean> cardItemList;
 
     /*...........add product.............*/
@@ -126,6 +127,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         //for card details
         iv_card_update = findViewById(R.id.iv_card_update);
         iv_card_edit = findViewById(R.id.iv_card_edit);
+        tv_notes_text = findViewById(R.id.tv_notes_text);
+        tv_notes = findViewById(R.id.tv_notes);
 
         cardProductList = new ArrayList<>();
         addProducts = new ArrayList<>();
@@ -155,7 +158,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
             else if (userType.equals("custmer")) {
                 action_bar_title.setText("Product Details");
-                addProductBtn.setText("Add To Card");
+                addProductBtn.setText("Add To Cart");
 
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
@@ -185,6 +188,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 add_view_layout.setVisibility(View.GONE);
                 details_view_layout.setVisibility(View.VISIBLE);
                 addProductBtn.setVisibility(View.GONE);
+                tv_notes.setVisibility(View.VISIBLE);
+                tv_notes_text.setVisibility(View.VISIBLE);
+                tv_notes.setText(cardItemList.get(position).note);
             }
         }
         iv_card_update.setOnClickListener(new View.OnClickListener() {
@@ -193,14 +199,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 iv_card_update.setVisibility(View.GONE);
                 iv_card_edit.setVisibility(View.VISIBLE);
                 detailsProductAdapter.getUpdate("upDateCard");
-                detailsProductAdapter.saveDataListInSession();
 
                 ArrayList<ProductDetailsInfo.AddProduct> ProductArrayList = detailsProductAdapter.getProductArrayList();
                 Gson gson = new Gson();
                 String json = gson.toJson(ProductArrayList);
 
                 productDetailsInfoCardData.productData = json;
-
                 sessionManager.savecardList(cardItemList);
             }
         });
@@ -213,7 +217,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
-        detailsProductAdapter = new DetailsProductAdapter(this, addProducts, userType);
+        detailsProductAdapter = new DetailsProductAdapter(this, addProducts, userType, new GetPosition() {
+            @Override
+            public void getCardItemPosition(int position) {
+                removetDialog(ProductDetailsActivity.this,"Do you want to remove?",position);
+            }
+        });
         recycler_view_details.setLayoutManager(new LinearLayoutManager(this));
         recycler_view_details.setAdapter(detailsProductAdapter);
 
@@ -278,7 +287,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             Utils.openAlertDialog(ProductDetailsActivity.this, "Please add product sizes,colors and rates");
                         }
                     }
-                } else if (addProductBtn.getText().toString().trim().equals("Add To Card")) {
+                } else if (addProductBtn.getText().toString().trim().equals("Add To Cart")) {
                     boolean isProductItemSelected = false;
 
                     for (int i = 0; i < addProducts.size(); i++)
@@ -296,6 +305,37 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (product_key.equals("viewProduct")) {
             productdetails();
         }
+    }
+    public void removetDialog(Context context, String message, final int position) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                addProducts.remove(position);
+                ArrayList<ProductDetailsInfo.AddProduct> ProductArrayList = addProducts;
+                Gson gson = new Gson();
+                String json = gson.toJson(ProductArrayList);
+                productDetailsInfoCardData.productData = json;
+
+                sessionManager.savecardList(cardItemList);
+                detailsProductAdapter.notifyDataSetChanged();
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
     }
 
     public void deleteSuccessDialog(Context context, String message) {
@@ -342,7 +382,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
             }
             setDetaislData(productDetailsInfo);
-            detailsProductAdapter = new DetailsProductAdapter(this, addProducts, userType);
+            detailsProductAdapter = new DetailsProductAdapter(this, addProducts, userType, new GetPosition() {
+                @Override
+                public void getCardItemPosition(int position) {}// there is no need to call
+            });
             recycler_view_details.setLayoutManager(new LinearLayoutManager(this));
             recycler_view_details.setAdapter(detailsProductAdapter);
         } catch (JSONException e) {
@@ -717,7 +760,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         alert.show();
     }
     
-    /*...............dialog add to card..............*/
+    /*...............dialog Add To Cart..............*/
 
     private void addToCardDialog() {
         final Dialog dialog = new Dialog(this);
@@ -728,7 +771,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         Button add_card_btn = dialog.findViewById(R.id.add_card_btn);
         final TextView dialog_header = dialog.findViewById(R.id.dialog_header);
-        dialog_header.setText("Add To Card");
+        dialog_header.setText("Add To Cart");
         final RelativeLayout ly_qyt = dialog.findViewById(R.id.ly_qyt);
         ly_qyt.setVisibility(View.GONE);
         final EditText ed_note = dialog.findViewById(R.id.ed_note);
