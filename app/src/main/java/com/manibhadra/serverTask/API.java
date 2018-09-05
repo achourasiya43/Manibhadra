@@ -6,5 +6,4 @@ package com.manibhadra.serverTask;
 
 public class API {
     public static String BASE_URL = "http://feelthesport.com/manibhadra/service/"; // Live server
-
 }

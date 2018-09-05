@@ -150,7 +150,7 @@
                         android:layout_centerVertical="true"
                         android:backgroundTint="@color/colorBlack"
                         android:fontFamily="@font/nunito_light"
-                        android:hint="Contect number"
+                        android:hint="Contact number"
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:textColor="@color/colorBlack"
