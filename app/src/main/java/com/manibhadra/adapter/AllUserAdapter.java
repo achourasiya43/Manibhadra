@@ -44,6 +44,11 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
         if (arrayList.get(position).profileImage != null)
             Glide.with(mContext).load(arrayList.get(position).profileImage).apply(new RequestOptions().placeholder(R.drawable.ico_user_placeholder)).into(holder.profile_image);
         holder.tv_product_name.setText(arrayList.get(position).fullName);
+
+        if (arrayList.get(position).isBlock) {
+            holder.iv_isblock.setVisibility(View.VISIBLE);
+        } else holder.iv_isblock.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -52,7 +57,7 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView profile_image;
+        ImageView profile_image, iv_isblock;
         TextView tv_product_name;
 
         public ViewHolder(View itemView) {
@@ -60,12 +65,13 @@ public class AllUserAdapter extends RecyclerView.Adapter<AllUserAdapter.ViewHold
             itemView.setOnClickListener(this);
             profile_image = itemView.findViewById(R.id.profile_image);
             tv_product_name = itemView.findViewById(R.id.tv_product_name);
+            iv_isblock = itemView.findViewById(R.id.iv_isblock);
         }
 
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, UserDetailsActivity.class);
-            intent.putExtra("userInfo",arrayList.get(getAdapterPosition()));
+            intent.putExtra("userInfo", arrayList.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
 

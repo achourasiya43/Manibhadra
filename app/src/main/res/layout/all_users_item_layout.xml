@@ -55,6 +55,16 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/iv_isblock"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/ico_current_red"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:visibility="gone"/>
+
 
     </RelativeLayout>
 

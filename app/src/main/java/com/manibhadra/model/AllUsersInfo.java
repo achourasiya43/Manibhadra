@@ -22,6 +22,7 @@ public class AllUsersInfo implements Serializable {
         public String https;
         public String profileImage;
         public String contactNumber;
+        public boolean isBlock;
 
     }
 }

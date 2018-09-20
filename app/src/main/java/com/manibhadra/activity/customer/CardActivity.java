@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.manibhadra.R;
 import com.manibhadra.activity.admin.AdminHomeActivity;
@@ -45,6 +50,7 @@ public class CardActivity extends AppCompatActivity {
     private CardAdapter adapter;
     private ProgressBar progress_bar;
     private Button addProductBtn;
+    private int orderCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,21 @@ public class CardActivity extends AppCompatActivity {
         recycler_view = findViewById(R.id.recycler_view);
         progress_bar = findViewById(R.id.progress_bar);
         addProductBtn = findViewById(R.id.addProductBtn);
+
+        FirebaseDatabase.getInstance().getReference().child(Constant.OrderNumberTable).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue(Integer.class) != null){
+                    orderCount = dataSnapshot.getValue(Integer.class);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +86,7 @@ public class CardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (productDetailsArrayList != null && productDetailsArrayList.size() != 0) {
+
                     askDialog(CardActivity.this, "Are you sure want to submit ?");
                 } else {
                     Utils.openAlertDialog(CardActivity.this, "Please Add Some Product");
@@ -98,6 +120,12 @@ public class CardActivity extends AppCompatActivity {
         addProductBtn.setEnabled(false);
         progress_bar.setVisibility(View.VISIBLE);
         Gson gson = new Gson();
+
+        final int orderNumber = orderCount+1;
+        for(int i = 0;i<productDetailsArrayList.size();i++){
+            productDetailsArrayList.get(i).orderNumber = orderNumber;
+        }
+
         String json = gson.toJson(productDetailsArrayList);
 
         Map<String, String> map = new HashMap<>();
@@ -117,6 +145,7 @@ public class CardActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
 
                     if (status.equals("success")) {
+                        FirebaseDatabase.getInstance().getReference().child(Constant.OrderNumberTable).setValue(orderNumber);
                         ArrayList<ProductDetailsInfo.ProductDetailBean> productDetailsInfo = new ArrayList<>();
                         sessionManager.savecardList(productDetailsInfo);
                     } else {

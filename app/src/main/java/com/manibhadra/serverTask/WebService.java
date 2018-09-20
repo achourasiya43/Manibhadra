@@ -1,10 +1,12 @@
 package com.manibhadra.serverTask;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,7 +17,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.manibhadra.app.App;
+import com.manibhadra.helper.Constant;
+import com.manibhadra.model.AllUsersInfo;
 import com.manibhadra.session.SessionManager;
 import com.manibhadra.volley.AppHelper;
 import com.manibhadra.volley.DataPart;
@@ -33,10 +41,10 @@ public class WebService {
     private Context mContext;
     private String TAG;
 
-
     private SessionManager session;
     private ResponseListener mListener;
     private LoginRegistrationListener mLSListener;
+    String myUserId = "";
 
     public WebService(Context context, String TAG, LoginRegistrationListener listener) {
         super();
@@ -44,6 +52,50 @@ public class WebService {
         this.mContext = context;
         this.TAG = TAG;
         session = new SessionManager( mContext);
+        if(session.getUser()!= null){
+            myUserId = session.getUser().userDetail.userId;
+        }
+
+    }
+
+    private boolean isBlockUser(final String userId){
+        FirebaseDatabase.getInstance().getReference().child(Constant.BlockTable).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                AllUsersInfo.UsersDataBean bean = dataSnapshot.getValue( AllUsersInfo.UsersDataBean.class);
+                if(bean != null){
+                    // case of bloked user,
+                   youBlockedDialog(mContext,"You are currently blocked by admin!");
+                }else {
+                    // case of unbloked user
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return false;
+    }
+
+    public void youBlockedDialog(Context context, String message) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Manibhadra");
+        builder.setCancelable(false);
+        builder.setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                session.logout();
+            }
+        });
+        AlertDialog alert = builder.create();
+        Activity activity = (Activity) context;
+        if(!activity.isFinishing())
+            alert.show();
     }
 
 
@@ -92,7 +144,9 @@ public class WebService {
             public void onResponse(NetworkResponse response) {
                 String resultResponse = new String(response.data);
                 System.out.println(resultResponse);
+                isBlockUser(myUserId);
                 mLSListener.onResponse(resultResponse);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -146,6 +200,7 @@ public class WebService {
                     @Override
                     public void onResponse(String response) {
                         mLSListener.onResponse(response);
+                        isBlockUser(myUserId);
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -16,6 +16,7 @@ public class ProductDetailsInfo implements Serializable{
 
         public String productId;
         public String categoryId;
+        public int orderNumber;
         public String productName;
         public String productDetail;
         public String productOtherDetail;

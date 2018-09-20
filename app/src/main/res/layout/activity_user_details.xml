@@ -298,6 +298,18 @@
             android:tint="@color/colorPrimary"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_10sdp"/>
+
+        <TextView
+            android:id="@+id/tv_isBlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/josefinsans_regular"
+            android:textColor="@color/colorBlack"
+            android:text="Block"
+            android:textSize="@dimen/text_Medium_Size"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <RelativeLayout

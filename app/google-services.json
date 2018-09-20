@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "87693029039",
+    "firebase_url": "https://manibhadra-6651c.firebaseio.com",
+    "project_id": "manibhadra-6651c",
+    "storage_bucket": "manibhadra-6651c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87693029039:android:37bf732f3731e288",
+        "android_client_info": {
+          "package_name": "com.manibhadra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87693029039-enkhmaslnk4s5fh0agb84juucpe4d63q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manibhadra",
+            "certificate_hash": "28e4df3f314647c1e3fbe579a2bda492a78c1d8e"
+          }
+        },
+        {
+          "client_id": "87693029039-ec5726m4g8mg9gh06m6sqk9q2iar5bud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYHQZ3dldn8RNlXU5Vos5YvNuXjcV1TEY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87693029039-ec5726m4g8mg9gh06m6sqk9q2iar5bud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

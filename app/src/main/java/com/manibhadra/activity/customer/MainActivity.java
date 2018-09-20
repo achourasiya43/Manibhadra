@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progress_bar;
     SessionManager sessionManager;
     List<ProductDetailsInfo.ProductDetailBean> productDetailsInfo;
+    private TextView tv_count;
 
 
     @Override
@@ -70,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
         iv_settings = findViewById(R.id.iv_settings);
         iv_add_card = findViewById(R.id.iv_add_card);
         recycler_view = findViewById(R.id.recycler_view);
-
+        tv_count = findViewById(R.id.tv_count);
         sessionManager = new SessionManager(this);
         categorytList = new ArrayList<>();
 
-        productDetailsInfo = sessionManager.getsavecardList();
+
 
         adapter = new CategoryAdapter(this, categorytList, "custmer",null);
         recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
@@ -166,6 +167,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        productDetailsInfo = sessionManager.getsavecardList();
+
+        if(productDetailsInfo != null){
+            tv_count.setText(productDetailsInfo.size()+"");
+        }
         viewAllCategory();
     }
 

@@ -20,16 +20,35 @@
             android:padding="@dimen/_5sdp"
             android:src="@drawable/mani_logo"/>
 
-        <ImageView
-            android:id="@+id/iv_add_card"
+        <RelativeLayout
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_4sdp"
-            android:tint="@color/colorPrimaryDark"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/_5sdp"
-            android:src="@drawable/trolley"
-            android:gravity="center" />
+            android:layout_marginRight="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/iv_add_card"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_4sdp"
+                android:tint="@color/colorPrimaryDark"
+                android:src="@drawable/trolley"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tv_count"
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/circle_count"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:textSize="@dimen/_9sdp"
+                android:text="0"/>
+
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/iv_settings"

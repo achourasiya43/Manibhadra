@@ -306,6 +306,25 @@ public class ProductDetailsActivity extends AppCompatActivity {
             productdetails();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+        if (userType.equals("custmer")){
+            boolean isProductItemSelected = false;
+            for (int i = 0; i < addProducts.size(); i++)
+                if (addProducts.get(i).isChecked)
+                    isProductItemSelected = true;
+
+            if (isProductItemSelected) {
+                addToCardDialog();
+            }else {
+                super.onBackPressed();
+            }
+        }else
+            super.onBackPressed();
+    }
+
     public void removetDialog(Context context, String message, final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Manibhadra");

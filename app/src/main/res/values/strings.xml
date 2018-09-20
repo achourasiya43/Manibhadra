@@ -3,7 +3,7 @@
 
     // Create Account Activity
     <string name="hint_email">Email</string>
-    <string name="hint_name">Name</string>
+    <string name="hint_name">Firm Name / Address</string>
     <string name="hint_birthday">Birthday</string>
     <string name="create_account_button">Create account</string>
     <string name="accept_continue">By continuing you accept our</string>
